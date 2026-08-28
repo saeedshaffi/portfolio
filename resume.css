@@ -1,0 +1,56 @@
+.resume-active .site-header{background:var(--paper);border-color:var(--line)}
+.resume-page{width:min(calc(100% - 48px),var(--max));margin:0 auto;padding:clamp(120px,10vw,150px) 0 120px}
+.resume-crumb{margin:0 0 18px;color:var(--muted);font-size:13px}
+.resume-crumb a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line)}
+.resume-crumb a:hover{color:var(--ink)}
+.resume-head{padding:36px 40px;border-radius:26px;background:linear-gradient(120deg,#fff3e9 0%,#fdeee9 45%,#f4f1eb 100%)}
+.resume-head-row{display:flex;gap:28px;align-items:center}
+.resume-photo{width:112px;height:112px;flex:0 0 auto;border-radius:50%;object-fit:cover;border:3px solid var(--card);box-shadow:0 8px 24px rgba(23,25,20,.14)}
+.resume-head-copy h1{margin:0;font-size:clamp(38px,4.6vw,54px);font-weight:640;letter-spacing:-.03em;line-height:1}
+.resume-role-title{margin:8px 0 0;font-size:clamp(16px,1.6vw,19px);font-weight:600;color:var(--coral)}
+.resume-meta{display:flex;flex-wrap:wrap;gap:6px 20px;margin:14px 0 0;padding:0;list-style:none;font-size:14px;color:var(--muted)}
+.resume-meta li{display:flex;align-items:center;gap:6px}
+.resume-meta a{color:var(--muted);text-decoration:none}
+.resume-meta a:hover{color:var(--ink)}
+.resume-copy-btn{display:inline-grid;place-items:center;width:24px;height:24px;padding:0;border:1px solid var(--line);border-radius:7px;background:none;color:var(--muted);cursor:pointer;transition:.2s ease}
+.resume-copy-btn svg{width:13px;height:13px}
+.resume-copy-btn:hover{border-color:var(--ink);color:var(--ink)}
+.resume-copy-btn.is-copied{border-color:var(--coral);background:var(--coral);color:#171914}
+.resume-visa{display:inline-flex;margin-top:16px;padding:7px 16px;border:1px solid var(--coral);border-radius:999px;background:rgba(255,107,74,.12);color:#c1401f;font-size:13px;font-weight:700;letter-spacing:-.005em}
+.resume-head-actions{display:flex;gap:14px;margin-top:26px;flex-wrap:wrap}
+.resume-download{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.resume-download:hover{background:var(--coral);border-color:var(--coral);color:#171914}
+.resume-back{color:var(--ink);border:1px solid var(--line);background:none}
+.resume-back:hover{border-color:var(--ink)}
+.resume-body{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:56px;margin-top:48px;align-items:start}
+.resume-section-title{margin:0 0 26px;padding-bottom:10px;border-bottom:3px solid var(--coral);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.resume-role{position:relative;padding:24px 0 24px 22px;border-top:1px solid var(--line);border-left:3px solid;border-left-color:hsl(calc(14 + var(--i,0)*28),78%,58%)}
+.resume-role:first-of-type{border-top:0;padding-top:0}
+.resume-role-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.resume-role-head h3{margin:0;font-size:19px;font-weight:700;letter-spacing:-.01em}
+.resume-role-dates{font-size:13px;color:var(--muted);white-space:nowrap}
+.resume-role-org{margin:4px 0 0;font-size:14px;font-weight:600;color:var(--coral)}
+.resume-role-bullets{margin:12px 0 0;padding-left:20px}
+.resume-role-bullets li{margin:6px 0;font-size:15px;line-height:1.55;color:#3c3f37}
+.resume-side{position:sticky;top:110px;display:grid;gap:20px}
+.resume-side-card{padding:22px;border:1px solid var(--line);border-radius:18px;background:var(--card)}
+.resume-side-card h2{margin:0 0 12px;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--coral)}
+.resume-side-card p{margin:0;font-size:14px;line-height:1.58;color:#3c3f37}
+.resume-skill-group{margin:0 0 4px}
+.resume-skill-group:last-child{margin-bottom:0}
+.resume-skill-group b{display:block;margin-bottom:3px;color:var(--ink);font-size:12.5px;font-weight:700}
+.resume-pill-row{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.resume-pill-row:last-child{margin-bottom:0}
+.resume-pill{padding:4px 10px;border-radius:999px;background:rgba(23,25,20,.06);color:#3c3f37;font-size:11.5px;font-weight:600}
+.resume-pill-row.is-accent-a .resume-pill{background:rgba(255,107,74,.12);color:#c1401f}
+.resume-pill-row.is-accent-b .resume-pill{background:rgba(52,131,111,.14);color:#256b57}
+.resume-pill-row.is-accent-c .resume-pill{background:rgba(90,98,214,.13);color:#3d43a8}
+@media(max-width:900px){
+  .resume-body{grid-template-columns:1fr}
+  .resume-side{position:static}
+  .resume-head-row{flex-wrap:wrap}
+}
+@media(max-width:560px){
+  .resume-photo{width:72px;height:72px}
+  .resume-head-copy h1{font-size:34px}
+}

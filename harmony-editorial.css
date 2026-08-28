@@ -1,0 +1,323 @@
+/* Harmony case — retheme to the shared KFH/Eyewa editorial language.
+   White paper, #090909 ink, hairline rules, flat border-top cards, one deep accent.
+   Accent stays CreditBook green (#1e8055) so the brand survives the shared system. */
+
+body.harmony-case-active {
+  --kfh-ink: #090909;
+  --kfh-muted: #5f5e66;
+  --kfh-paper: #ffffff;
+  --kfh-soft: #f7f7f6;
+  --kfh-line: #e5e5e3;
+  --hm-green: #1e8055;
+  --hm-green-dark: #166342;
+  --hm-green-soft: #e9f6ef;
+  --ink: var(--kfh-ink);
+  --muted: var(--kfh-muted);
+  --paper: var(--kfh-paper);
+  --card: var(--kfh-paper);
+  --line: var(--kfh-line);
+  background: var(--kfh-paper);
+  color: var(--kfh-ink);
+}
+
+.harmony-case-active .hm-case {
+  --hm-accent: #1e8055;
+  --hm-accent-ink: #166342;
+}
+
+.harmony-case-active .case {
+  width: min(calc(100% - 48px), 1280px);
+  padding: 22px 0 128px;
+}
+
+/* ── Hero: dark panel → white editorial ── */
+.harmony-case-active .case .case-hero {
+  min-height: min(600px, calc(100vh - 260px));
+  gap: 18px clamp(32px, 5vw, 72px);
+  padding: clamp(20px, 3vw, 36px) 0 clamp(48px, 6vw, 80px);
+  border-bottom: 1px solid var(--kfh-line);
+  border-radius: 0;
+  background: var(--kfh-paper);
+  color: var(--kfh-ink);
+}
+
+.harmony-case-active .case .case-hero::after { display: none; }
+
+.harmony-case-active .case .case-hero > .eyebrow { color: var(--hm-green); }
+
+.harmony-case-active .case .case-hero > h1 {
+  max-width: 680px;
+  color: var(--kfh-ink);
+  font-size: clamp(48px, 5.5vw, 76px);
+  line-height: .96;
+  letter-spacing: -.065em;
+}
+
+.harmony-case-active .case .case-hero > p {
+  max-width: 570px;
+  color: var(--kfh-muted);
+  font-size: clamp(18px, 1.55vw, 21px);
+  line-height: 1.55;
+}
+
+.harmony-case-active .case-crumb a { color: var(--kfh-muted); }
+.harmony-case-active .case-crumb b { color: var(--kfh-ink); }
+
+.harmony-case-active .hm-case .hm-brandmark {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.harmony-case-active .hm-case .hm-hero .hm-tag {
+  border-color: var(--kfh-line);
+  background: transparent;
+  color: var(--kfh-muted);
+}
+
+.harmony-case-active .hm-hero-panel {
+  border: 1px solid var(--kfh-line);
+  border-radius: 0;
+  background: var(--kfh-soft);
+  box-shadow: none;
+}
+
+.harmony-case-active .hm-hero-caption { color: var(--kfh-muted); }
+.harmony-case-active .hm-hero-caption b { color: var(--kfh-ink); }
+
+/* ── Facts ── */
+.harmony-case-active .case-facts { gap: 36px; margin: 0 0 clamp(92px, 11vw, 150px); }
+.harmony-case-active .fact {
+  padding: 26px 0 0;
+  border: 0;
+  border-top: 1px solid var(--kfh-line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--kfh-muted);
+}
+.harmony-case-active .fact .eyebrow { color: var(--hm-green); }
+.harmony-case-active .fact b { color: var(--kfh-ink); font-size: 17px; }
+
+/* ── TOC ── */
+.harmony-case-active .long-study {
+  grid-template-columns: 218px minmax(0, 900px);
+  gap: clamp(52px, 7vw, 96px);
+  justify-content: space-between;
+  padding: 0;
+}
+.harmony-case-active .study-toc { top: 108px; padding-top: 20px; border-top: 1px solid var(--kfh-line); }
+.harmony-case-active .study-toc > .eyebrow { margin-bottom: 14px; color: var(--hm-green); }
+.harmony-case-active .study-toc a {
+  min-height: 0;
+  padding: 9px 0 9px 14px;
+  border-left: 2px solid transparent;
+  color: var(--kfh-muted);
+  font-size: 12px;
+  line-height: 1.25;
+}
+.harmony-case-active .study-toc a:hover { color: var(--kfh-ink); }
+.harmony-case-active .study-toc a.active {
+  border-left-color: var(--hm-green);
+  color: var(--kfh-ink);
+  font-weight: 750;
+}
+
+/* ── Chapters: flat, hairline-ruled, oversized titles ── */
+.harmony-case-active .hm-case .chapter {
+  margin: 0;
+  padding: 24px 0 clamp(100px, 11vw, 148px);
+  border-top: 1px solid var(--kfh-line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--kfh-ink);
+  scroll-margin-top: 104px;
+}
+.harmony-case-active .hm-case .chapter-num {
+  color: var(--hm-green);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.harmony-case-active .hm-case .chapter h2 {
+  max-width: 800px;
+  margin: 14px 0 28px;
+  color: var(--kfh-ink);
+  font-size: clamp(48px, 5.8vw, 76px);
+  line-height: .98;
+  letter-spacing: -.065em;
+}
+.harmony-case-active .hm-case .chapter h3 {
+  max-width: 740px;
+  margin: 50px 0 14px;
+  color: var(--kfh-ink);
+  font-size: clamp(22px, 2.2vw, 28px);
+  line-height: 1.18;
+  letter-spacing: -.025em;
+}
+.harmony-case-active .hm-case .chapter p,
+.harmony-case-active .hm-case .chapter li {
+  max-width: 68ch;
+  color: var(--kfh-muted);
+  font-size: 17px;
+  line-height: 1.75;
+}
+.harmony-case-active .hm-case .long-study .chapter p.hm-lead {
+  max-width: 62ch;
+  color: var(--kfh-muted);
+  font-size: clamp(19px, 2vw, 23px);
+  line-height: 1.58;
+}
+
+/* ── Cards flattened to border-top exhibits ── */
+.harmony-case-active .hm-case .finding {
+  padding: 22px 0 0;
+  border: 0;
+  border-top: 1px solid var(--kfh-ink);
+  border-radius: 0;
+  background: transparent;
+}
+.harmony-case-active .hm-case .finding.accent {
+  border-left: 0;
+  border-top: 2px solid var(--hm-green);
+  background: transparent;
+}
+.harmony-case-active .hm-case .long-study .chapter .finding.accent p { color: var(--kfh-ink); }
+
+.harmony-case-active .hm-rail-node,
+.harmony-case-active .hm-phase,
+.harmony-case-active .hm-doc,
+.harmony-case-active .hm-micro-item {
+  border: 0;
+  border-top: 1px solid var(--kfh-line);
+  border-radius: 0;
+  background: transparent;
+  padding-inline: 0;
+}
+.harmony-case-active .hm-rail-node:hover,
+.harmony-case-active .hm-rail-node:focus-visible {
+  transform: none;
+  border-top-color: var(--hm-green);
+  box-shadow: none;
+}
+.harmony-case-active .hm-phase { border-top: 2px solid var(--hm-green); }
+.harmony-case-active .hm-micro-stage { border-radius: 0; background: var(--kfh-soft); }
+
+.harmony-case-active .hm-sev,
+.harmony-case-active .hm-states,
+.harmony-case-active .hm-drift,
+.harmony-case-active .hm-mx-scroll,
+.harmony-case-active .hm-case .hm-board-cell,
+.harmony-case-active .hm-c-dialog {
+  border: 1px solid var(--kfh-line);
+  border-radius: 0;
+  background: var(--kfh-paper);
+}
+.harmony-case-active .hm-case .hm-board-stage { border-radius: 0; background: var(--kfh-soft); }
+.harmony-case-active .hm-sev-track { background: var(--kfh-soft); }
+
+.harmony-case-active .hm-token {
+  border: 1px solid var(--kfh-line);
+  border-radius: 0;
+  background: var(--kfh-paper);
+}
+.harmony-case-active .hm-token:hover {
+  transform: none;
+  border-color: var(--hm-green);
+  box-shadow: none;
+}
+.harmony-case-active .hm-token.is-copied::after { background: var(--hm-green); color: #fff; }
+
+.harmony-case-active .hm-fig .hm-shot,
+.harmony-case-active .hm-mood-tile .hm-shot {
+  border-radius: 0;
+  border-color: var(--kfh-line);
+  background: var(--kfh-soft);
+}
+.harmony-case-active .hm-fig .hm-shot:hover,
+.harmony-case-active .hm-mood-tile .hm-shot:hover { transform: none; box-shadow: none; }
+
+.harmony-case-active .pill.hm-pill {
+  border: 1px solid var(--kfh-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--kfh-muted);
+}
+.harmony-case-active .hm-pill:hover { box-shadow: inset 0 -2px 0 var(--hm-green); }
+
+/* ── Rules / type scale ── */
+.harmony-case-active .hm-rules li span { color: var(--hm-green); }
+.harmony-case-active .hm-rail-num { color: var(--hm-green); }
+.harmony-case-active .hm-rail-dot { border-color: var(--hm-green); }
+.harmony-case-active .hm-rail-node:hover .hm-rail-dot { background: var(--hm-green); }
+
+/* ── States switcher on deep green ── */
+.harmony-case-active .hm-state-tab.is-active { background: var(--hm-green); color: #fff; }
+.harmony-case-active .hm-state-tab:focus-visible,
+.harmony-case-active .hm-token:focus-visible,
+.harmony-case-active .hm-roll-tab:focus-visible,
+.harmony-case-active .hm-fig .hm-shot:focus-visible,
+.harmony-case-active .hm-mood-tile .hm-shot:focus-visible {
+  outline: 3px solid var(--hm-green);
+  outline-offset: 3px;
+}
+.harmony-case-active .hm-state-demo[data-state=focus] .hm-demo-btn { box-shadow: 0 0 0 3px rgba(30, 128, 85, .45); }
+.harmony-case-active .hm-state-demo[data-state=focus] .hm-demo-field input { border-color: var(--hm-green); box-shadow: 0 0 0 3px rgba(30, 128, 85, .25); }
+.harmony-case-active .hm-demo-btn { border-radius: 8px; }
+.harmony-case-active .hm-demo-field input { border-radius: 8px; }
+.harmony-case-active .hm-micro-btn-ghost:focus-visible,
+.harmony-case-active .hm-micro-item[data-micro=focus]:hover .hm-micro-btn-ghost { box-shadow: 0 0 0 3px rgba(30, 128, 85, .4); }
+.harmony-case-active .hm-micro-confirm i { border-color: var(--hm-green); }
+.harmony-case-active .hm-micro-item[data-micro=confirm]:hover .hm-micro-confirm i { background: var(--hm-green); }
+
+/* ── Rollout matrix ── */
+.harmony-case-active .hm-roll-tab { border-radius: 0; background: var(--kfh-paper); }
+.harmony-case-active .hm-roll-tab:hover { transform: none; border-color: var(--hm-green); box-shadow: none; }
+.harmony-case-active .hm-roll-tab.is-active { border-color: var(--hm-green); background: var(--hm-green-soft); }
+.harmony-case-active .hm-roll-tab.is-active span { color: var(--hm-green-dark); }
+.harmony-case-active .hm-mx td.is-on i { background: var(--hm-green); box-shadow: 0 0 0 4px rgba(30, 128, 85, .16); }
+.harmony-case-active .hm-mx td.is-cross,
+.harmony-case-active .hm-mx th.is-cross { background: var(--hm-green-soft); }
+.harmony-case-active .hm-mx tr.is-cross th[scope=row],
+.harmony-case-active .hm-mx th.is-cross span,
+.harmony-case-active .hm-mx-bandhead b { color: var(--hm-green-dark); }
+.harmony-case-active .hm-mx-ship td,
+.harmony-case-active .hm-mx-ship th { background: rgba(30, 128, 85, .05); }
+.harmony-case-active .hm-mx-key.is-on i { background: var(--hm-green); }
+
+/* ── Dark emphasis surfaces on editorial ink ── */
+.harmony-case-active .hm-case .hm-quote,
+.harmony-case-active .hm-case .hm-validation {
+  border-radius: 0;
+  background: var(--kfh-ink);
+}
+.harmony-case-active .hm-validation-list li::before { background: var(--hm-green); }
+.harmony-case-active .hm-progress i { background: var(--hm-green); }
+.harmony-case-active .hm-sev .hm-sev-bar[style*="#77e89c"] { background: var(--hm-green); }
+
+/* ── Metrics: border-top ledger, like Eyewa stats ── */
+.harmony-case-active .hm-case .hm-metrics {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  gap: 22px;
+  overflow: visible;
+}
+.harmony-case-active .hm-case .hm-metric {
+  padding: 20px 0 0;
+  border: 0 !important;
+  border-top: 1px solid var(--kfh-ink) !important;
+}
+.harmony-case-active .hm-case .hm-metric::before { display: none; }
+.harmony-case-active .hm-case .hm-metric strong { color: var(--kfh-ink); }
+.harmony-case-active .hm-case .hm-metric:hover strong { color: var(--hm-green-dark); }
+
+/* ── Close ── */
+.harmony-case-active .hm-case .case-end.hm-end {
+  border-radius: 0;
+  background: var(--kfh-ink);
+}
+.harmony-case-active .hm-case .hm-end-statement em { color: #6fdca6; }
+.harmony-case-active .hm-case .hm-end-cta:hover { background: #6fdca6; border-color: #6fdca6; color: var(--kfh-ink); }
+
+@media (max-width: 900px) {
+  .harmony-case-active .hm-case .hm-metric:nth-child(even) { border-left: 0 !important; }
+}

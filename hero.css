@@ -1,0 +1,614 @@
+/* ===========================================================
+   Hero — layout, rotating promise, pill states, entrance motion.
+   Loaded last; supersedes the earlier inline hero patch.
+   Motion language: 620ms / cubic-bezier(.22,1,.36,1), staggered.
+   =========================================================== */
+
+body.home-active {
+  background: #f3f0ea;
+  /* ONE page grid. Every card edge and every content edge on the page is
+     derived from these three values, so the vertical lines never drift.
+       card edge    = (100% - content)/2 - bleed
+       content edge = card edge + inset
+     inset floors at 28px so narrow screens keep breathing room. */
+  --page-gutter: clamp(24px, 5.6vw, 96px);
+  --page-card: min(calc(100% - var(--page-gutter)), 1600px);
+  --page-bleed: clamp(12px, calc(50vw - var(--page-gutter) / 2 - 720px), 80px);
+  --page-content: calc(var(--page-card) - 2 * var(--page-bleed));
+  --page-inset: max(var(--page-bleed), 28px);
+  --page-card-x: calc((100% - var(--page-card)) / 2);
+}
+
+/* Sections below the hero: pad in to the shared content edge. */
+body.home-active .home-work,
+body.home-active .home-timeline {
+  --work-card-bleed: var(--page-bleed);
+  width: var(--page-content);
+  margin-inline: auto;
+  padding-inline: max(0px, calc(var(--page-inset) - var(--page-bleed)));
+}
+
+/* The contact panel is a card, so its edges match the hero's card edges. */
+body.home-active .site-header {
+  margin-top: calc(var(--page-gutter) / 2);
+}
+
+body.home-active .site-footer {
+  padding-inline: var(--page-card-x);
+}
+
+body.home-active .home-hero .home-inline-cta,
+body.home-active .home-hero .home-talk-pill,
+body.home-active .home-hero .home-resume-link {
+  translate: none;
+  will-change: auto;
+}
+
+body.home-active .home-hero {
+  --hero-ease: cubic-bezier(.22, 1, .36, 1);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  width: var(--page-card);
+  min-height: calc(100svh - var(--page-gutter));
+  justify-content: flex-start;
+  margin: -88px auto clamp(18px, 2vw, 32px);
+  padding-block: clamp(148px, 16vh, 214px) clamp(44px, 5.5vh, 76px);
+  padding-inline: var(--page-inset);
+  overflow: hidden;
+  border: 1px solid rgba(255, 122, 109, 0.26);
+  border-radius: 38px;
+  color: #f8f6f2;
+  background:
+    radial-gradient(ellipse 50% 72% at 94% 14%, rgba(109, 43, 36, 0.42), transparent 72%),
+    radial-gradient(ellipse 42% 64% at 4% 18%, rgba(4, 37, 31, 0.34), transparent 70%),
+    linear-gradient(115deg, #060a08 0%, #070706 48%, #180d0a 100%);
+  box-shadow: 0 28px 64px rgba(31, 24, 16, 0.14);
+}
+
+/* Cursor-reactive glow: a wide, soft pool that eases toward the pointer.
+   The interpolation lives in app.js (--hero-pointer-x/y). */
+body.home-active .home-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: block;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(circle 46vmax at var(--hero-pointer-x, 50%) var(--hero-pointer-y, 46%),
+      rgba(255, 108, 88, 0.20) 0%,
+      rgba(244, 94, 75, 0.11) 26%,
+      rgba(244, 94, 75, 0.035) 52%,
+      transparent 74%),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.03), transparent 38%, rgba(244, 94, 75, 0.05));
+  opacity: 0.72;
+  transition: opacity 0.6s ease;
+}
+
+body.home-active .home-hero.is-hero-pointer-active::before {
+  opacity: 1;
+}
+
+/* ---------- Meta row ---------- */
+
+body.home-active .home-hero-meta {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  margin-block: 0 clamp(40px, 6vh, 84px);
+  color: rgba(248, 246, 242, 0.66);
+  font-size: clamp(0.75rem, 0.76vw, 0.92rem);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  margin-bottom: clamp(36px, 5vh, 56px);
+}
+
+/* ---------- Body column: headline centred, note pinned low ---------- */
+
+body.home-active .home-hero-content {
+  max-width: none;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: 0;
+}
+
+body.home-active #home-hero-title {
+  max-width: 26ch;
+  margin: 0;
+  color: #f8f6f2;
+  font-size: clamp(3.4rem, 4.6vw, 5.9rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.12;
+  text-align: left;
+  text-wrap: pretty;
+}
+
+body.home-active #home-hero-title em {
+  font-style: normal;
+  font-weight: inherit;
+}
+
+/* ---------- Inline pills ---------- */
+
+body.home-active #home-hero-title .home-status,
+body.home-active #home-hero-title .home-inline-cta,
+body.home-active #home-hero-title .home-talk-pill {
+  transform: translateY(0);
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+  min-width: 0;
+  min-height: 0;
+  margin-inline: 0.1em;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: clamp(0.88rem, 0.9vw, 1.18rem);
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1;
+  text-decoration: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  transition:
+    transform 0.26s cubic-bezier(.33, 1, .68, 1),
+    background-color 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.26s cubic-bezier(.33, 1, .68, 1),
+    color 0.22s ease;
+}
+
+body.home-active #home-hero-title .home-status {
+  gap: 0.6em;
+  padding: 0.84em 1.36em;
+  color: #151816;
+  background: #f7f4ef;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+body.home-active #home-hero-title .home-status i {
+  width: 0.62em;
+  height: 0.62em;
+  border-radius: 999px;
+  background: #f45e4b;
+  box-shadow: 0 0 0 0 rgba(244, 94, 75, 0.5);
+  animation: hero-status-pulse 2.6s ease-out infinite;
+}
+
+body.home-active #home-hero-title .home-inline-cta {
+  gap: 0.68em;
+  padding: 0.8em 1.28em;
+  color: #f8f6f2;
+  background: rgba(8, 11, 9, 0.72);
+  border: 1px solid rgba(248, 246, 242, 0.32);
+  backdrop-filter: blur(14px);
+}
+
+body.home-active #home-hero-title .home-inline-cta .home-eye {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9em;
+  height: 1.9em;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 246, 242, 0.36);
+  transition: border-color 0.22s ease, background-color 0.22s ease;
+}
+
+body.home-active #home-hero-title .home-inline-cta .home-eye::after {
+  content: "";
+  width: 0.42em;
+  height: 0.42em;
+  border-radius: 999px;
+  background: #f8f6f2;
+  transform: translate(var(--eye-x, 0px), var(--eye-y, 0px));
+}
+
+body.home-active #home-hero-title .home-talk-pill {
+  gap: 0.6em;
+  padding: 0.78em 0.82em 0.78em 1.3em;
+  color: #111411;
+  background: #f7f4ef;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+body.home-active #home-hero-title .home-talk-pill .home-talk-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9em;
+  height: 1.9em;
+  border-radius: 999px;
+  font-style: normal;
+  font-size: 0.82em;
+  color: #111411;
+  background: rgba(17, 20, 17, 0.08);
+  transition: transform 0.26s cubic-bezier(.33, 1, .68, 1), background-color 0.22s ease, color 0.22s ease;
+}
+
+/* WCAG 2.5.5 / HIG: nothing interactive drops below a 44px target. */
+body.home-active #home-hero-title .home-status,
+body.home-active #home-hero-title .home-inline-cta,
+body.home-active #home-hero-title .home-talk-pill,
+body.home-active .home-resume-link,
+body.home-active .site-header .brand,
+body.home-active .site-header nav a {
+  min-height: 44px;
+}
+
+body.home-active .site-header nav a {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Hover: restrained lift, no size jump in the text line */
+body.home-active #home-hero-title .home-status:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(6, 8, 7, 0.34);
+}
+
+body.home-active #home-hero-title .home-inline-cta:hover {
+  transform: translateY(-2px);
+  background: rgba(16, 21, 18, 0.9);
+  border-color: rgba(255, 137, 116, 0.6);
+  box-shadow: 0 10px 30px rgba(244, 94, 75, 0.18);
+}
+
+body.home-active #home-hero-title .home-inline-cta:hover .home-eye {
+  transform: none;
+  border-color: rgba(255, 137, 116, 0.85);
+  background: rgba(244, 94, 75, 0.16);
+}
+
+/* the pupil's only motion is the cursor tracking in hero.js */
+body.home-active #home-hero-title .home-inline-cta:hover .home-eye::after {
+  transform: translate(var(--eye-x, 0px), var(--eye-y, 0px));
+}
+
+/* Primary action: hover fills with the accent and inverts the badge. */
+body.home-active #home-hero-title .home-talk-pill:hover {
+  transform: translateY(-2px);
+  color: #fff6f3;
+  background: #f0503c;
+  border-color: rgba(255, 190, 178, 0.55);
+  box-shadow: 0 12px 32px rgba(240, 80, 60, 0.34);
+}
+
+body.home-active #home-hero-title .home-talk-pill:hover .home-talk-icon {
+  transform: translate(0.18em, -0.18em);
+  color: #d8402d;
+  background: #fff6f3;
+}
+
+body.home-active #home-hero-title .home-status:active,
+body.home-active #home-hero-title .home-inline-cta:active,
+body.home-active #home-hero-title .home-talk-pill:active {
+  transform: translateY(0);
+}
+
+body.home-active .home-hero :focus-visible {
+  outline: 2px solid #ff8974;
+  outline-offset: 3px;
+}
+
+body.home-active #home-hero-title .home-status:focus-visible,
+body.home-active #home-hero-title .home-inline-cta:focus-visible,
+body.home-active #home-hero-title .home-talk-pill:focus-visible,
+body.home-active .home-resume-link:focus-visible {
+  border-radius: 999px;
+}
+
+@keyframes hero-status-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(244, 94, 75, 0.45); }
+  70% { box-shadow: 0 0 0 0.5em rgba(244, 94, 75, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(244, 94, 75, 0); }
+}
+
+/* ---------- Rotating promise ---------- */
+
+body.home-active #home-hero-title .home-rotating-phrase {
+  display: inline;
+  color: inherit;
+  white-space: normal;
+}
+
+body.home-active #home-hero-title .home-rotating-suffix {
+  display: inline;
+}
+
+body.home-active #home-hero-title .home-rotating-group {
+  display: inline;
+  color: #ff756b;
+  white-space: nowrap;
+}
+
+body.home-active #home-hero-title .home-rotating-comma {
+  color: #ff756b;
+}
+
+body.home-active #home-hero-title .home-rotating-word {
+  position: relative;
+  display: inline-block;
+  box-sizing: content-box;
+  height: 0.906em;             /* box bottom lands on the surrounding text's baseline */
+  padding-bottom: 0.07em;      /* a hair of slack so the baseline row isn't shaved */
+  margin-bottom: -0.07em;      /* ...without moving the baseline */
+  margin-right: -4px;          /* cancels the clip slack added in app.js */
+  overflow: hidden;
+  vertical-align: baseline;
+  color: #ff756b;
+  transition: width 0.18s cubic-bezier(.33, 1, .68, 1);
+}
+
+/* State (opacity/filter/transform) is set inline by app.js — see initHomeRotatingWords. */
+body.home-active #home-hero-title .home-rotating-word > span {
+  color: #ff756b;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  animation: none !important;
+}
+
+body.home-active #home-hero-title .home-rotating-suffix {
+  color: #f8f6f2;
+  font-weight: inherit;
+}
+
+/* ---------- Footer note ---------- */
+
+body.home-active .home-hero-note {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 40px;
+  margin-top: clamp(44px, 6.5vh, 92px);
+  padding-top: clamp(24px, 2.8vh, 38px);
+  border-top: 1px solid rgba(248, 246, 242, 0.2);
+}
+
+body.home-active .home-hero-note p {
+  max-width: 56ch;
+  margin: 0;
+  color: rgba(248, 246, 242, 0.68);
+  font-size: clamp(1rem, 1.05vw, 1.3rem);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+body.home-active .home-resume-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  color: #f8f6f2;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: color 0.22s ease, transform 0.26s cubic-bezier(.33, 1, .68, 1);
+}
+
+body.home-active .home-resume-link span {
+  transition: transform 0.42s var(--hero-ease);
+}
+
+body.home-active .home-resume-link:hover {
+  color: #ff9387;
+}
+
+body.home-active .home-resume-link:hover span {
+  transform: translate(0.2em, -0.2em);
+}
+
+/* ---------- Entrance sequence ---------- */
+
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hero-rise-soft {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hero-pill-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.94); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+body.home-active .site-header,
+body.home-active .home-hero:not(.is-hero-entered) .home-hero-meta,
+body.home-active .home-hero:not(.is-hero-entered) #home-hero-title,
+body.home-active .home-hero:not(.is-hero-entered) .home-hero-note {
+  animation: hero-rise 0.72s var(--hero-ease, cubic-bezier(.22, 1, .36, 1)) both;
+}
+
+body.home-active .site-header { animation-delay: 0.04s; animation-name: hero-rise-soft; }
+body.home-active .home-hero:not(.is-hero-entered) .home-hero-meta { animation-delay: 0.16s; animation-name: hero-rise-soft; }
+body.home-active .home-hero:not(.is-hero-entered) #home-hero-title { animation-delay: 0.26s; }
+body.home-active .home-hero:not(.is-hero-entered) .home-hero-note { animation-delay: 0.62s; animation-name: hero-rise-soft; }
+
+body.home-active .home-hero:not(.is-hero-entered) #home-hero-title .home-status,
+body.home-active .home-hero:not(.is-hero-entered) #home-hero-title .home-inline-cta,
+body.home-active .home-hero:not(.is-hero-entered) #home-hero-title .home-talk-pill {
+  animation: hero-pill-in 0.6s var(--hero-ease) both;
+}
+
+body.home-active .home-hero:not(.is-hero-entered) #home-hero-title .home-status { animation-delay: 0.44s; }
+body.home-active .home-hero:not(.is-hero-entered) #home-hero-title .home-inline-cta { animation-delay: 0.52s; }
+body.home-active .home-hero:not(.is-hero-entered) #home-hero-title .home-talk-pill { animation-delay: 0.6s; }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1180px) {
+  body.home-active #home-hero-title {
+    max-width: 24ch;
+    font-size: clamp(3rem, 5.4vw, 4.6rem);
+  }
+}
+
+@media (max-width: 999px) {
+  body.home-active .home-hero {
+    min-height: auto;
+    margin: -88px auto 18px;
+    padding-block: clamp(130px, 18vw, 168px) clamp(36px, 7vw, 60px);
+    border-radius: 34px;
+  }
+
+  body.home-active .home-hero-meta {
+    margin-bottom: clamp(36px, 8vw, 60px);
+    font-size: clamp(0.75rem, 1.8vw, 0.8rem);
+    letter-spacing: 0.12em;
+  }
+
+  body.home-active #home-hero-title {
+    max-width: none;
+    font-size: clamp(2.9rem, 7.6vw, 4.6rem);
+    line-height: 1.08;
+  }
+
+  body.home-active #home-hero-title .home-status,
+  body.home-active #home-hero-title .home-inline-cta,
+  body.home-active #home-hero-title .home-talk-pill {
+    font-size: clamp(0.82rem, 1.9vw, 0.95rem);
+    vertical-align: middle;
+  }
+
+  body.home-active .home-hero-note {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 20px;
+    margin-top: clamp(36px, 8vw, 60px);
+  }
+}
+
+@media (max-width: 620px) {
+  body.home-active .home-hero {
+    margin-top: -68px;
+    padding-block: clamp(112px, 28vw, 142px) 32px;
+    border-radius: 28px;
+  }
+
+  body.home-active .home-hero-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  body.home-active #home-hero-title {
+    font-size: clamp(2.3rem, 9.4vw, 3.4rem);
+    letter-spacing: -0.045em;
+    line-height: 1.12;
+  }
+
+  /* Pills get their own breathing room so they never collide with text */
+  /* Readable, tappable pills — they are two of the page's primary actions. */
+  body.home-active #home-hero-title .home-status,
+  body.home-active #home-hero-title .home-inline-cta,
+  body.home-active #home-hero-title .home-talk-pill {
+    margin-inline: 0.06em;
+    font-size: 0.85rem;
+    vertical-align: middle;
+  }
+
+  body.home-active #home-hero-title .home-inline-cta .home-eye,
+  body.home-active #home-hero-title .home-talk-pill .home-talk-icon {
+    width: 1.7em;
+    height: 1.7em;
+  }
+}
+
+/* Touch: no pointer glow to chase, so hold a fixed atmospheric pool */
+@media (hover: none), (pointer: coarse) {
+  body.home-active .home-hero::before {
+    background:
+      radial-gradient(ellipse 70% 60% at 86% 12%, rgba(255, 108, 88, 0.2), transparent 70%),
+      linear-gradient(115deg, rgba(255, 255, 255, 0.03), transparent 38%, rgba(244, 94, 75, 0.05));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home-active .site-header,
+  body.home-active .home-hero-meta,
+  body.home-active #home-hero-title,
+  body.home-active .home-hero-note,
+  body.home-active #home-hero-title .home-status,
+  body.home-active #home-hero-title .home-inline-cta,
+  body.home-active #home-hero-title .home-talk-pill,
+  body.home-active #home-hero-title .home-status i {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+
+  body.home-active #home-hero-title .home-rotating-word {
+    width: auto !important;
+    height: auto;
+    overflow: visible;
+    transition: none;
+  }
+
+  body.home-active #home-hero-title .home-rotating-word > span:not(:first-child) {
+    display: none !important;
+  }
+
+  body.home-active #home-hero-title .home-rotating-word > span:first-child {
+    position: static !important;
+    display: inline !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}
+
+/* ===========================================================
+   Audit fixes outside the hero: shared gutter on the contact
+   panel, and 44px targets in the footer.
+   =========================================================== */
+
+body.home-active .footer-contact-panel {
+  width: 100%;
+}
+
+body.home-active .footer-contact-copy a,
+body.home-active .footer-contact-copy strong {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+body.home-active .footer-copy-email {
+  width: 44px;
+  height: 44px;
+  flex-basis: 44px;
+}
+
+@media (max-width: 430px) {
+  body.home-active .site-header {
+  margin-top: calc(var(--page-gutter) / 2);
+}
+
+body.home-active .site-footer {
+    padding-inline: var(--page-card-x);
+  }
+}
+
+/* Lightbox: show the shot at its own resolution, never stretched past it. */
+.shot-lightbox-panel img {
+  width: auto;
+  /* Never scale a shot past its own pixels — upscaling is what read as "poor quality". */
+  max-width: min(92vw, 1800px, var(--shot-natural, 1800px));
+  max-height: 82vh;
+  height: auto;
+  object-fit: contain;
+  image-rendering: auto;
+}
