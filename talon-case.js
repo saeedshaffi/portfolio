@@ -1,6 +1,6 @@
 /* Talon.One design sprint case study, same editorial structure as the KFH Jazeel case study. */
 (function(){
-  const T='assets/talon/';
+  const T='assets/talon/hr/';
   const L=T+'logos/';
 
   const big=(f,caption,alt,noMatte)=>`<figure class="media-block"><figcaption>${caption}</figcaption><div class="tl-bigshot${noMatte?'':' tl-matte'}"><img loading="lazy" decoding="async" src="${T+f}" alt="${alt||caption}"></div></figure>`;

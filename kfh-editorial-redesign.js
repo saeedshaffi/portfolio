@@ -1,6 +1,6 @@
 (function(){
   const route='#/case/kfh-editorial';
-  const base='assets/kfh/';
+  const base='assets/kfh/hr/';
   const galleries={
     'Gathering requirements':['optimized/requirement-gathering-v2.svg'],
     'Product analysis':['optimized/product-analysis.jpg'],
@@ -13,7 +13,7 @@
     'High fidelity wireframes':['HiFi wireframes/Component 7.png'],
     'Version control':['optimized/version-control.jpg'],
     'Design system':['ds.png','DS Kapple.png'],
-    'Before the redesign':['Before/KFH Home Dashboard@3x 3.png','Before/image 90.png','Before/image 91.png','Before/image 92.png'],
+    'Before the redesign':['Before/image 90.png','Before/image 91.png'],
     'Improvements':['optimized/interface-improvements.jpg'],
     'Final interface':['optimized/final-ui.jpg'],
     'Heatmaps':['optimized/heatmap-validation.jpg'],

@@ -1,7 +1,7 @@
 /* Eyewa checkout case study, same editorial structure as the KFH case study. */
 (function(){
-  const A='assets/eyewa/';
-  const F='assets/eyewa/fig/';
+  const A='assets/eyewa/hr/';
+  const F='assets/eyewa/hr/fig/';
 
   const shot=(src,title,alt,cls)=>`<button type="button" class="shot ey-shot${cls?' '+cls:''}" data-shot-src="${src}" data-shot-title="${title}"><img src="${src}" alt="${alt}" loading="lazy" decoding="async"></button>`;
 
@@ -118,7 +118,7 @@
   <p><strong>Boosting customer retention through user experience in eCommerce checkout.</strong> Customers faced concerns and difficulties with Eyewa’s checkout, which led to a poor experience and high levels of complaints. I rebuilt the flow to be clearer and more trustworthy, and the churn and complaint numbers moved.</p>
   <span class="ey-hero-meta">User research &amp; UI design · Mobile · 9 min read</span>
   <div class="case-hero-visual" aria-label="Three screens from the redesigned checkout">
-    ${[['fig/prop-05.png','Sign in'],['fig/prop-03.png','Shipping details'],['fig/prop-01.png','Payment']].map(([f,t],i)=>`<span class="ey-hero-shot" style="--h:${i}">${shot('assets/eyewa/'+f,'Redesigned checkout · '+t,t+' screen from the redesigned checkout')}</span>`).join('')}
+    ${[['fig/prop-05.png','Sign in'],['fig/prop-03.png','Shipping details'],['fig/prop-01.png','Payment']].map(([f,t],i)=>`<span class="ey-hero-shot" style="--h:${i}">${shot(A+f,'Redesigned checkout · '+t,t+' screen from the redesigned checkout')}</span>`).join('')}
   </div>
 </section>
 

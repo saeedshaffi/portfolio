@@ -1,6 +1,6 @@
 /* Harmony: CreditBook design system case study. Same editorial shell as the KFH study. */
 (function(){
-  const IMG='assets/harmony/';
+  const IMG='assets/harmony/hr/';
 
   const fig=(file,alt,caption,ratio,cls)=>`<figure class="hm-fig${cls?' '+cls:''}" style="--ratio:${ratio||'16/10'}">
     <button type="button" class="shot hm-shot" data-shot-src="${IMG+file}" data-shot-title="${caption||alt}">
@@ -293,7 +293,7 @@ ${chapter(8,'The component library','Built once, correct everywhere',`
   <div class="hm-grid-3">
     ${fig('cb-style-01.png','Harmony Figma sheet: app bar variants, tabs and bottom navigation','App bar, tabs, bottom navigation.','1/1','hm-fig-sheet')}
     ${fig('cb-style-02.png','Harmony Figma sheet: further component specimens from the style library','From the style library.','1/1','hm-fig-sheet')}
-    ${fig('cb-style-03.png','Harmony Figma sheet: further component specimens from the style library','From the style library.','1/1','hm-fig-sheet')}
+    ${fig('cb-style-03-ai.png','Harmony Figma sheet: FAB and extended FAB component specimens from the style library','Floating action button and extended button components.','1/1','hm-fig-sheet')}
   </div>
   <p class="hm-note">The real Figma sheets the specimens above were rebuilt from.</p>
 

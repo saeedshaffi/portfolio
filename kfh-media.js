@@ -1,5 +1,5 @@
 (function () {
-  const base = 'assets/kfh/';
+  const base = 'assets/kfh/hr/';
 
   const localAssets = {
     hero: ['Device - Macbook Pro 3D.png'],
@@ -34,10 +34,8 @@
     version: ['optimized/version-control.jpg'],
     system: ['ds.png', 'DS Kapple.png'],
     before: [
-      'Before/KFH Home Dashboard@3x 3.png',
       'Before/image 90.png',
-      'Before/image 91.png',
-      'Before/image 92.png'
+      'Before/image 91.png'
     ],
     improvements: ['optimized/interface-improvements.jpg'],
     ui: ['optimized/final-ui.jpg'],
@@ -90,7 +88,7 @@
     hifi: ['High fidelity wireframes for the redesigned KFH Jazeel journey'],
     version: ['Version control workflow introduced for the KFH Jazeel design team'],
     system: ['KFH Jazeel design system structure', 'Kapple design system foundations and component architecture'],
-    before: Array.from({ length: 4 }, (_, index) => `Original KFH Jazeel interface, screen ${index + 1} of 4`),
+    before: Array.from({ length: 2 }, (_, index) => `Original KFH Jazeel interface, screen ${index + 1} of 2`),
     improvements: ['Annotated KFH Jazeel interface improvements'],
     ui: ['Final KFH Jazeel interface across key journeys'],
     heatmaps: ['Attention heatmap for the redesigned KFH Jazeel sign in experience'],

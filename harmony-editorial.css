@@ -322,5 +322,16 @@ body.harmony-case-active {
 .harmony-case-active .hm-case .hm-end-cta:hover { background: #6fdca6; border-color: #6fdca6; color: var(--kfh-ink); }
 
 @media (max-width: 900px) {
+  .harmony-case-active .long-study {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  .harmony-case-active .long-study > * {
+    min-width: 0;
+  }
+  .harmony-case-active .hm-stretch-item {
+    width: 100% !important;
+    min-width: 0;
+  }
   .harmony-case-active .hm-case .hm-metric:nth-child(even) { border-left: 0 !important; }
 }
