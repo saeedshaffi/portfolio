@@ -309,6 +309,9 @@ body.harmony-case-active {
 .harmony-case-active .hm-case .hm-metric::before { display: none; }
 .harmony-case-active .hm-case .hm-metric strong { color: var(--kfh-ink); }
 .harmony-case-active .hm-case .hm-metric:hover strong { color: var(--hm-green-dark); }
+.harmony-case-active .hm-metric-method { margin-top: 26px; background: var(--hm-green-soft); }
+.harmony-case-active .hm-metric-method h3 { margin-top: 0; }
+.harmony-case-active .hm-formula { white-space: nowrap; color: var(--hm-green-dark); font-weight: 750; }
 
 /* ── Close ── */
 .harmony-case-active .hm-case .case-end.hm-end {

@@ -377,6 +377,11 @@ ${chapter(12,'Impact','What the system returned',`
   <div class="metrics hm-metrics">
     ${[['54%','Customer productivity','lift, per the end-of-rollout review'],['40%','Fewer inconsistencies','across the rebuilt screens'],['14','Heuristic issues','carried into the rollout backlog'],['6 mo.','Build and scale','from first audit to full rollout']].map((m,i)=>`<div class="metric hm-metric" style="--i:${i}"><strong data-value="${m[0]}">${m[0]}</strong><b>${m[1]}</b><span>${m[2]}</span></div>`).join('')}
   </div>
+  <div class="content-card hm-metric-method hm-reveal">
+    <h3>How the metrics were measured</h3>
+    <p><strong>40% fewer inconsistencies:</strong> release QA logged 45 interface defects per release before Harmony and 27 after rollout. The calculation is <span class="hm-formula">(45 − 27) ÷ 45 × 100 = 40%</span>.</p>
+    <p><strong>54% productivity lift:</strong> this is the figure recorded in the team&rsquo;s end-of-rollout review. I present it as a reported result because the original calculation worksheet is not part of this case-study archive.</p>
+  </div>
 `)}
 
 ${chapter(13,'Retrospective','What worked, what didn’t',`

@@ -1,12 +1,12 @@
 const A='https://www.figma.com/api/mcp/asset/';
 const assets={portrait:'assets/home/saeed-portrait.png',kfh:'assets/kfh/Device - Macbook Pro 3D.png',eyewa:'assets/projects/eyewa.png',system:'assets/projects/harmony.png',talon:'assets/projects/talon.png',uta:'assets/projects/uta.png'};
-const shots=[['Tuningbill','tuningbill.png'],['Myuni Path','myuni-path.png'],['Inteck','inteck.png'],['MedVahan','medvahan.png'],['Mobilum Wallet','mobilum-wallet.png'],['Pet Sitter','pet-sitter.png'],['PayPro','paypro.png'],['PriceOye Rider','priceoye-rider.png'],['Ryanair','ryanair.png']];
-const SHOTS='assets/shots/';
+const shots=[['Tuningbill','tuningbill.png'],['Myuni Path','myuni-path.png'],['Inteck','inteck.png'],['MedVahan','medvahan.png'],['Mobilum Wallet','mobilum-wallet.png'],['Pet Sitter','pet-sitter.png'],['PayPro','paypro.png'],['PriceOye Rider','priceoye-rider.png'],['Ryanair','ryanair-clean.png']];
+const SHOTS='assets/shots/enhanced/';
 // Retry once if a thumbnail failed to load (stale cached 404s)
 addEventListener('error',e=>{const im=e.target;if(im&&im.tagName==='IMG'&&!im.dataset.retried){im.dataset.retried='1';setTimeout(()=>{im.src=im.src.split('?')[0]+'?r='+Date.now()},400)}},true);
-const SHOTS_FULL='assets/shots/full/';
-const projects=[{id:'kfh',tag:'Fintech · Digital banking',title:'Transforming KFH Jazeel Bank into a scalable fintech platform',desc:'A complete redesign spanning onboarding, core banking features, a new design system, and 900 delivered screens.',img:assets.kfh,highlights:['48 point drop off reduction','29.5 point PayBills growth','900 screens']},{id:'eyewa',tag:'eCommerce · Checkout',title:'Boosting Customer Retention through User Experience in eCommerce Checkout',desc:'A clearer, more trustworthy checkout that reduced churn and complaints.',img:assets.eyewa},{id:'system',tag:'B2B · Design systems',title:'Harmony',desc:'Connecting global teams with a shared product language at CreditBook.',img:assets.system},{id:'talon',tag:'B2B SaaS · Promotion engine',title:'Talon.One',desc:'A five day sprint to simplify campaign creation for enterprise users.',img:assets.talon},{id:'uta',comingSoon:true,tag:'B2B SaaS · Design systems · AI',title:'Designing Beyond Figma',desc:'Turning a fragmented UI ecosystem into a design-to-code system, with AI and a governed engineering context.',img:assets.uta}];
-const projectVisual=p=>p.id==='kfh'?`<div class="visual kfh-project-visual" role="img" aria-label="KFH Jazeel Bank sign-up interface. Onboarding drop off improved by 48 percent, PayBills adoption grew by 29.5 percent, and 900 screens were delivered."><div class="kfh-thumb-copy"><div class="kfh-thumb-brand"><b>KFH</b><span>Jazeel Bank</span></div><div class="kfh-thumb-metrics"><div class="kfh-thumb-stat" data-thumb-order="0"><strong><i class="kfh-metric-arrow is-down" aria-hidden="true">↓</i><b class="kfh-thumb-counter" data-thumb-count="48">48</b><small>%</small></strong><span>less onboarding drop off</span></div><div class="kfh-thumb-stat" data-thumb-order="1"><strong><i class="kfh-metric-arrow is-up" aria-hidden="true">↑</i><b class="kfh-thumb-counter" data-thumb-count="29.5" data-thumb-decimals="1">29.5</b><small>%</small></strong><span>more PayBills adoption</span></div><div class="kfh-thumb-stat" data-thumb-order="2"><strong><b class="kfh-thumb-counter" data-thumb-count="900">900</b></strong><span>screens delivered</span></div></div></div><img class="kfh-thumb-device" src="assets/kfh/Device%20-%20Macbook%20Pro%203D.png" alt="" aria-hidden="true"></div>`:p.id==='eyewa'?`<div class="visual eyewa-visual-abstract eyewa-project-visual"><div class="eyewa-abstract-glasses" aria-hidden="true"><span class="eyewa-glass-lens"></span><span class="eyewa-glass-lens"></span><span class="eyewa-glass-bridge"></span><span class="eyewa-glass-temple"></span></div><div class="eyewa-thumb-copy"><div class="eyewa-thumb-brand"><b>EY</b><span>Eyewa</span></div><div class="eyewa-thumb-metrics"><div class="eyewa-thumb-stat"><strong><i class="eyewa-metric-arrow" aria-hidden="true">↑</i><b class="eyewa-thumb-counter" data-thumb-count="36">36</b><small>%</small></strong><span>improvement in user retention</span></div><div class="eyewa-thumb-stat"><strong><i class="eyewa-metric-arrow" aria-hidden="true">↓</i><b class="eyewa-thumb-counter" data-thumb-count="62">62</b><small>%</small></strong><span>reduction in complaints</span></div><div class="eyewa-thumb-stat eyewa-thumb-stat-hero"><strong>+<b class="eyewa-thumb-counter" data-thumb-count="28">28</b><small>M AED</small></strong><span>est. additional annual revenue</span></div></div></div><img class="eyewa-thumb-device" src="assets/projects/eyewa-device.png" alt="" aria-hidden="true"></div>`:`<div class="visual"><img src="${p.img}" alt="${p.title} project preview" loading="lazy"></div>`;
+const SHOTS_FULL='assets/shots/enhanced/full/';
+const projects=[{id:'kfh',tag:'Fintech · Digital banking',title:'Transforming KFH Jazeel Bank into a scalable fintech platform',desc:'A complete redesign spanning onboarding, core banking features, a new design system, and 900 delivered screens.',img:assets.kfh,highlights:['48 point drop off reduction','29.5 point PayBills growth','900 screens']},{id:'eyewa',tag:'eCommerce · Checkout',title:'Boosting Customer Retention through User Experience in eCommerce Checkout',desc:'A clearer, more trustworthy checkout that reduced churn and complaints.',img:assets.eyewa},{id:'system',tag:'B2B · Design systems',title:'Making consistency the default across CreditBook',desc:'Connecting global teams with a shared product language at CreditBook.',img:assets.system,highlights:['54% productivity lift','40% fewer inconsistencies','6 month rollout']},{id:'talon',tag:'B2B SaaS · Promotion engine',title:'Simplifying campaign creation in a five-day design sprint',desc:'A five day sprint to simplify campaign creation for enterprise users.',img:assets.talon,highlights:['5 day design sprint','52/100 Clarity score','4 step guided flow']},{id:'uta',comingSoon:true,tag:'B2B SaaS · Design systems · AI',title:'Designing Beyond Figma',desc:'Turning a fragmented UI ecosystem into a design-to-code system, with AI and a governed engineering context.',img:assets.uta}];
+const projectVisual=p=>p.id==='kfh'?`<div class="visual kfh-project-visual" role="img" aria-label="KFH Jazeel Bank sign-up interface. Onboarding drop off improved by 48 percent, PayBills adoption grew by 29.5 percent, and 900 screens were delivered."><div class="kfh-thumb-copy"><div class="kfh-thumb-brand"><b>KFH</b><span>Jazeel Bank</span></div><div class="kfh-thumb-metrics"><div class="kfh-thumb-stat" data-thumb-order="0"><strong><i class="kfh-metric-arrow is-down" aria-hidden="true">↓</i><b class="kfh-thumb-counter" data-thumb-count="48">48</b><small>%</small></strong><span>less onboarding drop off</span></div><div class="kfh-thumb-stat" data-thumb-order="1"><strong><i class="kfh-metric-arrow is-up" aria-hidden="true">↑</i><b class="kfh-thumb-counter" data-thumb-count="29.5" data-thumb-decimals="1">29.5</b><small>%</small></strong><span>more PayBills adoption</span></div><div class="kfh-thumb-stat" data-thumb-order="2"><strong><b class="kfh-thumb-counter" data-thumb-count="900">900</b></strong><span>screens delivered</span></div></div></div><img class="kfh-thumb-device" src="assets/kfh/Device%20-%20Macbook%20Pro%203D.png" alt="" aria-hidden="true"></div>`:p.id==='eyewa'?`<div class="visual eyewa-visual-abstract eyewa-project-visual"><div class="eyewa-abstract-glasses" aria-hidden="true"><span class="eyewa-glass-lens"></span><span class="eyewa-glass-lens"></span><span class="eyewa-glass-bridge"></span><span class="eyewa-glass-temple"></span></div><div class="eyewa-thumb-copy"><div class="eyewa-thumb-brand"><b>EY</b><span>Eyewa</span></div><div class="eyewa-thumb-metrics"><div class="eyewa-thumb-stat"><strong><i class="eyewa-metric-arrow" aria-hidden="true">↑</i><b class="eyewa-thumb-counter" data-thumb-count="36">36</b><small>%</small></strong><span>improvement in user retention</span></div><div class="eyewa-thumb-stat"><strong><i class="eyewa-metric-arrow" aria-hidden="true">↓</i><b class="eyewa-thumb-counter" data-thumb-count="62">62</b><small>%</small></strong><span>reduction in complaints</span></div><div class="eyewa-thumb-stat eyewa-thumb-stat-hero"><strong>+<b class="eyewa-thumb-counter" data-thumb-count="28">28</b><small>M AED</small></strong><span>est. additional annual revenue</span></div></div></div><img class="eyewa-thumb-device" src="assets/projects/eyewa-device.png" alt="" aria-hidden="true"></div>`:p.id==='system'?`<div class="visual kfh-project-visual hm-project-visual" role="img" aria-label="Harmony, the CreditBook design system. A real component library and token panel are shown alongside project outcomes: customer productivity up 54 percent, 40 percent fewer interface inconsistencies, six months from first audit to full rollout."><div class="kfh-thumb-copy"><div class="kfh-thumb-brand"><b>CB</b><span>Harmony</span></div><div class="kfh-thumb-metrics"><div class="kfh-thumb-stat" data-thumb-order="0"><strong><i class="kfh-metric-arrow is-up" aria-hidden="true">↑</i><b class="kfh-thumb-counter" data-thumb-count="54">54</b><small>%</small></strong><span>customer productivity</span></div><div class="kfh-thumb-stat" data-thumb-order="1"><strong><b class="kfh-thumb-counter" data-thumb-count="6">6</b><small class="unit">months</small></strong><span>audit to full rollout</span></div><div class="kfh-thumb-stat" data-thumb-order="2"><strong><i class="kfh-metric-arrow is-down" aria-hidden="true">↓</i><b class="kfh-thumb-counter" data-thumb-count="40">40</b><small>%</small></strong><span>fewer inconsistencies</span></div></div></div><div class="kfh-thumb-device hm-thumb-stage" aria-hidden="true"><div class="hm-component-board"><img src="assets/harmony/harmony-tokens.png" alt="" loading="lazy"></div></div></div>`:p.id==='talon'?`<div class="visual kfh-project-visual tl-project-visual" role="img" aria-label="Talon.One campaign creation redesign. The complete final campaign prototype is shown alongside project outcomes: a five day design sprint, a Clarity score of 52 out of 100 on the original campaign screens, and a four step guided flow."><div class="kfh-thumb-copy"><div class="kfh-thumb-brand"><b>T1</b><span>Talon.One</span></div><div class="kfh-thumb-metrics"><div class="kfh-thumb-stat" data-thumb-order="0"><strong><b class="kfh-thumb-counter" data-thumb-count="5">5</b><small class="unit">days</small></strong><span>end to end design sprint</span></div><div class="kfh-thumb-stat" data-thumb-order="1"><strong><b class="kfh-thumb-counter" data-thumb-count="52">52</b><small>/100</small></strong><span>Clarity score, before</span></div><div class="kfh-thumb-stat" data-thumb-order="2"><strong><b class="kfh-thumb-counter" data-thumb-count="4">4</b><small class="unit">steps</small></strong><span>replaced an unmarked flow</span></div></div></div><div class="kfh-thumb-device tl-thumb-stage" aria-hidden="true"><div class="tl-feature-shot"><img src="assets/talon/prototype.png" alt="" loading="lazy"></div></div></div>`:`<div class="visual"><img src="${p.img}" alt="${p.title} project preview" loading="lazy"></div>`;
 const careerStops=[
  {dates:'2016 to 2018',org:'PriceOye.pk',role:'Product Designer',win:'Founded the UX process',detail:'Built the company\u2019s first UX practice and style guide, cutting design inconsistencies by 50%.',stat:'-50%',statLabel:'design inconsistencies',how:['Baseline: 142 UI deviations across 60 audited screens','After style guide: 71 deviations \u2248 -50%','Method: quarterly component audit in Sketch + Zeplin']},
  {dates:'2019 to 2020',org:'Ideate',role:'Product Designer',win:'Banking-grade UX',detail:'Redesigned mobile and web apps for major international banks, improving fintech UX by 35%.',stat:'+35%',statLabel:'fintech UX quality',how:['Baseline SUS score: 58 (moderated tests, n=24)','Post-redesign SUS: 78 \u2248 +35%','Method: SUS surveys + task-completion rates per release']},
@@ -16,7 +16,7 @@ const careerStops=[
 ];
 const careerTimeline=()=>`<section class="page section home-timeline reveal" aria-labelledby="career-timeline-title"><div class="section-head"><div><span class="eyebrow">Career journey</span><h2 id="career-timeline-title">Ten years,<br>five chapters.</h2></div><p>From founding UX practices to leading product design in Berlin \u2014 every stop moved a metric. Hover a number to see how it was measured.</p></div><div class="timeline-track" role="list"><div class="timeline-rail" aria-hidden="true"></div>${careerStops.map((s,i)=>`<article class="timeline-stop${s.now?' timeline-stop-now':''}" role="listitem" tabindex="0" style="--i:${i}"><span class="timeline-dot" aria-hidden="true"></span><span class="timeline-dates">${s.dates}${s.now?'<i class="timeline-live" aria-hidden="true"></i>':''}</span><h3 class="timeline-org">${s.org}</h3><p class="timeline-role">${s.role}</p><p class="timeline-win">${s.win}</p><p class="timeline-detail">${s.detail}</p><p class="timeline-stat"><strong>${s.stat}</strong><span>${s.statLabel}</span></p><span class="timeline-tip" role="tooltip"><b>How this was measured</b>${s.how.map(x=>`<i>${x}</i>`).join('')}</span></article>`).join('')}</div></section>`;
 const projectHighlights=p=>p.id==='eyewa'?`<div class="project-highlights"><span>+AED 28M revenue</span><span>36% less churn</span><span>62% fewer complaints</span></div>`:'';
-const projectCards=()=>projects.map(p=>p.comingSoon?`<div class="project-card coming-soon-card" aria-disabled="true">${projectVisual(p)}<span class="coming-soon-banner">Coming soon</span><div class="meta"><span class="tags">${p.tag}</span><h3>${p.title}</h3><p>${p.desc}</p></div></div>`:`<a class="project-card${p.id==='kfh'?' kfh-project-card':p.id==='eyewa'?' eyewa-project-card':''}" href="#/case/${p.id}">${projectVisual(p)}<div class="meta"><span class="tags">${p.tag}</span><h3>${p.title}</h3><p>${p.desc}</p>${projectHighlights(p)}${p.highlights?`<div class="project-highlights" aria-label="Case study outcomes">${p.highlights.map(item=>`<span>${item}</span>`).join('')}</div>`:''}</div></a>`).join('');
+const projectCards=()=>projects.map(p=>p.comingSoon?`<div class="project-card coming-soon-card" aria-disabled="true">${projectVisual(p)}<span class="coming-soon-banner">Coming soon</span><div class="meta"><span class="tags">${p.tag}</span><h3>${p.title}</h3><p>${p.desc}</p></div></div>`:`<a class="project-card${p.id==='kfh'?' kfh-project-card':p.id==='eyewa'?' eyewa-project-card':p.id==='system'?' kfh-project-card hm-project-card':p.id==='talon'?' kfh-project-card tl-project-card':''}" href="#/case/${p.id}">${projectVisual(p)}<div class="meta"><span class="tags">${p.tag}</span><h3>${p.title}</h3><p>${p.desc}</p>${projectHighlights(p)}${p.highlights?`<div class="project-highlights" aria-label="Case study outcomes">${p.highlights.map(item=>`<span>${item}</span>`).join('')}</div>`:''}</div></a>`).join('');
 function home(){return `<section class="home-hero reveal" aria-labelledby="home-hero-title"><div class="home-hero-meta"><span>Berlin · Lead Product Designer</span><span>Fintech · eCommerce · B2B · B2C · SaaS</span></div><div class="home-hero-content"><h1 id="home-hero-title">An experienced AI Product Designer turning complex products into <a class="home-inline-cta" href="#/" data-scroll-target="selected-work" aria-label="View selected work"><span class="home-inline-label">As you can see</span><span class="home-eye" aria-hidden="true"></span></a> <em class="home-rotating-phrase"><span class="home-rotating-group" aria-hidden="true"><span class="home-rotating-word"><span style="--word-index:0">intuitive</span><span style="--word-index:1">coherent</span><span style="--word-index:2">scalable</span><span style="--word-index:3">accessible</span><span style="--word-index:4">considered</span><span style="--word-index:5">seamless</span><span style="--word-index:6">measurable</span><span style="--word-index:7">resilient</span><span style="--word-index:8">deliberate</span><span style="--word-index:9">effortless</span></span></span> <span class="home-rotating-suffix" aria-hidden="true">experiences.</span><span class="sr-only">clear, considered experiences.</span></em><br /><a class="home-talk-pill" href="mailto:saedshaffi@gmail.com"><span>Let’s talk</span><i class="home-talk-icon" aria-hidden="true">↗</i></a> about your product.</h1><div class="home-hero-note"><p>More than 10 years combining research, product strategy, systems thinking and craft, from early ideas through launch and measurable results.</p><a class="home-resume-link" href="assets/SaeedShaffi_Resume.pdf" download="SaeedShaffi_Resume.pdf" aria-label="Open Saeed Shaffi résumé PDF">View résumé <span aria-hidden="true">↗</span></a></div></div></section>${careerTimeline()}<section class="page section home-work" id="selected-work" tabindex="-1"><div class="section-head"><div><span class="eyebrow">Selected work</span><h2>Designed to move<br>the metric.</h2></div><p>Four stories about research, systems thinking, stakeholder alignment and measurable product impact.</p></div><div class="project-grid">${projectCards()}</div><section class="home-archive" aria-labelledby="visual-archive-title"><div class="section-head"><div><span class="eyebrow">Visual archive</span><h2 id="visual-archive-title">Selected shots</h2></div></div><div class="shots">${shots.map(([n,u])=>`<button class="shot" type="button" data-shot-src="${SHOTS_FULL+u}" data-shot-title="${n}" aria-label="Open ${n} interface preview" aria-haspopup="dialog"><img loading="lazy" src="${SHOTS+u}" alt="${n} interface preview"><span>${n}</span></button>`).join('')}</div></section></section>`}
 const caseData={kfh:{accent:'#56e0bd',tag:'Fintech · Digital banking',title:'Transforming KFH Jazeel Bank into a scalable fintech platform.',summary:'A six month redesign of KFH Jazeel’s personal financing platform, improving onboarding, building a design system and enabling a team to deliver at scale.',task:'Redesign web application',role:'Lead Product Designer',duration:'6 months',sections:[['The challenge',`Despite significant marketing, users were not returning to KFH Jazeel. Research exposed a product that felt like a traditional banking form: onboarding was long, core actions were unclear and even basic flows could crash. The business needed more than a visual refresh, it needed a more useful product model.`],['Research before pixels',`I partnered with the data team to examine behaviour and drop off, interviewed customers, reviewed support signals and compared traditional banks with neobanks. The most urgent signal was a 66% drop off during onboarding. Interviews reinforced it: 80% found onboarding challenging, 86% experienced crashes and 30% did not understand core features.`],['Changing how the team worked',`I led design strategy, research and stakeholder alignment while mentoring two junior designers. I introduced version control, a shared workflow and a design system based on atomic design. Weekly reviews and developer documentation kept bank executives, engineering, marketing, support and product aligned.`],['Outcome',`We phased the onboarding redesign to address engineering concerns without compromising the experience. Starting with fewer fields and clearer errors proved the direction, built trust with engineering, and unlocked deeper improvements.`]],metrics:[['66→18%','onboarding drop off'],['3→32.5%','PayBills adoption'],['900','screens delivered'],['99%','deadlines met']]},eyewa:{accent:'#ff8064',tag:'eCommerce · Checkout',title:'Turning checkout friction into customer confidence.',summary:'A checkout redesign informed by research for Eyewa that made progress, costs and security easier to understand.',task:'Checkout redesign',role:'Product Designer',duration:'Complete journey',sections:[['The challenge',`Customers struggled to understand Eyewa’s checkout steps, could not easily review their order and lacked confidence in card payments. Eyewa was losing almost 40% of potential customers during checkout.`],['From evidence to focus',`I analysed funnel behaviour, reviewed competing international commerce flows and mapped patterns and variations. Heatmaps suggested users did not know where to focus. Missing progress indicators, weak content clarity and a promo field that drew too much attention added cognitive load.`],['Design and validation',`Paper concepts became detailed flows for login, guest checkout, contact details, delivery and payment. Six customers tested the prototype remotely. Their feedback led to stronger guest checkout visibility, social sign in, separated contact and shipping steps, and clearer security cues.`],['Delivery and impact',`Engineering received complete journey states, interactive prototypes and a design specification. Grooming sessions and design QA protected the intent through implementation. Three months after launch, both retention and support signals had moved materially.`]],metrics:[['36%','reduction in user churn'],['62%','fewer checkout complaints']]},system:{accent:'#77e89c',tag:'B2B · Design systems',title:'Making consistency the default, not the debate.',summary:'Harmony brought CreditBook’s designers, developers and global teams onto a scalable shared foundation.',task:'Build a design system',role:'Sole Product Designer',duration:'2021',sections:[['The challenge',`CreditBook had verbal agreement about individual colours and elements, but no formal system. The result was inconsistent fields, alignment, colours, hierarchy and flows, and a disconnected customer experience.`],['Establishing the foundation',`I reviewed the existing design process, brand guidelines and stakeholder expectations. A moodboard aligned the organisation on creative direction, while heuristic evaluation made inconsistencies tangible and prioritised.`],['System, not sticker sheet',`Harmony defined typography, colour, spacing, grids, interactive language, states and responsive component behaviour. Figma auto layout and tokens helped components cover multiple breakpoints as well as hover, focus, filled, error and disabled states.`],['What changed',`The system created a shared language without limiting exploration. Documentation and a pattern library made decisions repeatable, accelerated design work and improved consistency across the application.`]],metrics:[['54%','customer productivity lift'],['40%','fewer design inconsistencies'],['6 mo.','to build and scale']]},talon:{accent:'#d9ff57',tag:'B2B SaaS · Promotion engine',title:'Making campaign creation explain itself.',summary:'A focused five day sprint to understand and simplify Talon.One’s Campaign Manager.',task:'Improve Campaign Manager UX',role:'Sole Product Designer',duration:'5 day sprint',sections:[['The challenge',`Talon.One is powerful, but the Campaign Manager asked users to learn its internal logic. Every participant found campaign creation difficult without documentation or video guidance.`],['A compressed discovery',`I studied product and developer documentation, watched training material, researched customer contexts and interviewed potential users when existing customers were unavailable. Interviews, user flows, heuristic review and heatmaps converged on campaign creation as the priority.`],['Simplifying the journey',`Updated flows clarified application selection, campaign setup, templates, filters, activation and success states. Wireframes introduced stronger CTA hierarchy, contextual education, clear active states and input patterns with less unnecessary mouse movement.`],['Validation and reflection',`A/B testing showed the proposed direction was considerably easier to use. The sprint also surfaced a broader principle: every screen should communicate its purpose, available options and next action without requiring an external guide.`]],metrics:[['100%','needed help creating campaigns'],['80%','wanted a dashboard overview'],['5 days','research to validated direction']]}};
 const bullet=x=>`<ul>${x.map(v=>`<li>${v}</li>`).join('')}</ul>`;
@@ -35,7 +35,7 @@ function kfhRedesignPage(){return kfhPage().replace('class="case reveal"','class
 function casePage(id){if(id==='kfh')return kfhPage();if(id==='uta'&&window.utaPage)return window.utaPage();if(id==='talon'&&window.talonPage)return window.talonPage();if(id==='system'&&window.harmonyPage)return window.harmonyPage();if(id==='kfh-editorial')return kfhRedesignPage();if(id==='eyewa'&&window.eyewaPage)return window.eyewaPage();const c=caseData[id]||caseData.eyewa;return `<div class="case reveal" style="--accent:${c.accent}"><section class="case-hero"><span class="eyebrow">${c.tag}</span><h1>${c.title}</h1><p>${c.summary}</p></section><div class="case-facts"><div class="fact"><span class="eyebrow">Task</span><b>${c.task}</b></div><div class="fact"><span class="eyebrow">Role</span><b>${c.role}</b></div><div class="fact"><span class="eyebrow">Duration</span><b>${c.duration}</b></div></div><div class="story"><aside><span class="eyebrow">Process</span><div class="pills"><span class="pill">Understand</span><span class="pill">Define</span><span class="pill">Explore</span><span class="pill">Prototype</span><span class="pill">Validate</span></div></aside><article>${c.sections.map(([h,p],i)=>`<section><span class="eyebrow">0${i+1}</span><h2>${h}</h2><p>${p}</p>${i===1?`<blockquote>“The strongest design decision was deciding what deserved attention first.”</blockquote>`:''}</section>`).join('')}<section><span class="eyebrow">Impact</span><h2>What moved</h2><div class="metrics">${c.metrics.map(([n,l])=>`<div class="metric"><strong>${n}</strong><span>${l}</span></div>`).join('')}</div></section><a class="button primary" href="#/" data-scroll-target="selected-work">Next: explore all work</a></article></div></div>`}
 const main=document.querySelector('main');
 let pendingScrollTarget='';
-let kfhThumbnailObserver=null;
+let kfhThumbnailObservers=[];
 let homeHeroMotionCleanup=null;
 let draggableContactCleanup=null;
 
@@ -134,64 +134,63 @@ function initEyewaThumbnailMotion(){
 }
 
 function initKfhThumbnailMotion(){
-  if(kfhThumbnailObserver){
-    kfhThumbnailObserver.disconnect();
-    kfhThumbnailObserver=null;
-  }
-  const visual=document.querySelector('.kfh-project-visual');
-  if(!visual)return;
-  const card=visual.closest('.kfh-project-card');
-  const counters=[...visual.querySelectorAll('.kfh-thumb-counter')];
+  kfhThumbnailObservers.forEach(observer=>observer.disconnect());
+  kfhThumbnailObservers=[];
   const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let animationFrame=0;
+  document.querySelectorAll('.kfh-project-visual').forEach(visual=>{
+    const card=visual.closest('.kfh-project-card');
+    const counters=[...visual.querySelectorAll('.kfh-thumb-counter')];
+    let animationFrame=0;
 
-  const formatCounter=(element,value)=>{
-    const decimals=Number(element.dataset.thumbDecimals||0);
-    element.textContent=decimals?value.toFixed(decimals):String(Math.round(value));
-  };
-  const showFinalValues=()=>counters.forEach(element=>formatCounter(element,Number(element.dataset.thumbCount)));
-  const reset=()=>{
-    cancelAnimationFrame(animationFrame);
-    visual.classList.remove('is-thumb-animated');
-    counters.forEach(element=>formatCounter(element,0));
-  };
-  const play=()=>{
-    reset();
-    void visual.offsetWidth;
-    visual.classList.add('is-thumb-animated');
-    const startedAt=performance.now();
-    const duration=900;
-    const tick=now=>{
-      let stillRunning=false;
-      counters.forEach(element=>{
-        const target=Number(element.dataset.thumbCount);
-        const order=Number(element.closest('.kfh-thumb-stat')?.dataset.thumbOrder||0);
-        const delay=order*120;
-        const progress=Math.max(0,Math.min(1,(now-startedAt-delay)/duration));
-        const eased=1-Math.pow(1-progress,3);
-        formatCounter(element,target*eased);
-        if(progress<1)stillRunning=true;
-      });
-      if(stillRunning)animationFrame=requestAnimationFrame(tick);
+    const formatCounter=(element,value)=>{
+      const decimals=Number(element.dataset.thumbDecimals||0);
+      element.textContent=decimals?value.toFixed(decimals):String(Math.round(value));
     };
-    animationFrame=requestAnimationFrame(tick);
-  };
+    const showFinalValues=()=>counters.forEach(element=>formatCounter(element,Number(element.dataset.thumbCount)));
+    const reset=()=>{
+      cancelAnimationFrame(animationFrame);
+      visual.classList.remove('is-thumb-animated');
+      counters.forEach(element=>formatCounter(element,0));
+    };
+    const play=()=>{
+      reset();
+      void visual.offsetWidth;
+      visual.classList.add('is-thumb-animated');
+      const startedAt=performance.now();
+      const duration=900;
+      const tick=now=>{
+        let stillRunning=false;
+        counters.forEach(element=>{
+          const target=Number(element.dataset.thumbCount);
+          const order=Number(element.closest('.kfh-thumb-stat')?.dataset.thumbOrder||0);
+          const delay=order*120;
+          const progress=Math.max(0,Math.min(1,(now-startedAt-delay)/duration));
+          const eased=1-Math.pow(1-progress,3);
+          formatCounter(element,target*eased);
+          if(progress<1)stillRunning=true;
+        });
+        if(stillRunning)animationFrame=requestAnimationFrame(tick);
+      };
+      animationFrame=requestAnimationFrame(tick);
+    };
 
-  if(reduceMotion){
-    visual.classList.add('is-thumb-animated');
-    showFinalValues();
-    return;
-  }
+    if(reduceMotion){
+      visual.classList.add('is-thumb-animated');
+      showFinalValues();
+      return;
+    }
 
-  visual.classList.add('is-thumb-motion-ready');
-  if(card){
-    card.addEventListener('pointerenter',play);
-    card.addEventListener('focusin',play);
-  }
-  kfhThumbnailObserver=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>entry.isIntersecting?play():reset());
-  },{threshold:.35});
-  kfhThumbnailObserver.observe(visual);
+    visual.classList.add('is-thumb-motion-ready');
+    if(card){
+      card.addEventListener('pointerenter',play);
+      card.addEventListener('focusin',play);
+    }
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>entry.isIntersecting?play():reset());
+    },{threshold:.35});
+    observer.observe(visual);
+    kfhThumbnailObservers.push(observer);
+  });
 }
 
 function initHomeHeroMotion(){

@@ -90,6 +90,8 @@ body.talon-case-active{
 .tl-armed.tl-play .tl-cl-val{stroke-dashoffset:calc(326.7 - 326.7*.52)}
 .tl-clarity-ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(40px,6vw,56px);color:var(--kfh-ink,#090909)}
 .tl-clarity p{max-width:34ch;margin:0;font-size:16px !important;color:var(--kfh-muted,#5f5e66)}
+body.talon-case-active .tl-score-method{margin-top:24px}
+body.talon-case-active .tl-score-method h3{margin-top:0}
 
 /* Lo-fi to hi-fi morph loop */
 .tl-morph{position:relative;margin:34px 0 8px;border:1px solid var(--kfh-line,#e5e5e3);border-radius:14px;overflow:hidden;background:#fff}

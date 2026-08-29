@@ -339,14 +339,12 @@
   padding:clamp(68px,7vw,100px) clamp(18px,4vw,58px) clamp(22px,4vw,46px);
   overflow:auto;
   border:0;
-  background:rgba(5,7,6,.5);
+  background:var(--ink);
   color:#fff;
   cursor:zoom-out;
 }
 .shot-lightbox::backdrop{
-  background:rgba(5,7,6,.12);
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
+  background:var(--ink);
 }
 .shot-lightbox[open]{
   display:grid;
@@ -1121,6 +1119,6 @@ body.home-active footer#contact .ft3 .ft3-copy{
 .case-crumb a{color:var(--muted);text-decoration:none;transition:color .2s ease}
 .case-crumb a:hover{color:var(--ink);text-decoration:underline}
 .case-crumb b{font-weight:700;color:var(--ink)}
-.shot-lightbox-close{position:absolute;top:10px;right:10px;z-index:2;display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid rgba(23,25,20,.16);border-radius:50%;background:rgba(255,255,255,.92);color:var(--ink);cursor:pointer;transition:background .2s ease,transform .25s cubic-bezier(.22,1,.36,1)}
+.shot-lightbox-close{position:absolute;top:10px;right:10px;z-index:2;display:grid;place-items:center;width:38px;height:38px;padding:0;border:0;border-radius:50%;background:#fff;color:var(--ink);box-shadow:0 8px 24px rgba(0,0,0,.24);cursor:pointer;transition:transform .25s cubic-bezier(.22,1,.36,1)}
 .shot-lightbox-close:hover{background:#fff;transform:scale(1.08)}
 .shot-lightbox-panel{position:relative}

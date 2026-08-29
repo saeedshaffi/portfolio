@@ -1,0 +1,109 @@
+/* ============================================================================
+   project-thumbs.css
+   Harmony (CreditBook) and Talon.One home thumbnails.
+   Built on the same component as the KFH Jazeel thumbnail (.kfh-project-visual
+   + .kfh-thumb-*), so layout, glass tiles, glint, count-up and entrance motion
+   are shared. Only palette differs per case study, and the "device" slot holds
+   real, finalized screenshots from each case study (the same files used in
+   that case study's own hero), floated as tilted cards with a drop shadow —
+   not fabricated UI.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------- Harmony */
+.project-card .hm-project-visual,.project-card .tl-project-visual{container-type:inline-size}
+.project-card .hm-project-visual{
+  background:radial-gradient(circle at 82% 18%,rgba(255,255,255,.72),transparent 30%),
+             linear-gradient(135deg,#c3e7d4 0%,#eef8f2 48%,#b2dfc6 100%);
+}
+.project-card .hm-project-visual:before{border-color:rgba(30,128,85,.26)}
+.project-card .hm-project-visual:after{border-color:rgba(13,43,31,.13)}
+.hm-project-visual .kfh-thumb-copy{color:#123c2c}
+.hm-project-visual .kfh-thumb-brand b{background:linear-gradient(135deg,#0f4d33,#31a06b);box-shadow:0 7px 16px rgba(15,77,51,.22)}
+.hm-project-visual .kfh-thumb-brand span{color:#166342}
+.hm-project-visual .kfh-thumb-stat{
+  border-color:rgba(22,99,66,.18);
+  background:linear-gradient(145deg,rgba(255,255,255,.9),rgba(206,238,220,.6));
+  color:#3d6152;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 10px 24px rgba(9,64,42,.12);
+}
+.hm-project-visual .kfh-thumb-stat strong{color:#14563a}
+.hm-project-visual .kfh-metric-arrow{background:#166342;box-shadow:0 .28em .55em rgba(9,64,42,.2)}
+.hm-project-visual .kfh-thumb-device{
+  position:absolute;right:-2.5%;bottom:7%;width:59%!important;height:79%!important;
+  transform:rotate(1.2deg);z-index:2;
+}
+
+.kfh-thumb-stat strong small.unit{margin-left:.42em}
+
+/* One wide, real Harmony board keeps buttons, navigation, dialog patterns and
+   tokens visible together instead of reducing each component sheet to a tile. */
+.hm-thumb-stage{display:block}
+.hm-component-board{
+  width:100%;height:100%;overflow:hidden;border-radius:10px;background:#fff;
+  border:1px solid rgba(22,99,66,.16);
+  box-shadow:0 18px 32px rgba(9,58,38,.24);
+  transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s cubic-bezier(.22,1,.36,1);
+}
+.hm-component-board img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+.kfh-project-card:hover .hm-component-board{transform:translateY(-5px);box-shadow:0 23px 38px rgba(9,58,38,.27)}
+
+/* ------------------------------------------------------------- Talon.One */
+.project-card .tl-project-visual{
+  background:radial-gradient(circle at 82% 18%,rgba(255,255,255,.75),transparent 30%),
+             linear-gradient(135deg,#c8d7fb 0%,#eef2fe 48%,#bccffa 100%);
+}
+.project-card .tl-project-visual:before{border-color:rgba(47,98,233,.24)}
+.project-card .tl-project-visual:after{border-color:rgba(24,45,120,.12)}
+.tl-project-visual .kfh-thumb-copy{color:#1b2c5e}
+.tl-project-visual .kfh-thumb-brand b{background:linear-gradient(135deg,#1d3fae,#4f7bff);box-shadow:0 7px 16px rgba(29,63,174,.24)}
+.tl-project-visual .kfh-thumb-brand span{color:#2a56d4}
+.tl-project-visual .kfh-thumb-stat{
+  border-color:rgba(47,98,233,.18);
+  background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(214,226,253,.6));
+  color:#4a5a86;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 10px 24px rgba(20,45,120,.12);
+}
+.tl-project-visual .kfh-thumb-stat strong{color:#1d3fae}
+.tl-project-visual .kfh-metric-arrow{background:#2a56d4;box-shadow:0 .28em .55em rgba(20,45,120,.2)}
+.tl-project-visual .kfh-thumb-device{
+  position:absolute;right:-4%;bottom:9%;width:67%!important;height:auto!important;
+  aspect-ratio:2520/1600;transform:rotate(-1deg);z-index:1;
+}
+
+/* The complete final prototype is framed at its native wide ratio so every
+   edge of the screen remains visible at card size. */
+.tl-thumb-stage{display:block}
+.tl-feature-shot{
+  width:100%;height:100%;overflow:hidden;border-radius:10px;background:#fff;
+  border:1px solid rgba(24,45,120,.14);
+  box-shadow:0 18px 34px rgba(18,40,110,.25);
+  transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s cubic-bezier(.22,1,.36,1);
+}
+.tl-feature-shot img{content:url("assets/talon/prototype-framed.png");display:block;width:100%;height:100%;object-fit:contain;object-position:50% 50%}
+.kfh-project-card:hover .tl-feature-shot{transform:translateY(-5px);box-shadow:0 23px 40px rgba(18,40,110,.28)}
+
+/* --------------------------------------- trims, keyed to the card's own width */
+/* The home grid keeps two columns down to 641px, so a card can be ~335px wide while
+   the viewport is still "desktop". These trims key off the card, so the metric tiles
+   always fit the 1.9:1 visual. */
+@container (max-width:470px){
+  .project-card .hm-project-visual,.project-card .tl-project-visual{padding:14px;gap:5px}
+  .hm-project-visual .kfh-thumb-brand,.tl-project-visual .kfh-thumb-brand{margin-bottom:9px}
+  .hm-project-visual .kfh-thumb-brand b,.tl-project-visual .kfh-thumb-brand b{min-width:33px;height:19px;font-size:8.5px}
+  .hm-project-visual .kfh-thumb-brand span,.tl-project-visual .kfh-thumb-brand span{font-size:8.5px}
+  .hm-project-visual .kfh-thumb-metrics,.tl-project-visual .kfh-thumb-metrics{gap:5px}
+  .hm-project-visual .kfh-thumb-stat,.tl-project-visual .kfh-thumb-stat{min-height:0;padding:6px 7px;font-size:7.4px;border-radius:9px}
+  .hm-project-visual .kfh-thumb-stat strong,.tl-project-visual .kfh-thumb-stat strong{font-size:12.5px}
+  .hm-project-visual .kfh-thumb-stat>span,.tl-project-visual .kfh-thumb-stat>span{margin-top:3px}
+}
+@container (max-width:430px){
+  .hm-project-visual .kfh-thumb-device{right:-6%;bottom:8%;width:61%!important;height:75%!important}
+  .tl-project-visual .kfh-thumb-device{right:-6%;bottom:13%;width:61%!important;height:auto!important}
+}
+@container (max-width:330px){
+  .hm-project-visual .kfh-thumb-stat,.tl-project-visual .kfh-thumb-stat{padding:5px 6px;font-size:6.9px}
+  .hm-project-visual .kfh-thumb-stat strong,.tl-project-visual .kfh-thumb-stat strong{font-size:11.5px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hm-project-visual .kfh-thumb-device,.tl-project-visual .kfh-thumb-device{animation:none!important}
+}
