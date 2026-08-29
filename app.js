@@ -304,6 +304,15 @@ function initHomeRotatingWords(){
 
   const fit = (track, word) => {
     /* +4px slack for the last glyph's side bearing; cancelled by margin-right in hero.css. */
+    /* Tablet and mobile: lock the track to the longest word in the set, so the
+       headline wraps identically for every word and the hero never changes
+       height as the words rotate. Desktop (>999px) keeps the original
+       per-word fit and is untouched. */
+    if (window.matchMedia('(max-width: 999px)').matches) {
+      const widest = [...track.children].reduce((max, w) => Math.max(max, w.getBoundingClientRect().width), 0);
+      track.style.width = Math.ceil(widest) + 4 + 'px';
+      return;
+    }
     track.style.width = Math.ceil(word.getBoundingClientRect().width) + 4 + 'px';
   };
 

@@ -2752,9 +2752,8 @@ body.eyewa-case-active {
     overflow: visible;
     border: 1px solid var(--kfh-line) !important;
     border-radius: 14px;
-    background: rgba(255, 255, 255, .96);
+    background: #fff; /* opaque: chapter text must never bleed through the list */
     box-shadow: 0 12px 32px rgba(9, 9, 9, .08);
-    backdrop-filter: blur(16px);
   }
 
   .eyewa-case-active .study-toc > .eyebrow {

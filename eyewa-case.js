@@ -406,7 +406,41 @@ ${chapter(13,'Deliver and impact',`
     /* TOC scroll-spy, highlight the chapter the reader is in. */
     const tocLinks=[...document.querySelectorAll('.study-toc a[href^="#eyewa-"]')];
     const chapters=tocLinks.map(a=>document.getElementById(a.getAttribute('href').slice(1))).filter(Boolean);
+
+    /* Mobile TOC: on tablet/mobile the CSS (eyewa-editorial.css, max-width:900px)
+       collapses the chapter list behind a sticky trigger, but it needs the
+       .mobile-toc-trigger / .toc-links structure to exist. Without it the raw
+       link list rendered fully expanded on top of the content. Desktop markup
+       and behaviour are untouched: the trigger is display:none above 900px and
+       .toc-links stays a plain grid. */
+    const tocEl=root.querySelector('.study-toc');
+    if(tocEl&&!tocEl.querySelector('.mobile-toc-trigger')&&tocLinks.length){
+      const group=document.createElement('div');
+      group.className='toc-links';group.id='eyewa-chapter-links';
+      tocLinks.forEach(a=>group.appendChild(a));
+      const trigger=document.createElement('button');
+      trigger.className='mobile-toc-trigger';trigger.type='button';
+      trigger.setAttribute('aria-expanded','false');
+      trigger.setAttribute('aria-controls',group.id);
+      trigger.innerHTML=`<span><small>Chapter</small><b class="mobile-toc-current">${tocLinks[0].textContent.trim()}</b></span><i aria-hidden="true"></i>`;
+      trigger.addEventListener('click',()=>{const open=tocEl.classList.toggle('toc-open');trigger.setAttribute('aria-expanded',String(open));});
+      group.addEventListener('click',()=>{tocEl.classList.remove('toc-open');trigger.setAttribute('aria-expanded','false');});
+      tocEl.addEventListener('keydown',e=>{if(e.key!=='Escape')return;tocEl.classList.remove('toc-open');trigger.setAttribute('aria-expanded','false');trigger.focus();});
+      tocEl.append(trigger,group);
+    }
+
+    /* Chapter links scroll in place. Without this, the href hash (#eyewa-N)
+       lands in the router, which re-renders the app shell and dumps the
+       reader back on the home page. */
+    tocLinks.forEach(a=>a.addEventListener('click',event=>{
+      const section=document.getElementById(a.getAttribute('href').slice(1));
+      if(!section)return;
+      event.preventDefault();
+      section.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+    }));
+
     if(chapters.length){
+      const currentLabel=tocEl?tocEl.querySelector('.mobile-toc-current'):null;
       const spy=()=>{
         let cur=chapters[0];
         for(const c of chapters){if(c.getBoundingClientRect().top<=180)cur=c;}
@@ -415,6 +449,8 @@ ${chapter(13,'Deliver and impact',`
           a.classList.toggle('active',on);
           if(on)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');
         });
+        const active=tocLinks.find(a=>a.classList.contains('active'));
+        if(currentLabel&&active)currentLabel.textContent=active.textContent.trim();
       };
       window.addEventListener('scroll',spy,{passive:true});
       spy();
