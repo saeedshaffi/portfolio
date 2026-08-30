@@ -21,7 +21,8 @@ body.home-active {
 
 /* Sections below the hero: pad in to the shared content edge. */
 body.home-active .home-work,
-body.home-active .home-timeline {
+body.home-active .home-timeline,
+body.home-active .home-archive-section {
   --work-card-bleed: var(--page-bleed);
   width: var(--page-content);
   margin-inline: auto;

@@ -94,7 +94,9 @@ function initShotLightbox(){
   }));
 
   dialog.addEventListener('click',event=>{
-    if(event.target===dialog)close();
+    /* Anywhere on the overlay closes; only the image itself keeps it open
+       (the close button has its own handler). */
+    if(!event.target.closest('img,.shot-lightbox-close'))close();
   });
   dialog.querySelector('.shot-lightbox-close').addEventListener('click',close);
   dialog.addEventListener('close',()=>{
