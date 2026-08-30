@@ -341,7 +341,7 @@ body.eyewa-case-active{
   border:1px solid var(--ey-line);
   border-radius:14px;
   background:var(--ey-paper);
-  cursor:zoom-in;
+  cursor:default;
   overflow:hidden;
 }
 .eyewa-case .shot.ey-shot img{display:block;width:100%;height:auto;aspect-ratio:auto;object-fit:contain}
@@ -453,8 +453,9 @@ body.eyewa-case-active{
   animation:ey-rise .55s cubic-bezier(.22,.68,0,1) both;
   animation-delay:calc(var(--i,0) * 70ms);
 }
-.eyewa-case .shot.ey-shot{transition:transform .35s cubic-bezier(.22,.68,0,1),box-shadow .35s cubic-bezier(.22,.68,0,1)}
-.eyewa-case .shot.ey-shot:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(12,42,52,.14)}
+.eyewa-case .shot.ey-shot{transition:none}
+.eyewa-case .shot.ey-shot:hover{transform:none;box-shadow:0 10px 28px rgba(25,28,22,.04)}
+.eyewa-case .shot.ey-shot:hover img{transform:none;filter:none}
 .eyewa-case .ey-suggest-card{transition:transform .35s cubic-bezier(.22,.68,0,1),box-shadow .35s cubic-bezier(.22,.68,0,1)}
 .eyewa-case .ey-suggest-card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(12,42,52,.10)}
 .eyewa-case .ey-table tbody tr{transition:background-color .2s ease}
@@ -540,7 +541,7 @@ body.eyewa-case-active{
 .eyewa-case .ey-rail-dot{width:54px;height:54px;border:2px solid var(--ey-accent);font-size:13px;box-shadow:0 8px 20px rgba(207,63,48,.15)}
 .eyewa-case .ey-rail-track{top:27px;height:2px}
 .eyewa-case .ey-rail-circles .ey-rail-track{top:calc(clamp(58px,5.2vw,74px) / 2)}
-.eyewa-case .ey-rail.ey-play .ey-rail-dot{animation:ey-dot .55s cubic-bezier(.34,1.56,.64,1) both;animation-delay:calc(var(--n,0) * 150ms + 260ms)}
+.eyewa-case .ey-rail.ey-play .ey-rail-dot{animation:ey-dot .55s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--n,0) * 150ms + 260ms)}
 .eyewa-case .ey-rail b{font-size:clamp(14px,1.3vw,16px)}
 
 /* Funnel v2 — horizontal bars with a shared left axis */
@@ -912,4 +913,273 @@ body.eyewa-case-active{
 
 .eyewa-case-active .ey-gallery-pair {
   max-width: 560px;
+}
+
+/* Eyewa results: smoked-glass evidence panel with a clear measured/modelled split. */
+.eyewa-case-active .ey-ov-results {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, .12), transparent 36%),
+    rgba(21, 23, 27, .86);
+  color: #f7f5f2;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .18),
+    0 28px 70px -38px rgba(8, 10, 14, .82);
+  backdrop-filter: blur(26px) saturate(1.2);
+  -webkit-backdrop-filter: blur(26px) saturate(1.2);
+}
+
+.eyewa-case-active .ey-ov-results::before {
+  display: block;
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 1px;
+  border-radius: 15px;
+  background: linear-gradient(112deg, rgba(255, 255, 255, .06), transparent 28%, transparent 76%, rgba(255, 255, 255, .025));
+  pointer-events: none;
+}
+
+.eyewa-case-active .ey-ov-results-top {
+  padding-bottom: 18px;
+  border-bottom-color: rgba(255, 255, 255, .14);
+}
+
+.eyewa-case-active .ey-ov-results .ey-ov-step {
+  color: #f7f5f2;
+}
+
+.eyewa-case-active .ey-ov-results-top p {
+  color: #aeb2ba;
+}
+
+.eyewa-case-active .ey-ov-metrics {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 22px;
+}
+
+.eyewa-case-active .ey-ov-metric {
+  min-width: 0;
+  padding: 24px 0 8px;
+}
+
+.eyewa-case-active .ey-ov-metric + .ey-ov-metric {
+  padding-left: 22px;
+  border-left-color: rgba(255, 255, 255, .14);
+}
+
+.eyewa-case-active .ey-ov-metric b {
+  color: #e2b88f;
+  font-size: clamp(42px, 4.4vw, 64px);
+  letter-spacing: -.045em;
+}
+
+.eyewa-case-active .ey-ov-evidence-tag {
+  color: #b9bdc5;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.eyewa-case-active .ey-ov-metric-label {
+  color: #f8f7f4;
+}
+
+.eyewa-case-active .ey-ov-metric-note {
+  color: #bfc2c8;
+}
+
+.eyewa-case-active .ey-ov-metric.is-modeled {
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(190px, .42fr) minmax(0, 1fr);
+  align-self: stretch;
+  align-items: center;
+  gap: 18px 30px;
+  margin: 18px 0 0;
+  padding: 18px 22px;
+  border: 1px solid rgba(226, 184, 143, .28);
+  border-radius: 14px;
+  background: rgba(226, 184, 143, .1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+}
+
+.eyewa-case-active .ey-ov-metric.is-modeled .ey-ov-metric-copy {
+  max-width: none;
+  margin-top: 0;
+}
+
+.eyewa-case-active .ey-ov-metric.is-modeled b,
+.eyewa-case-active .ey-ov-metric.is-modeled .ey-ov-metric-label {
+  color: #f0dfcf;
+}
+
+.eyewa-case-active .ey-ov-metric.is-modeled .ey-ov-evidence-tag,
+.eyewa-case-active .ey-ov-metric.is-modeled .ey-ov-metric-note {
+  color: #c7b4a2;
+}
+
+.eyewa-case-active .ey-ov-results-foot {
+  max-width: none;
+  border-top-color: rgba(255, 255, 255, .14);
+  color: #aeb2ba;
+}
+
+/* Both checkout recommendations share one compact evidence block. */
+.eyewa-case .ey-suggest-card-merged {
+  grid-column: 1 / -1;
+  gap: 16px;
+  padding: clamp(18px, 2.2vw, 26px);
+  border-radius: 16px;
+}
+
+.eyewa-case .ey-suggest-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.eyewa-case .ey-suggest-item {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-width: 0;
+}
+
+.eyewa-case .ey-suggest-item p {
+  min-height: 2.8em;
+  font-weight: 650;
+}
+
+.eyewa-case .ey-suggest-card-merged .ey-detail-plate {
+  margin-top: 0;
+  min-height: 112px;
+  padding: 10px;
+  border: 1px solid var(--ey-line);
+  border-radius: 12px;
+}
+
+.eyewa-case .ey-suggest-card-merged .ey-detail-plate img {
+  width: 100%;
+  max-height: 170px;
+  object-fit: contain;
+}
+
+@media (min-width: 701px) and (max-width: 900px) {
+  .eyewa-case-active .ey-ov-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .eyewa-case-active .ey-ov-metric {
+    gap: 0;
+    padding: 22px 0 6px;
+  }
+
+  .eyewa-case-active .ey-ov-metric + .ey-ov-metric {
+    padding-left: 18px;
+    border-top: 0;
+    border-left: 1px solid rgba(255, 255, 255, .14);
+  }
+
+  .eyewa-case-active .ey-ov-metric + .ey-ov-metric.is-modeled {
+    margin-top: 16px;
+    padding: 16px 18px;
+    border-left: 1px solid rgba(226, 184, 143, .28);
+  }
+}
+
+@media (max-width: 700px) {
+  .eyewa-case-active .ey-ov-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .eyewa-case-active .ey-ov-metric + .ey-ov-metric {
+    padding-left: 0;
+    border-left: 0;
+    border-top-color: rgba(255, 255, 255, .14);
+  }
+
+  .eyewa-case-active .ey-ov-metric + .ey-ov-metric.is-modeled {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 16px;
+    border-top: 1px solid rgba(226, 184, 143, .28);
+    border-left: 1px solid rgba(226, 184, 143, .28);
+  }
+}
+
+/* The design process activates as one connected sequence. */
+@keyframes ey-process-line {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes ey-process-step {
+  from { opacity: .2; clip-path: inset(0 0 100% 0); transform: translateY(24px); }
+  to { opacity: 1; clip-path: inset(0); transform: translateY(0); }
+}
+
+@keyframes ey-process-node {
+  0% { background: var(--ey-paper); color: var(--ey-accent); transform: scale(.7); box-shadow: 0 0 0 rgba(143, 48, 43, 0); }
+  65% { background: var(--ey-accent); color: #fff; transform: scale(1.08); box-shadow: 0 12px 26px rgba(143, 48, 43, .28); }
+  100% { background: var(--ey-accent); color: #fff; transform: scale(1); box-shadow: 0 8px 18px rgba(143, 48, 43, .2); }
+}
+
+.eyewa-case #eyewa-1 .ey-rail.ey-play .ey-rail-track::after {
+  animation: ey-process-line 1.5s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.eyewa-case #eyewa-1 .ey-rail.ey-play li {
+  animation: ey-process-step .72s cubic-bezier(.16, 1, .3, 1) both;
+  animation-delay: calc(var(--n, 0) * 170ms + 180ms);
+}
+
+.eyewa-case #eyewa-1 .ey-rail.ey-play .ey-rail-dot {
+  animation: ey-process-node .66s cubic-bezier(.16, 1, .3, 1) both;
+  animation-delay: calc(var(--n, 0) * 170ms + 260ms);
+}
+
+/* Heat maps stay as compact evidence; the full-resolution view remains one click away. */
+.eyewa-case-active .ey-gallery-heat {
+  --cols: 3;
+  width: min(100%, 650px);
+  margin-inline: auto;
+  gap: 16px;
+}
+
+.eyewa-case-active .ey-gallery-heat .ey-heatwrap img {
+  max-height: 430px;
+  object-fit: contain;
+}
+
+@media (max-width: 700px) {
+  .eyewa-case-active .ey-gallery-heat {
+    --cols: 3;
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyewa-case #eyewa-1 .ey-rail.ey-play li,
+  .eyewa-case #eyewa-1 .ey-rail.ey-play .ey-rail-dot,
+  .eyewa-case #eyewa-1 .ey-rail.ey-play .ey-rail-track::after {
+    animation: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .eyewa-case .ey-suggest-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .eyewa-case .ey-suggest-item p {
+    min-height: 0;
+  }
 }

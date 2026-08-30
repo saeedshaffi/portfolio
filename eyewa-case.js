@@ -3,7 +3,7 @@
   const A='assets/eyewa/hr/';
   const F='assets/eyewa/hr/fig/';
 
-  const shot=(src,title,alt,cls)=>`<button type="button" class="shot ey-shot${cls?' '+cls:''}" data-shot-src="${src}" data-shot-title="${title}"><img src="${src}" alt="${alt}" loading="lazy" decoding="async"></button>`;
+  const shot=(src,title,alt,cls)=>`<span class="shot ey-shot ey-shot-static${cls?' '+cls:''}"><img src="${src}" alt="${alt}" loading="lazy" decoding="async"></span>`;
 
   const fig=(inner,caption,cls)=>`<figure class="ey-fig${cls?' '+cls:''}">${inner}${caption?`<figcaption>${caption}</figcaption>`:''}</figure>`;
 
@@ -155,23 +155,26 @@
       <p>Three months after rollout</p>
     </div>
     <div class="ey-ov-metrics">
-      <div class="ey-ov-metric">
+      <div class="ey-ov-metric is-measured">
         <b><span class="ey-count" data-to="36">36</span><i>%</i></b>
         <div class="ey-ov-metric-copy">
+          <span class="ey-ov-evidence-tag">Measured outcome</span>
           <span class="ey-ov-metric-label">less user churn</span>
           <span class="ey-ov-metric-note">Measured on the same funnel instrumentation used in the research.</span>
         </div>
       </div>
-      <div class="ey-ov-metric">
+      <div class="ey-ov-metric is-measured">
         <b><span class="ey-count" data-to="62">62</span><i>%</i></b>
         <div class="ey-ov-metric-copy">
+          <span class="ey-ov-evidence-tag">Measured outcome</span>
           <span class="ey-ov-metric-label">fewer checkout complaints</span>
           <span class="ey-ov-metric-note">Support tickets tagged to the checkout flow, same window.</span>
         </div>
       </div>
-      <div class="ey-ov-metric">
+      <div class="ey-ov-metric is-modeled">
         <b>+<span class="ey-count" data-to="28">28</span><i>M AED</i></b>
         <div class="ey-ov-metric-copy">
+          <span class="ey-ov-evidence-tag">Modeled estimate</span>
           <span class="ey-ov-metric-label">additional annual revenue</span>
           <span class="ey-ov-metric-note">Modeled estimate: online checkout sales rising from an estimated AED 175M to AED 203M/year (+16%), benchmarked against UAE eyewear e-commerce sizing, not confirmed internal financials.</span>
         </div>
@@ -274,7 +277,12 @@ ${chapter(8,'Reviewing the existing design',`
   ${gallery([['orig-cart.png','Cart'],['orig-contact.png','Contact information'],['orig-shipping.png','Shipping method'],['orig-payment.png','Payment'],['orig-payment-2.png','Payment · full page'],['orig-thankyou.png','Order confirmation'],['orig-account.png','Create account'],['orig-summary.png','Order summary']],4)}
   <h3>What are the suggestions to improve the existing flow?</h3>
   <div class="ey-suggest">
-    ${suggestions.map(([text,file,alt])=>`<article class="ey-suggest-card"><span class="eyebrow">Thing to add</span><p>${text}</p><div class="ey-detail-plate"><img src="${F}${file}" alt="${alt}" loading="lazy" decoding="async"></div></article>`).join('')}
+    <article class="ey-suggest-card ey-suggest-card-merged">
+      <span class="eyebrow">Things to add</span>
+      <div class="ey-suggest-grid">
+        ${suggestions.map(([text,file,alt])=>`<div class="ey-suggest-item"><p>${text}</p><div class="ey-detail-plate"><img src="${F}${file}" alt="${alt}" loading="lazy" decoding="async"></div></div>`).join('')}
+      </div>
+    </article>
   </div>
   <div class="ey-benchmark-grid">
     <div class="ey-stat"><strong>${odometer(19,'%')}</strong><span>of users abandon during the checkout process</span><cite>Baymard Institute</cite></div>
@@ -342,7 +350,7 @@ ${chapter(12,'Improvements',`
     <div class="content-card"><h3>Problem</h3><p>No social login; users avoid registration. Guest order option lacks visibility, causing confusion.</p></div>
     <div class="content-card"><h3>Solution</h3><p>Enabled social account login and enhanced visibility for the ‘Login as Guest’ option on the login screen.</p></div>
   </div>
-  ${fig(shot(F+'imp-login.png','Improvements: login','Login screen across old design, first iteration and final design'),'Old design, first iteration and final design, left to right.','ey-fig-plain')}
+  ${fig(shot(F+'imp-login-v2.png','Improvements: login','Login screen across old design, first iteration and final design'),'Old design, first iteration and final design, left to right.','ey-fig-plain')}
   <h3>Improvements: contact information and shipping details</h3>
   <div class="content-columns">
     <div class="content-card"><h3>Problem</h3><p>In the old design, users had to input first and last names separately. The initial version then required users to enter all information on a single overwhelming screen.</p></div>
@@ -361,7 +369,7 @@ ${chapter(12,'Improvements',`
     <div class="content-card"><h3>Solution</h3><p>Merged first and last name fields, separated ‘Contact Information’ and ‘Shipping Details’ for a more user-friendly experience.</p></div>
   </div>
   <div class="ey-gallery ey-gallery-iter ey-gallery-pair" style="--cols:2">
-    <div><figure class="ey-fig">${shot(F+'pay-old.png','Old design','Card fields, order summary and billing checkbox competing on one scroll, with the trust marks below the fold.')}<figcaption><b>Old design</b>Card fields, order summary and billing checkbox competing on one scroll, with the trust marks below the fold.</figcaption></figure></div>
+    <div><figure class="ey-fig">${shot(F+'orig-payment-2.png','Old design','Original payment screen showing the order summary, card fields, billing checkbox and trust mark in one long checkout step.')}<figcaption><b>Old design</b>Card fields, order summary and billing checkbox competing on one scroll, with the trust marks below the fold.</figcaption></figure></div>
     <div><figure class="ey-fig">${shot(F+'pay-final.png','Final design','Payment method chosen first, three card fields, and the SSL assurance sitting directly above the pay button.')}<figcaption><b>Final design</b>Payment method chosen first, three card fields, and the SSL assurance sitting directly above the pay button.</figcaption></figure></div>
   </div>
 `)}
