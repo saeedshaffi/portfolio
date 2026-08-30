@@ -20,7 +20,7 @@
           <p>Lead Product Designer combining product strategy, systems thinking and AI to make ambitious ideas clearer, more useful and ready to scale.</p>
           <div class="new-home-actions">
             <a href="#/" data-scroll-target="selected-work">Explore selected work <span aria-hidden="true">↓</span></a>
-            <a href="mailto:saedshaffi@gmail.com">Start a conversation <span aria-hidden="true">↗</span></a>
+            <a href="mailto:saeedshaffi@gmail.com">Start a conversation <span aria-hidden="true">↗</span></a>
           </div>
         </div>
         <div class="new-home-scroll" aria-hidden="true"><i></i><span>Scroll to explore</span></div>

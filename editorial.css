@@ -921,8 +921,8 @@ body.kfh-active {
 
 .kfh-active .finding-gauge-progress {
   stroke: #ff796b;
-  stroke-dasharray: 52 100;
-  stroke-dashoffset: 52;
+  stroke-dasharray: 66 100;
+  stroke-dashoffset: 66;
   stroke-linecap: round;
   transition: stroke-dashoffset 1.15s cubic-bezier(.2, .72, .2, 1) .12s;
 }
@@ -1050,7 +1050,7 @@ body.kfh-active {
 
 .kfh-active .finding-benchmark-track i {
   display: block;
-  width: 60%;
+  width: 86%;
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(90deg, #ff9a8e, #cf3f30);
@@ -1087,7 +1087,7 @@ body.kfh-active {
 
 .kfh-active .research-finding-story.finding-animate .finding-gauge-marker {
   opacity: 1;
-  transform: rotate(187.2deg);
+  transform: rotate(237.6deg);
 }
 
 .kfh-active .research-finding-story.finding-animate .finding-gauge::after {
@@ -1125,7 +1125,7 @@ body.kfh-active {
 }
 
 .kfh-active .research-finding-story.finding-reset .finding-gauge-progress {
-  stroke-dashoffset: 52;
+  stroke-dashoffset: 66;
   transition: none;
 }
 
@@ -3116,7 +3116,7 @@ body.kfh-active {
   }
 
   .kfh-active .finding-gauge-marker {
-    transform: rotate(187.2deg);
+    transform: rotate(237.6deg);
   }
 
   .kfh-active .finding-benchmark-track i {

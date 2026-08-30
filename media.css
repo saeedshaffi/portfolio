@@ -1294,3 +1294,7 @@
     animation: none;
   }
 }
+
+/* Case-study images are presentation, not controls: no zoom cursor, no hover lift. */
+.media-open.media-static{cursor:default}
+.media-open.media-static:hover{border-color:var(--line);box-shadow:none}

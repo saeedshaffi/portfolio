@@ -3,10 +3,10 @@
   const IMG='assets/harmony/hr/';
 
   const fig=(file,alt,caption,ratio,cls)=>`<figure class="hm-fig${cls?' '+cls:''}" style="--ratio:${ratio||'16/10'}">
-    <button type="button" class="shot hm-shot" data-shot-src="${IMG+file}" data-shot-title="${caption||alt}">
+    <span class="shot hm-shot">
       <img src="${IMG+file}" alt="${alt}" loading="lazy" decoding="async" onerror="this.closest('.hm-fig').classList.add('is-missing')">
       <span class="hm-missing" aria-hidden="true">${file}</span>
-    </button>
+    </span>
     ${caption?`<figcaption>${caption}</figcaption>`:''}
   </figure>`;
 
@@ -162,11 +162,11 @@ ${chapter(4,'Research','Two questions before any component',`
   </div>
   <p class="hm-reveal">Once stakeholders agreed on what CreditBook is, a moodboard fixed the design philosophy the organisation would adopt.</p>
   <div class="hm-mood">
-    <figure class="hm-mood-tile"><button type="button" class="shot hm-shot" data-shot-src="${IMG}mood-1.png" data-shot-title="Moodboard reference 1"><img src="${IMG}mood-1.png" alt="Moodboard reference 1 of 5: a mobile interface with soft dimensional shapes and generous spacing" loading="lazy" decoding="async"></button></figure>
-    <figure class="hm-mood-tile"><button type="button" class="shot hm-shot" data-shot-src="${IMG}mood-2.png" data-shot-title="Moodboard reference 2"><img src="${IMG}mood-2.png" alt="Moodboard reference 2 of 5: card-led mobile screens with strong photography" loading="lazy" decoding="async"></button></figure>
-    <figure class="hm-mood-tile"><button type="button" class="shot hm-shot" data-shot-src="${IMG}mood-3.png" data-shot-title="Moodboard reference 3"><img src="${IMG}mood-3.png" alt="Moodboard reference 3 of 5: a data-forward screen with clear numeric hierarchy" loading="lazy" decoding="async"></button></figure>
-    <figure class="hm-mood-tile"><button type="button" class="shot hm-shot" data-shot-src="${IMG}mood-4.png" data-shot-title="Moodboard reference 4"><img src="${IMG}mood-4.png" alt="Moodboard reference 4 of 5: calm single-task flows on flat colour" loading="lazy" decoding="async"></button></figure>
-    <figure class="hm-mood-tile"><button type="button" class="shot hm-shot" data-shot-src="${IMG}mood-5.png" data-shot-title="Moodboard reference 5"><img src="${IMG}mood-5.png" alt="Moodboard reference 5 of 5: dark-mode screens with a single accent" loading="lazy" decoding="async"></button></figure>
+    <figure class="hm-mood-tile"><span class="shot hm-shot"><img src="${IMG}mood-1.png" alt="Moodboard reference 1 of 5: a mobile interface with soft dimensional shapes and generous spacing" loading="lazy" decoding="async"></span></figure>
+    <figure class="hm-mood-tile"><span class="shot hm-shot"><img src="${IMG}mood-2.png" alt="Moodboard reference 2 of 5: card-led mobile screens with strong photography" loading="lazy" decoding="async"></span></figure>
+    <figure class="hm-mood-tile"><span class="shot hm-shot"><img src="${IMG}mood-3.png" alt="Moodboard reference 3 of 5: a data-forward screen with clear numeric hierarchy" loading="lazy" decoding="async"></span></figure>
+    <figure class="hm-mood-tile"><span class="shot hm-shot"><img src="${IMG}mood-4.png" alt="Moodboard reference 4 of 5: calm single-task flows on flat colour" loading="lazy" decoding="async"></span></figure>
+    <figure class="hm-mood-tile"><span class="shot hm-shot"><img src="${IMG}mood-5.png" alt="Moodboard reference 5 of 5: dark-mode screens with a single accent" loading="lazy" decoding="async"></span></figure>
   </div>
   <p class="hm-note">Five of the references the moodboard was built from. Clarity and calm over decoration.</p>
 `)}
@@ -451,6 +451,37 @@ ${chapter(14,'Not the end','This is not the end',`
     // Scroll spy
     const links=[...root.querySelectorAll('.hm-toc a')];
     const sections=links.map(a=>root.querySelector(a.getAttribute('href')));
+
+    /* Chapter links scroll in place. Without this, the href hash (#hm-N) lands
+       in the router, which re-renders the app shell and dumps the reader back
+       on the home page. */
+    links.forEach(a=>a.addEventListener('click',event=>{
+      const section=root.querySelector(a.getAttribute('href'));
+      if(!section)return;
+      event.preventDefault();
+      section.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+    }));
+
+    /* Mobile TOC: collapse the 14 chapters behind a sticky trigger, matching
+       the pattern KFH, Eyewa and Talon already use. Desktop is untouched
+       (the trigger is display:none above 900px). */
+    const tocEl=root.querySelector('.hm-toc');
+    if(tocEl&&!tocEl.querySelector('.mobile-toc-trigger')&&links.length){
+      const group=document.createElement('div');
+      group.className='toc-links';group.id='hm-chapter-links';
+      links.forEach(a=>group.appendChild(a));
+      const trigger=document.createElement('button');
+      trigger.className='mobile-toc-trigger';trigger.type='button';
+      trigger.setAttribute('aria-expanded','false');
+      trigger.setAttribute('aria-controls',group.id);
+      trigger.innerHTML=`<span><small>Chapter</small><b class="mobile-toc-current">${links[0].textContent.trim()}</b></span><i aria-hidden="true"></i>`;
+      trigger.addEventListener('click',()=>{const open=tocEl.classList.toggle('toc-open');trigger.setAttribute('aria-expanded',String(open));});
+      group.addEventListener('click',()=>{tocEl.classList.remove('toc-open');trigger.setAttribute('aria-expanded','false');});
+      tocEl.addEventListener('keydown',e=>{if(e.key!=='Escape')return;tocEl.classList.remove('toc-open');trigger.setAttribute('aria-expanded','false');trigger.focus();});
+      tocEl.append(trigger,group);
+    }
+    const currentLabel=tocEl?tocEl.querySelector('.mobile-toc-current'):null;
+
     if(links.length){
       const spy=new IntersectionObserver(entries=>{
         entries.forEach(e=>{
@@ -460,6 +491,7 @@ ${chapter(14,'Not the end','This is not the end',`
             l.classList.toggle('active',n===i);
             if(n===i)l.setAttribute('aria-current','true'); else l.removeAttribute('aria-current');
           });
+          if(currentLabel&&links[i])currentLabel.textContent=links[i].textContent.trim();
         });
       },{rootMargin:'-96px 0px -70% 0px'});
       sections.forEach(s=>s&&spy.observe(s));

@@ -10,7 +10,7 @@
    ========================================================================== */
 
 /* ---------------------------------------------------------------- Harmony */
-.project-card .hm-project-visual,.project-card .tl-project-visual{container-type:inline-size}
+.project-card .kfh-project-visual,.project-card .eyewa-visual-abstract{container-type:inline-size}
 .project-card .hm-project-visual{
   background:radial-gradient(circle at 82% 18%,rgba(255,255,255,.72),transparent 30%),
              linear-gradient(135deg,#c3e7d4 0%,#eef8f2 48%,#b2dfc6 100%);
@@ -87,22 +87,27 @@
    the viewport is still "desktop". These trims key off the card, so the metric tiles
    always fit the 1.9:1 visual. */
 @container (max-width:470px){
-  .project-card .hm-project-visual,.project-card .tl-project-visual{padding:14px;gap:5px}
-  .hm-project-visual .kfh-thumb-brand,.tl-project-visual .kfh-thumb-brand{margin-bottom:9px}
-  .hm-project-visual .kfh-thumb-brand b,.tl-project-visual .kfh-thumb-brand b{min-width:33px;height:19px;font-size:8.5px}
-  .hm-project-visual .kfh-thumb-brand span,.tl-project-visual .kfh-thumb-brand span{font-size:8.5px}
-  .hm-project-visual .kfh-thumb-metrics,.tl-project-visual .kfh-thumb-metrics{gap:5px}
-  .hm-project-visual .kfh-thumb-stat,.tl-project-visual .kfh-thumb-stat{min-height:0;padding:6px 7px;font-size:7.4px;border-radius:9px}
-  .hm-project-visual .kfh-thumb-stat strong,.tl-project-visual .kfh-thumb-stat strong{font-size:12.5px}
-  .hm-project-visual .kfh-thumb-stat>span,.tl-project-visual .kfh-thumb-stat>span{margin-top:3px}
+  .project-card .kfh-project-visual,.project-card .eyewa-visual-abstract{padding:14px;gap:5px}
+  .kfh-project-visual .kfh-thumb-brand,.eyewa-visual-abstract .eyewa-thumb-brand{margin-bottom:9px}
+  .kfh-project-visual .kfh-thumb-brand b,.eyewa-visual-abstract .eyewa-thumb-brand b{min-width:33px;height:19px;font-size:8.5px}
+  .kfh-project-visual .kfh-thumb-brand span,.eyewa-visual-abstract .eyewa-thumb-brand span{font-size:8.5px}
+  .kfh-project-visual .kfh-thumb-copy>p{max-width:none;font-size:12.5px!important}
+  .kfh-project-visual .kfh-thumb-metrics,.eyewa-visual-abstract .eyewa-thumb-metrics{gap:5px;margin-top:10px}
+  .kfh-project-visual .kfh-thumb-stat,.eyewa-visual-abstract .eyewa-thumb-stat{min-height:0;padding:6px 7px;font-size:9px;border-radius:9px}
+  .kfh-project-visual .kfh-thumb-stat strong,.eyewa-visual-abstract .eyewa-thumb-stat strong{font-size:13px}
+  .kfh-project-visual .kfh-thumb-stat strong small,.eyewa-visual-abstract .eyewa-thumb-stat strong small{font-size:.62em}
+  .kfh-project-visual .kfh-thumb-stat>span,.eyewa-visual-abstract .eyewa-thumb-stat>span{margin-top:3px}
+  .eyewa-visual-abstract .eyewa-abstract-glasses{right:-12%;width:52%;opacity:.6}
 }
 @container (max-width:430px){
   .hm-project-visual .kfh-thumb-device{right:-6%;bottom:8%;width:61%!important;height:75%!important}
   .tl-project-visual .kfh-thumb-device{right:-6%;bottom:13%;width:61%!important;height:auto!important}
+  .kfh-project-visual:not(.hm-project-visual):not(.tl-project-visual) .kfh-thumb-device{width:132%!important}
+  .eyewa-visual-abstract .eyewa-thumb-device{right:2%;height:84%}
 }
 @container (max-width:330px){
-  .hm-project-visual .kfh-thumb-stat,.tl-project-visual .kfh-thumb-stat{padding:5px 6px;font-size:6.9px}
-  .hm-project-visual .kfh-thumb-stat strong,.tl-project-visual .kfh-thumb-stat strong{font-size:11.5px}
+  .kfh-project-visual .kfh-thumb-stat,.eyewa-visual-abstract .eyewa-thumb-stat{padding:5px 6px;font-size:8.5px}
+  .kfh-project-visual .kfh-thumb-stat strong,.eyewa-visual-abstract .eyewa-thumb-stat strong{font-size:12px}
 }
 @media(prefers-reduced-motion:reduce){
   .hm-project-visual .kfh-thumb-device,.tl-project-visual .kfh-thumb-device{animation:none!important}

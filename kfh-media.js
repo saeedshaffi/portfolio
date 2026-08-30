@@ -125,7 +125,7 @@
     const size = intrinsicAttributes(mediaDimensions[key]?.[index]);
     if (logoKeys.has(key)) return `<div class="media-open media-static"><img${size} loading="lazy" decoding="async" src="${src}" alt="${alt}"></div>`;
     const overlay = key === 'mobile' ? '<span class="coming-soon-overlay">Coming soon</span>' : '';
-    return `<button class="media-open" type="button" data-full-src="${src}" data-full-alt="${alt}" aria-label="Open ${alt}"><img${size} loading="lazy" decoding="async" src="${src}" alt="${alt}">${overlay}</button>`;
+    return `<div class="media-open media-static"><img${size} loading="lazy" decoding="async" src="${src}" alt="${alt}">${overlay}</div>`;
   };
 
   const gallery = (key, caption) => {
@@ -150,14 +150,14 @@
     const src = `${base}${encodeURI(source)}`;
     const posterSrc = `${base}${encodeURI(poster)}`;
     const size = intrinsicAttributes(gifDimensions[key]);
-    return `<figure class="media-block gif-block media-${key}"><div class="media-heading"><figcaption>${caption}</figcaption><p>${description}</p></div><div class="gif-stage"><button class="media-open" type="button" data-full-src="${src}" data-full-alt="${alt}" aria-label="Open ${alt}"><img${size} class="animated-evidence" loading="lazy" decoding="async" src="${src}" data-gif-src="${src}" data-poster-src="${posterSrc}" alt="${alt}"></button><button class="gif-toggle" type="button" aria-pressed="false" aria-label="Pause ${caption}"><span>Pause animation</span></button></div><p class="motion-note">Pause or replay this sequence at any time.</p></figure>`;
+    return `<figure class="media-block gif-block media-${key}"><div class="media-heading"><figcaption>${caption}</figcaption><p>${description}</p></div><div class="gif-stage"><div class="media-open media-static"><img${size} class="animated-evidence" loading="lazy" decoding="async" src="${src}" data-gif-src="${src}" data-poster-src="${posterSrc}" alt="${alt}"></div><button class="gif-toggle" type="button" aria-pressed="false" aria-label="Pause ${caption}"><span>Pause animation</span></button></div><p class="motion-note">Pause or replay this sequence at any time.</p></figure>`;
   };
 
   const heroVisual = () => {
     const src = `${base}${encodeURI(localAssets.hero[0])}`;
     const alt = altText.hero[0];
     const size = intrinsicAttributes(mediaDimensions.hero[0]);
-    return `<figure class="case-hero-visual"><figcaption class="visually-hidden">The redesigned KFH Jazeel experience</figcaption><button class="media-open" type="button" data-full-src="${src}" data-full-alt="${alt}" aria-label="Open ${alt}"><img${size} decoding="async" fetchpriority="high" src="${src}" alt="${alt}"></button></figure>`;
+    return `<figure class="case-hero-visual"><figcaption class="visually-hidden">The redesigned KFH Jazeel experience</figcaption><div class="media-open media-static"><img${size} decoding="async" fetchpriority="high" src="${src}" alt="${alt}"></div></figure>`;
   };
 
   const questionnaireArtifact = () => {
@@ -203,7 +203,7 @@
 
   const verifiedFindings = `<div class="finding-grid verified-findings" aria-label="Verified user interview findings from the source Figma case study"><div class="finding" style="--finding-order:0;--finding-value:80%"><strong aria-label="80 percent"><span class="counter" aria-hidden="true" data-count="80">80</span><span aria-hidden="true">%</span></strong><span>Found onboarding difficult</span><i class="finding-meter" aria-hidden="true"></i></div><div class="finding" style="--finding-order:1;--finding-value:57%"><strong aria-label="57 percent"><span class="counter" aria-hidden="true" data-count="57">57</span><span aria-hidden="true">%</span></strong><span>Did not know they could change the language</span><i class="finding-meter" aria-hidden="true"></i></div><div class="finding" style="--finding-order:2;--finding-value:30%"><strong aria-label="30 percent"><span class="counter" aria-hidden="true" data-count="30">30</span><span aria-hidden="true">%</span></strong><span>Did not know how to use the main features</span><i class="finding-meter" aria-hidden="true"></i></div><div class="finding" style="--finding-order:3;--finding-value:86%"><strong aria-label="86 percent"><span class="counter" aria-hidden="true" data-count="86">86</span><span aria-hidden="true">%</span></strong><span>Experienced crashes during basic tasks</span><i class="finding-meter" aria-hidden="true"></i></div></div>`;
 
-  const findingStory = `<section class="research-finding-story" aria-label="Clarity research finding"><div class="finding-story-meta"><span class="eyebrow">Clarity assessment</span><button class="finding-replay" type="button" aria-label="Replay clarity insight animation">Replay animation <span aria-hidden="true">↻</span></button></div><div class="finding-story-stage"><div class="finding-gauge" role="img" aria-label="Clarity score 52, categorised as moderate difficulty"><svg viewBox="0 0 220 220" aria-hidden="true"><circle class="finding-gauge-track" cx="110" cy="110" r="84" pathLength="100"></circle><circle class="finding-gauge-progress" cx="110" cy="110" r="84" pathLength="100"></circle><circle class="finding-gauge-marker" cx="110" cy="26" r="5"></circle></svg><div class="finding-score"><strong data-finding-score>52</strong><span>Clarity score</span></div></div><div class="finding-story-copy"><span class="finding-status">Moderate difficulty</span><h4>Moderate difficulty</h4><p class="finding-range">Scores from 30 to 60</p><p>At this score, parts of the design may be difficult to read or understand.</p></div></div><div class="finding-benchmark"><div><span>Clarity benchmark</span><strong aria-label="60 percent"><b data-finding-benchmark>60</b><small aria-hidden="true">%</small></strong></div><div class="finding-benchmark-track" aria-hidden="true"><i></i></div><p>This score is lower than 60% of the most popular websites.</p></div></section>`;
+  const findingStory = `<section class="research-finding-story" aria-label="Onboarding funnel research finding"><div class="finding-story-meta"><span class="eyebrow">Funnel assessment</span><button class="finding-replay" type="button" aria-label="Replay onboarding insight animation">Replay animation <span aria-hidden="true">↻</span></button></div><div class="finding-story-stage"><div class="finding-gauge" role="img" aria-label="66 percent of sign-ups dropped off during onboarding, categorised as critical"><svg viewBox="0 0 220 220" aria-hidden="true"><circle class="finding-gauge-track" cx="110" cy="110" r="84" pathLength="100"></circle><circle class="finding-gauge-progress" cx="110" cy="110" r="84" pathLength="100"></circle><circle class="finding-gauge-marker" cx="110" cy="26" r="5"></circle></svg><div class="finding-score"><strong data-finding-score>66</strong><span>% drop off</span></div></div><div class="finding-story-copy"><span class="finding-status">Critical drop-off</span><h4>Critical drop-off</h4><p class="finding-range">Two of every three sign-ups never finished</p><p>The funnel data showed applicants stalling inside onboarding itself: long forms, unclear errors and crashes before the first success moment.</p></div></div><div class="finding-benchmark"><div><span>Interview signal</span><strong aria-label="86 percent"><b data-finding-benchmark>86</b><small aria-hidden="true">%</small></strong></div><div class="finding-benchmark-track" aria-hidden="true"><i></i></div><p>86% of interviewed customers had experienced crashes during onboarding.</p></div></section>`;
 
   const synthesis = `<aside class="research-synthesis"><span class="eyebrow">What the comparison told us</span><h3>Customers wanted the reassurance of a bank without the friction of a traditional banking product.</h3><div><p><strong>Traditional banks</strong> often relied on long forms and journeys shaped around internal processes.</p><p><strong>Neobanks</strong> showed people that banking could feel quick, clear, and easy to manage on their own.</p></div><p class="synthesis-decision"><strong>Our direction:</strong> make onboarding simpler while keeping the sense of trust people expect from a bank.</p></aside>`;
 
@@ -527,8 +527,8 @@
       scoreFrame = undefined;
       story.classList.remove('finding-animate');
       story.classList.add('finding-reset');
-      score.textContent = reducedMotion ? '52' : '0';
-      benchmark.textContent = reducedMotion ? '60' : '0';
+      score.textContent = reducedMotion ? '66' : '0';
+      benchmark.textContent = reducedMotion ? '86' : '0';
     };
     const run = () => {
       reset();
@@ -545,8 +545,8 @@
       const frame = (now) => {
         const progress = Math.min(1, (now - start) / duration);
         const eased = 1 - Math.pow(1 - progress, 3);
-        score.textContent = String(Math.round(52 * eased));
-        benchmark.textContent = String(Math.round(60 * eased));
+        score.textContent = String(Math.round(66 * eased));
+        benchmark.textContent = String(Math.round(86 * eased));
         if (progress < 1) scoreFrame = window.requestAnimationFrame(frame);
         else scoreFrame = undefined;
       };
@@ -877,7 +877,6 @@
     }));
 
     initRails(root);
-    initLightbox(root);
     initGifControls(root);
     initFindingStory(root);
     initFindingMetrics(root);

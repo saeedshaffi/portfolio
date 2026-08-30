@@ -12,7 +12,7 @@
     if(!h||h===settledFor)return;
     settledFor=h;
     clearTimeout(settleTimer);
-    if(matchMedia('(prefers-reduced-motion: reduce)').matches){h.classList.add('is-hero-entered');return;}
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches||document.body.classList.contains('is-return-visit')){h.classList.add('is-hero-entered');return;}
     /* longest pill delay (0.6s) + duration (0.6s) + slack */
     settleTimer=setTimeout(function(){if(document.contains(h))h.classList.add('is-hero-entered');},1400);
   }

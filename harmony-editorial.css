@@ -335,3 +335,87 @@ body.harmony-case-active {
   }
   .harmony-case-active .hm-case .hm-metric:nth-child(even) { border-left: 0 !important; }
 }
+
+/* ============================ Mobile TOC ============================
+   Collapse the 14 chapters behind a sticky "Chapter" pill below 900px,
+   the same pattern KFH, Eyewa and Talon use. Desktop keeps the sidebar:
+   the trigger stays display:none and .toc-links stays a plain block. */
+.harmony-case-active .mobile-toc-trigger { display: none; }
+.harmony-case-active .hm-toc .toc-links { display: block; }
+
+@media (max-width: 900px) {
+  .harmony-case-active .study-toc.hm-toc {
+    position: sticky !important;
+    top: 82px !important;
+    z-index: 15;
+    display: block;
+    margin: 0 0 48px;
+    padding: 0 !important;
+    overflow: visible;
+    border: 1px solid var(--kfh-line) !important;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 12px 32px rgba(9, 9, 9, .08);
+  }
+  .harmony-case-active .hm-toc > .eyebrow { display: none; }
+  .harmony-case-active .mobile-toc-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 66px;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 14px;
+    background: transparent;
+    color: var(--kfh-ink, #111);
+    text-align: left;
+    cursor: pointer;
+  }
+  .harmony-case-active .mobile-toc-trigger span { display: grid; min-width: 0; padding-right: 16px; }
+  .harmony-case-active .mobile-toc-trigger small {
+    color: var(--hm-green);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  .harmony-case-active .mobile-toc-trigger b { font-size: 14px; }
+  .harmony-case-active .mobile-toc-trigger i {
+    position: relative;
+    display: grid;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    place-items: center;
+    border: 1px solid var(--kfh-line);
+    border-radius: 50%;
+    font-style: normal;
+    transition: border-color .2s ease, background-color .2s ease;
+  }
+  .harmony-case-active .mobile-toc-trigger i::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform .25s cubic-bezier(.22, 1, .36, 1);
+  }
+  .harmony-case-active .hm-toc .toc-links {
+    display: none;
+    max-height: min(60vh, 430px);
+    padding: 4px 14px 14px;
+    overflow-y: auto;
+    border-top: 1px solid var(--kfh-line);
+  }
+  .harmony-case-active .hm-toc.toc-open .toc-links { display: block; }
+  .harmony-case-active .hm-toc.toc-open .mobile-toc-trigger i {
+    border-color: rgba(30, 128, 85, .3);
+    background: var(--hm-green-soft);
+  }
+  .harmony-case-active .hm-toc.toc-open .mobile-toc-trigger i::before {
+    transform: translateY(2px) rotate(225deg);
+  }
+  .harmony-case-active .hm-toc a { min-height: 46px; }
+}
