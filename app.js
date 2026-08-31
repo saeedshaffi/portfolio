@@ -731,7 +731,7 @@ function render(){
   try{introPlayed=sessionStorage.getItem('homeIntroPlayed')==='1';}catch(e){}
   document.body.classList.toggle('is-return-visit',path==='/'&&introPlayed);
   if(path==='/'&&!introPlayed){try{sessionStorage.setItem('homeIntroPlayed','1');}catch(e){}}
-  const routeTitles={'/case/kfh':'KFH Jazeel — Saeed Shaffi','/case/eyewa':'Eyewa Checkout — Saeed Shaffi','/case/system':'Harmony Design System — Saeed Shaffi','/case/talon':'Talon.One — Saeed Shaffi','/case/ai-system':'Building a Design System with AI — Saeed Shaffi'};
+  const routeTitles={'/case/kfh':'KFH Jazeel — Saeed Shaffi','/case/eyewa':'Eyewa Checkout — Saeed Shaffi','/case/system':'Harmony Design System — Saeed Shaffi','/case/talon':'Talon.One — Saeed Shaffi','/case/ai-system':'From Figma to Frontend: Building a Design System with AI — Saeed Shaffi'};
   document.title=routeTitles[path]||'Saeed Shaffi, Product Designer';
   main.innerHTML=path.startsWith('/case/')?casePage(path.split('/')[2]):home();
   if(path==='/')separateHomeArchive();

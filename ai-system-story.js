@@ -39,7 +39,7 @@
   window.aiSystemPage=function(){
     return `<div class="case reveal ai-system-case" style="--accent:#d81e2c">
     <section class="case-hero">
-      <nav class="case-crumb" aria-label="Breadcrumb"><a href="#/">Home</a><span aria-hidden="true">/</span><a href="#/" data-scroll-target="selected-work">Work</a><span aria-hidden="true">/</span><b>Building a Design System with AI</b></nav>
+      <nav class="case-crumb" aria-label="Breadcrumb"><a href="#/">Home</a><span aria-hidden="true">/</span><a href="#/" data-scroll-target="selected-work">Work</a><span aria-hidden="true">/</span><b>From Figma to Frontend: Building a Design System with AI</b></nav>
       <span class="eyebrow">B2B SaaS · AI enabled design systems</span>
       <h1>From Figma to frontend: Building a design system with AI.</h1>
       <p>How I used AI to design and implement reusable frontend components, turned developer feedback into repeatable rules, and created a safer path for designers to build interfaces with the design system.</p>
