@@ -247,7 +247,8 @@
     if(cons&&mergeBtn){
       mergeBtn.addEventListener('click',()=>{
         const merged=cons.classList.toggle('is-merged');
-        mergeBtn.textContent=merged?'Reset':'Consolidate';
+        mergeBtn.textContent=merged?'Show implementations':'Consolidate implementations';
+        mergeBtn.setAttribute('aria-pressed',String(merged));
       });
     }
 
