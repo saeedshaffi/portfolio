@@ -888,7 +888,7 @@
   }
 
   function handleRouteChange() {
-    document.body.classList.toggle('kfh-active', location.hash === '#/case/kfh' || location.hash === '#/case/talon' || location.hash === '#/case/uta');
+    document.body.classList.toggle('kfh-active', location.hash === '#/case/kfh' || location.hash === '#/case/talon' || location.hash === '#/case/ai-system');
     if (location.hash !== '#/case/kfh') {
       document.querySelectorAll('.reading-progress, .kfh-lightbox').forEach((element) => element.remove());
       if (window.__kfhProgressHandler) window.removeEventListener('scroll', window.__kfhProgressHandler);
@@ -899,6 +899,6 @@
   }
 
   window.addEventListener('hashchange', () => setTimeout(handleRouteChange, 0));
-  document.body.classList.toggle('kfh-active', location.hash === '#/case/kfh' || location.hash === '#/case/talon' || location.hash === '#/case/uta');
+  document.body.classList.toggle('kfh-active', location.hash === '#/case/kfh' || location.hash === '#/case/talon' || location.hash === '#/case/ai-system');
   setTimeout(handleRouteChange, 0);
 })();
