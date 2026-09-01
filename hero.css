@@ -350,7 +350,7 @@ body.home-active #home-hero-title .home-rotating-word {
   margin-bottom: -0.08em;
   margin-right: -4px;          /* cancels the clip slack added in app.js */
   overflow: hidden;
-  vertical-align: baseline;
+  vertical-align: -0.19em;  /* overflow:hidden makes the box baseline its bottom edge; pull it down so the word sits on the text baseline */
   color: #ff756b;
   transition: width 0.18s cubic-bezier(.33, 1, .68, 1);
 }
