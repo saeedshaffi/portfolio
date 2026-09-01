@@ -613,3 +613,28 @@ body.home-active .site-footer {
   object-fit: contain;
   image-rendering: auto;
 }
+
+/* ---------- Rotating promise: deterministic line structure ----------
+   The rotating words differ hugely in width (complexity vs AI). To keep the
+   headline's line count identical for every word, the phrase starts its own
+   line and the trailing clause is broken explicitly instead of by wrapping.
+   The word + "and" stay one nowrap unit, so the text after the word still
+   slides horizontally with the current word's width — no reserved gap. */
+
+body.home-active #home-hero-title .home-rotating-tail {
+  color: #f8f6f2;
+  font-weight: inherit;
+}
+
+body.home-active #home-hero-title .home-hero-break,
+body.home-active #home-hero-title .home-suffix-break {
+  display: block;
+  height: 0;
+}
+
+/* Wide viewports have room for the inline CTA, the longest word and "and" on
+   one line, so the phrase does not need its own line there. Verified against
+   the widest word ("complexity") at every breakpoint. */
+@media (min-width: 1000px) {
+  body.home-active #home-hero-title .home-hero-break { display: none; }
+}
