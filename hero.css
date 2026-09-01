@@ -319,6 +319,17 @@ body.home-active .home-resume-link:focus-visible {
 
 /* ---------- Rotating promise ---------- */
 
+body.home-active #home-hero-title .home-into-pair {
+  white-space: nowrap; /* keep "into" attached to the rotating word */
+}
+
+@media (max-width: 620px) {
+  body.home-active #home-hero-title .home-into-pair {
+    white-space: normal; /* narrow screens: the pair is wider than the column, let it wrap */
+  }
+}
+
+
 body.home-active #home-hero-title .home-rotating-phrase {
   display: inline;
   color: inherit;
