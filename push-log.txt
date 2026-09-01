@@ -1,0 +1,2 @@
+=== Round 2: Tue Sep  1 21:24:19 CEST 2026 ===
+--- step 1: tiny read-only git request (ls-remote) ---
