@@ -325,14 +325,14 @@ function initHomeRotatingWords(){
   const RISE = '1.1em';
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const paint = (word, state) => {
+  const paint = (word, state, instant) => {
     const s = word.style;
     s.position = 'absolute';
     s.top = '0';
     s.left = '0';
     s.display = 'block';
     s.width = 'max-content';
-    s.transition = reduceMotion ? 'none' : 'opacity .38s ease, filter .38s ease, transform .46s cubic-bezier(.22,1,.36,1)';
+    s.transition = (instant || reduceMotion) ? 'none' : 'opacity .38s ease, filter .38s ease, transform .46s cubic-bezier(.22,1,.36,1)';
     if (state === 'in') { s.opacity = '1'; s.filter = 'blur(0px)'; s.transform = 'translateY(0)'; }
     else if (state === 'out') { s.opacity = '0'; s.filter = 'blur(6px)'; s.transform = 'translateY(-' + RISE + ')'; }
     else { s.opacity = '0'; s.filter = 'blur(6px)'; s.transform = 'translateY(' + RISE + ')'; }
@@ -368,7 +368,7 @@ function initHomeRotatingWords(){
   const seed = (track, words) => {
     words.forEach((word, index) => {
       word.classList.remove('is-active', 'is-leaving');
-      paint(word, index === 0 ? 'in' : 'waiting');
+      paint(word, index === 0 ? 'in' : 'waiting', true);
     });
     track.__wordIndex = 0;
     reserveHeight(track);
@@ -402,10 +402,12 @@ function initHomeRotatingWords(){
       return;
     }
 
+    if (document.hidden) return;       // transitions freeze in hidden tabs; resume on return
+
     const showing = words.filter(w => w.style.opacity === '1');
     if (showing.length !== 1) {          // repair: never leave the line empty
       const index = track.__wordIndex || 0;
-      words.forEach((w, i) => paint(w, i === index ? 'in' : 'waiting'));
+      words.forEach((w, i) => paint(w, i === index ? 'in' : 'waiting', true));
       fit(track, words[index]);
       return;
     }
