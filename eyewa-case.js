@@ -101,10 +101,10 @@
     'A design spec document that covered the updated architecture + information design of the feature'
   ];
 
-  const hifi=[['hifi-01.png','Sign in'],['hifi-02.png','Contact information'],['hifi-03.png','Shipping details'],['hifi-04.png','Order summary'],['hifi-05.png','Payment']];
-  const proposed=[['prop-05.png','Sign in'],['prop-04.png','Contact information'],['prop-03.png','Shipping details'],['prop-02.png','Order summary'],['prop-01.png','Payment']];
-  const originals=[['orig-02.png','Create account'],['orig-04.png','Contact information'],['orig-03.png','Shipping method'],['orig-05.png','Cart summary'],['orig-01.png','Payment']];
-  const lofi=[['lofi-04.png','Login'],['lofi-03.png','Contact information'],['lofi-02.png','Shipping'],['lofi-01.png','Summary']];
+  const hifi=[['hifi-01.png','Sign in'],['hifi-02.webp','Contact information'],['hifi-03.webp','Shipping details'],['hifi-04.png','Order summary'],['hifi-05.png','Payment']];
+  const proposed=[['prop-05.png','Sign in'],['prop-04.webp','Contact information'],['prop-03.webp','Shipping details'],['prop-02.png','Order summary'],['prop-01.webp','Payment']];
+  const originals=[['orig-02.webp','Create account'],['orig-04.png','Contact information'],['orig-03.webp','Shipping method'],['orig-05.webp','Cart summary'],['orig-01.webp','Payment']];
+  const lofi=[['lofi-04.webp','Login'],['lofi-03.webp','Contact information'],['lofi-02.webp','Shipping'],['lofi-01.webp','Summary']];
 
   const gallery=(items,cols)=>`<div class="ey-gallery" style="--cols:${cols||5}">${items.map(([f,t])=>`<div>${fig(shot(F+f,t,t),`<b>${t}</b>`)}</div>`).join('')}</div>`;
 
@@ -118,7 +118,7 @@
   <p><strong>Boosting customer retention through user experience in eCommerce checkout.</strong> Customers faced concerns and difficulties with Eyewa’s checkout, which led to a poor experience and high levels of complaints. I rebuilt the flow to be clearer and more trustworthy, and the churn and complaint numbers moved.</p>
   <span class="ey-hero-meta">User research &amp; UI design · Mobile · 9 min read</span>
   <div class="case-hero-visual" aria-label="Three screens from the redesigned checkout">
-    ${[['fig/prop-05.png','Sign in'],['fig/prop-03.png','Shipping details'],['fig/prop-01.png','Payment']].map(([f,t],i)=>`<span class="ey-hero-shot" style="--h:${i}">${shot(A+f,'Redesigned checkout · '+t,t+' screen from the redesigned checkout')}</span>`).join('')}
+    ${[['fig/prop-05.png','Sign in'],['fig/prop-03.webp','Shipping details'],['fig/prop-01.webp','Payment']].map(([f,t],i)=>`<span class="ey-hero-shot" style="--h:${i}">${shot(A+f,'Redesigned checkout · '+t,t+' screen from the redesigned checkout')}</span>`).join('')}
   </div>
 </section>
 
@@ -227,7 +227,7 @@ ${chapter(3,'What the data revealed',`
 ${chapter(4,'Research and benchmark',`
   <h2>Research</h2>
   <p>I conducted a thorough analysis of Eyewa’s checkout process and other international eCommerce platforms to gain insights.</p>
-  ${fig(`<img src="${F}benchmark-cards.png" alt="Amazon, AliExpress, Walmart and Zalando" loading="lazy" decoding="async">`,'The four platforms studied, chosen because customers in the region use them weekly.','ey-fig-plain')}
+  ${fig(`<img src="${F}benchmark-cards.webp" alt="Amazon, AliExpress, Walmart and Zalando" loading="lazy" decoding="async">`,'The four platforms studied, chosen because customers in the region use them weekly.','ey-fig-plain')}
   <h3>Which steps were identified as crucial?</h3>
   <p>Six steps that every checkout has to account for, whatever the product.</p>
   <div class="ey-rail ey-rail-circles">
@@ -274,7 +274,7 @@ ${chapter(8,'Reviewing the existing design',`
   <h2>What are the things found by reviewing the existing design?</h2>
   <h3>Missing</h3>
   <ul>${missing.map(m=>`<li>${m}</li>`).join('')}</ul>
-  ${gallery([['orig-cart.png','Cart'],['orig-contact.png','Contact information'],['orig-shipping.png','Shipping method'],['orig-payment.png','Payment'],['orig-payment-2.png','Payment · full page'],['orig-thankyou.png','Order confirmation'],['orig-account.png','Create account'],['orig-summary.png','Order summary']],4)}
+  ${gallery([['orig-cart.webp','Cart'],['orig-contact.png','Contact information'],['orig-shipping.webp','Shipping method'],['orig-payment.png','Payment'],['orig-payment-2.webp','Payment · full page'],['orig-thankyou.webp','Order confirmation'],['orig-account.webp','Create account'],['orig-summary.png','Order summary']],4)}
   <h3>What are the suggestions to improve the existing flow?</h3>
   <div class="ey-suggest">
     <article class="ey-suggest-card ey-suggest-card-merged">
@@ -296,9 +296,9 @@ ${chapter(8,'Reviewing the existing design',`
   ${(()=>{
     const cell=(inner,t)=>`<div><figure class="ey-fig">${inner}<figcaption><b>${t}</b></figcaption></figure></div>`;
     return `<div class="ey-gallery ey-gallery-heat" style="--cols:3">
-      ${cell(`<div class="ey-heatwrap ey-heatlive">${shot(F+'heat-a.png','Cart heat map','Heat map of the cart screen')}</div>`,'Cart')}
-      ${cell(`<div class="ey-heatwrap ey-heatlive">${shot(F+'heat-b.png','Contact information heat map','Heat map of the contact information screen')}</div>`,'Contact information')}
-      ${cell(`<div class="ey-heatwrap ey-heatlive">${shot(F+'heat-c.png','Shipping heat map','Heat map of the shipping method and address screen')}</div>`,'Shipping')}
+      ${cell(`<div class="ey-heatwrap ey-heatlive">${shot(F+'heat-a.webp','Cart heat map','Heat map of the cart screen')}</div>`,'Cart')}
+      ${cell(`<div class="ey-heatwrap ey-heatlive">${shot(F+'heat-b.webp','Contact information heat map','Heat map of the contact information screen')}</div>`,'Contact information')}
+      ${cell(`<div class="ey-heatwrap ey-heatlive">${shot(F+'heat-c.webp','Shipping heat map','Heat map of the shipping method and address screen')}</div>`,'Shipping')}
     </div>
     <p class="ey-caption">Recorded on the live checkout. Attention pooled on the promo code and the primary button, not on the fields people had to fill. Click any heat map to see it full size.</p>`;
   })()}
@@ -350,7 +350,7 @@ ${chapter(12,'Improvements',`
     <div class="content-card"><h3>Problem</h3><p>No social login; users avoid registration. Guest order option lacks visibility, causing confusion.</p></div>
     <div class="content-card"><h3>Solution</h3><p>Enabled social account login and enhanced visibility for the ‘Login as Guest’ option on the login screen.</p></div>
   </div>
-  ${fig(shot(F+'imp-login-v2.png','Improvements: login','Login screen across old design, first iteration and final design'),'Old design, first iteration and final design, left to right.','ey-fig-plain')}
+  ${fig(shot(F+'imp-login-v2.webp','Improvements: login','Login screen across old design, first iteration and final design'),'Old design, first iteration and final design, left to right.','ey-fig-plain')}
   <h3>Improvements: contact information and shipping details</h3>
   <div class="content-columns">
     <div class="content-card"><h3>Problem</h3><p>In the old design, users had to input first and last names separately. The initial version then required users to enter all information on a single overwhelming screen.</p></div>
@@ -369,8 +369,8 @@ ${chapter(12,'Improvements',`
     <div class="content-card"><h3>Solution</h3><p>Merged first and last name fields, separated ‘Contact Information’ and ‘Shipping Details’ for a more user-friendly experience.</p></div>
   </div>
   <div class="ey-gallery ey-gallery-iter ey-gallery-pair" style="--cols:2">
-    <div><figure class="ey-fig">${shot(F+'orig-payment-2.png','Old design','Original payment screen showing the order summary, card fields, billing checkbox and trust mark in one long checkout step.')}<figcaption><b>Old design</b>Card fields, order summary and billing checkbox competing on one scroll, with the trust marks below the fold.</figcaption></figure></div>
-    <div><figure class="ey-fig">${shot(F+'pay-final.png','Final design','Payment method chosen first, three card fields, and the SSL assurance sitting directly above the pay button.')}<figcaption><b>Final design</b>Payment method chosen first, three card fields, and the SSL assurance sitting directly above the pay button.</figcaption></figure></div>
+    <div><figure class="ey-fig">${shot(F+'orig-payment-2.webp','Old design','Original payment screen showing the order summary, card fields, billing checkbox and trust mark in one long checkout step.')}<figcaption><b>Old design</b>Card fields, order summary and billing checkbox competing on one scroll, with the trust marks below the fold.</figcaption></figure></div>
+    <div><figure class="ey-fig">${shot(F+'pay-final.webp','Final design','Payment method chosen first, three card fields, and the SSL assurance sitting directly above the pay button.')}<figcaption><b>Final design</b>Payment method chosen first, three card fields, and the SSL assurance sitting directly above the pay button.</figcaption></figure></div>
   </div>
 `)}
 

@@ -2,12 +2,12 @@
   const base = 'assets/kfh/hr/';
 
   const localAssets = {
-    hero: ['Device - Macbook Pro 3D.png'],
+    hero: ['Device - Macbook Pro 3D.webp'],
     requirements: ['optimized/requirement-gathering-v2.svg'],
     product: ['optimized/product-analysis.jpg'],
     process: ['Design Process.png'],
     workflow: ['Design Workflow.png'],
-    heuristic: ['optimized/heuristic-evaluation.jpg'],
+    heuristic: ['optimized/heuristic-evaluation.webp'],
     traditional: [
       'Traditional banks logos/Rectangle 3.png',
       'Traditional banks logos/Rectangle 3-1.png',
@@ -28,14 +28,14 @@
       'Neo Banks/Rectangle 3-4.png',
       'Neo Banks/Rectangle 3-5.png'
     ],
-    neoFlows: ['optimized/neobank-userflows.jpg'],
+    neoFlows: ['optimized/neobank-userflows.webp'],
     comparison: ['optimized/flow-comparison.jpg'],
     hifi: ['HiFi wireframes/Component 7.png'],
     version: ['optimized/version-control.jpg'],
-    system: ['ds.png', 'DS Kapple.png'],
+    system: ['ds.webp', 'DS Kapple.webp'],
     before: [
-      'Before/image 90.png',
-      'Before/image 91.png'
+      'Before/image 90.webp',
+      'Before/image 91.webp'
     ],
     improvements: ['optimized/interface-improvements.jpg'],
     ui: ['optimized/final-ui.jpg'],
@@ -147,10 +147,12 @@
   const videoBlock = (key, caption, source, poster, description) => `<figure class="media-block video-block media-${key}"><div class="media-heading"><figcaption>${caption}</figcaption><p>${description}</p></div><video controls preload="metadata" playsinline poster="${base}${encodeURI(poster)}" aria-label="${caption}"><source src="${base}${encodeURI(source)}" type="video/mp4">Your browser does not support embedded video.</video><p class="motion-note">Pause, replay, or use the timeline whenever you need to.</p></figure>`;
 
   const gifBlock = (key, caption, source, poster, description, alt) => {
-    const src = `${base}${encodeURI(source)}`;
+    // Animated sequences are served as H.264 MP4 (a fraction of the old GIF weight)
+    // while keeping the exact same autoplay-loop-with-pause behaviour.
+    const src = `${base}${encodeURI(source.replace(/\.gif$/i, '.mp4'))}`;
     const posterSrc = `${base}${encodeURI(poster)}`;
     const size = intrinsicAttributes(gifDimensions[key]);
-    return `<figure class="media-block gif-block media-${key}"><div class="media-heading"><figcaption>${caption}</figcaption><p>${description}</p></div><div class="gif-stage"><div class="media-open media-static"><img${size} class="animated-evidence" loading="lazy" decoding="async" src="${src}" data-gif-src="${src}" data-poster-src="${posterSrc}" alt="${alt}"></div><button class="gif-toggle" type="button" aria-pressed="false" aria-label="Pause ${caption}"><span>Pause animation</span></button></div><p class="motion-note">Pause or replay this sequence at any time.</p></figure>`;
+    return `<figure class="media-block gif-block media-${key}"><div class="media-heading"><figcaption>${caption}</figcaption><p>${description}</p></div><div class="gif-stage"><div class="media-open media-static"><video${size} class="animated-evidence" muted loop playsinline preload="none" poster="${posterSrc}" src="${src}" aria-label="${alt}"></video></div><button class="gif-toggle" type="button" aria-pressed="false" aria-label="Pause ${caption}"><span>Pause animation</span></button></div><p class="motion-note">Pause or replay this sequence at any time.</p></figure>`;
   };
 
   const heroVisual = () => {
@@ -368,7 +370,7 @@
     const paragraph = [...root.querySelectorAll('#kfh-3 p')].find((element) => element.textContent.trim() === 'View the complete document');
     if (!paragraph) return;
     paragraph.className = 'document-link-wrap';
-    paragraph.innerHTML = `<a class="document-link" href="${base}${encodeURI('Heuristic Evaluation.png')}" target="_blank" rel="noreferrer">See the full heuristic evaluation <span aria-hidden="true">↗</span></a>`;
+    paragraph.innerHTML = `<a class="document-link" href="${base}${encodeURI('optimized/heuristic-evaluation.webp')}" target="_blank" rel="noreferrer">See the full heuristic evaluation <span aria-hidden="true">↗</span></a>`;
   }
 
   function initSectionMotion(root) {
@@ -479,14 +481,14 @@
   function initGifControls(root) {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     root.querySelectorAll('.gif-block').forEach((figure) => {
-      const image = figure.querySelector('.animated-evidence');
+      const video = figure.querySelector('.animated-evidence');
       const toggle = figure.querySelector('.gif-toggle');
-      if (!image || !toggle) return;
+      if (!video || !toggle) return;
       const label = figure.querySelector('figcaption')?.textContent || 'animation';
       let userPaused = reducedMotion;
       const setPaused = (paused) => {
-        if (paused) image.src = image.dataset.posterSrc;
-        else image.src = `${image.dataset.gifSrc}?replay=${Date.now()}`;
+        if (paused) { video.pause(); }
+        else { const p = video.play(); if (p && p.catch) p.catch(() => {}); }
         toggle.setAttribute('aria-pressed', String(paused));
         toggle.setAttribute('aria-label', `${paused ? 'Play' : 'Pause'} ${label}`);
         toggle.querySelector('span').textContent = `${paused ? 'Play' : 'Pause'} animation`;
@@ -796,6 +798,7 @@
     const root = document.querySelector('main');
     const caseRoot = root?.querySelector('.case');
     if (!root || !caseRoot || caseRoot.dataset.kfhLocalMediaReady) return;
+    if (!root.querySelector('#kfh-3')) return; // route markup not in the DOM yet (view transition still rendering)
     caseRoot.dataset.kfhLocalMediaReady = 'true';
     root.querySelectorAll('.media-block').forEach((element) => element.remove());
 
@@ -830,7 +833,7 @@
       ['Product analysis', gallery('product', 'Product analysis')],
       ['Design process', gallery('process', 'Design process and planning')],
       ['Design workflow', gallery('workflow', 'How the team worked together')],
-      ['User interviews', gifBlock('interviews', 'How the interviews worked', 'animated/user-interviews.gif', 'optimized/user-interviews-poster.jpg', 'A short look at how the interviews were run and organised.', 'Animated sequence of the KFH Jazeel user interviews')],
+      ['User interviews', gifBlock('interviews', 'How the interviews worked', 'animated/user-interviews.gif', 'optimized/user-interviews-poster.webp', 'A short look at how the interviews were run and organised.', 'Animated sequence of the KFH Jazeel user interviews')],
       ['Heuristic evaluation', gallery('heuristic', 'Heuristic evaluation')],
       ['Traditional bank research', gallery('traditional', 'Traditional bank research')],
       ['Neobank research', gallery('neo', 'Neobank research')],
@@ -898,7 +901,12 @@
     hydrateKfhMedia();
   }
 
+  window.initKfhMedia = handleRouteChange; // called by app.js right after each route render
   window.addEventListener('hashchange', () => setTimeout(handleRouteChange, 0));
   document.body.classList.toggle('kfh-active', location.hash === '#/case/kfh' || location.hash === '#/case/talon' || location.hash === '#/case/ai-system');
-  setTimeout(handleRouteChange, 0);
+  (function waitForRoute(attempts) {
+    const main = document.querySelector('main');
+    if (main && main.children.length) { handleRouteChange(); return; }
+    if (attempts > 0) requestAnimationFrame(() => waitForRoute(attempts - 1));
+  })(120);
 })();

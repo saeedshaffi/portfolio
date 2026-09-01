@@ -55,7 +55,7 @@ function resumePage(){
   return `<div class="resume-page" data-screen-label="Resume">
     <header class="resume-head">
       <div class="resume-head-row">
-        <img class="resume-photo" src="assets/home/saeed-portrait.png" alt="Portrait of Saeed Shaffi">
+        <img class="resume-photo" src="assets/home/saeed-portrait.webp" alt="Portrait of Saeed Shaffi">
         <div class="resume-head-copy">
           <p class="resume-crumb"><a href="#/">Home</a> <span aria-hidden="true">/</span> Resume</p>
           <h1>Saeed Shaffi</h1>

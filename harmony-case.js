@@ -108,8 +108,8 @@
     <div class="hm-tags" aria-label="Project areas"><span class="hm-tag">UI components</span><span class="hm-tag">Design tokens</span><span class="hm-tag">Accessibility</span><span class="hm-tag">Responsive design</span><span class="hm-tag">Micro-interactions</span><span class="hm-tag">User flows</span></div>
     <div class="hm-hero-visual">
       <div class="hm-hero-panel">
-        <img class="hm-hero-sheet is-back" src="${IMG}harmony-sheet-input.png" alt="" aria-hidden="true" loading="eager" decoding="async">
-        <img class="hm-hero-sheet is-front" src="${IMG}harmony-sheet-nav.png" alt="Harmony component sheets: app bar, tabs, bottom navigation and input fields" loading="eager" decoding="async">
+        <img class="hm-hero-sheet is-back" src="${IMG}harmony-sheet-input.webp" alt="" aria-hidden="true" loading="eager" decoding="async">
+        <img class="hm-hero-sheet is-front" src="${IMG}harmony-sheet-nav.webp" alt="Harmony component sheets: app bar, tabs, bottom navigation and input fields" loading="eager" decoding="async">
       </div>
       <div class="hm-hero-caption"><b>Harmony</b><span>Pattern library, 2021 to 2022</span></div>
     </div>
@@ -162,11 +162,11 @@ ${chapter(4,'Research','Two questions before any component',`
   </div>
   <p class="hm-reveal">Once stakeholders agreed on what CreditBook is, a moodboard fixed the design philosophy the organisation would adopt.</p>
   <div class="hm-mood">
-    <figure class="hm-mood-tile"><span class="shot hm-shot"><img src="${IMG}mood-1.png" alt="Moodboard reference 1 of 5: a mobile interface with soft dimensional shapes and generous spacing" loading="lazy" decoding="async"></span></figure>
-    <figure class="hm-mood-tile"><span class="shot hm-shot"><img src="${IMG}mood-2.png" alt="Moodboard reference 2 of 5: card-led mobile screens with strong photography" loading="lazy" decoding="async"></span></figure>
-    <figure class="hm-mood-tile"><span class="shot hm-shot"><img src="${IMG}mood-3.png" alt="Moodboard reference 3 of 5: a data-forward screen with clear numeric hierarchy" loading="lazy" decoding="async"></span></figure>
-    <figure class="hm-mood-tile"><span class="shot hm-shot"><img src="${IMG}mood-4.png" alt="Moodboard reference 4 of 5: calm single-task flows on flat colour" loading="lazy" decoding="async"></span></figure>
-    <figure class="hm-mood-tile"><span class="shot hm-shot"><img src="${IMG}mood-5.png" alt="Moodboard reference 5 of 5: dark-mode screens with a single accent" loading="lazy" decoding="async"></span></figure>
+    <figure class="hm-mood-tile"><span class="shot hm-shot"><img src="${IMG}mood-1.webp" alt="Moodboard reference 1 of 5: a mobile interface with soft dimensional shapes and generous spacing" loading="lazy" decoding="async"></span></figure>
+    <figure class="hm-mood-tile"><span class="shot hm-shot"><img src="${IMG}mood-2.webp" alt="Moodboard reference 2 of 5: card-led mobile screens with strong photography" loading="lazy" decoding="async"></span></figure>
+    <figure class="hm-mood-tile"><span class="shot hm-shot"><img src="${IMG}mood-3.webp" alt="Moodboard reference 3 of 5: a data-forward screen with clear numeric hierarchy" loading="lazy" decoding="async"></span></figure>
+    <figure class="hm-mood-tile"><span class="shot hm-shot"><img src="${IMG}mood-4.webp" alt="Moodboard reference 4 of 5: calm single-task flows on flat colour" loading="lazy" decoding="async"></span></figure>
+    <figure class="hm-mood-tile"><span class="shot hm-shot"><img src="${IMG}mood-5.webp" alt="Moodboard reference 5 of 5: dark-mode screens with a single accent" loading="lazy" decoding="async"></span></figure>
   </div>
   <p class="hm-note">Five of the references the moodboard was built from. Clarity and calm over decoration.</p>
 `)}
@@ -185,7 +185,7 @@ ${chapter(5,'Heuristics evaluation','Making the inconsistency undeniable',`
   <span class="eyebrow hm-reveal">Research key takeaways</span>
   ${pills(['Different style input fields','Inconsistent alignment','Poor visual hierarchy','Inconsistent colours','Inconsistent flows'])}
   <div class="finding accent hm-reveal"><p>There was inconsistency throughout the app because each designer had their own preferences for grid systems, radius, font weight and more.</p></div>
-  ${fig('cb-heuristics.png','Heuristics analysis table for the CreditBook app: fourteen issues across onboarding, sign-up and OTP, each with the heuristic used, a priority and a recommendation','Fourteen issues, each with a severity and a recommendation. From the working evaluation sheet.','2.3/1')}
+  ${fig('cb-heuristics.webp','Heuristics analysis table for the CreditBook app: fourteen issues across onboarding, sign-up and OTP, each with the heuristic used, a priority and a recommendation','Fourteen issues, each with a severity and a recommendation. From the working evaluation sheet.','2.3/1')}
 `)}
 
 ${chapter(6,'Rules before components','Fourteen agreements before any pixel',`
@@ -291,9 +291,9 @@ ${chapter(8,'The component library','Built once, correct everywhere',`
   </div>
   <p class="hm-note">Specimens rebuilt in HTML from the Harmony spec. Sizing, radius and spacing all on the 8-point grid.</p>
   <div class="hm-grid-3">
-    ${fig('cb-style-01.png','Harmony Figma sheet: app bar variants, tabs and bottom navigation','App bar, tabs, bottom navigation.','1/1','hm-fig-sheet')}
-    ${fig('cb-style-02.png','Harmony Figma sheet: further component specimens from the style library','From the style library.','1/1','hm-fig-sheet')}
-    ${fig('cb-style-03-ai.png','Harmony Figma sheet: FAB and extended FAB component specimens from the style library','Floating action button and extended button components.','1/1','hm-fig-sheet')}
+    ${fig('cb-style-01.webp','Harmony Figma sheet: app bar variants, tabs and bottom navigation','App bar, tabs, bottom navigation.','1/1','hm-fig-sheet')}
+    ${fig('cb-style-02.webp','Harmony Figma sheet: further component specimens from the style library','From the style library.','1/1','hm-fig-sheet')}
+    ${fig('cb-style-03-ai.webp','Harmony Figma sheet: FAB and extended FAB component specimens from the style library','Floating action button and extended button components.','1/1','hm-fig-sheet')}
   </div>
   <p class="hm-note">The real Figma sheets the specimens above were rebuilt from.</p>
 
@@ -346,13 +346,13 @@ ${chapter(9,'Tokens','Tokens as the source of truth',`
     ${tokens.map((t,i)=>`<li><button type="button" class="hm-token" data-copy="${t[0]}" style="--i:${Math.min(i,7)}"><b>${t[0]}</b><span>${t[1]}</span></button></li>`).join('')}
   </ul>
   <p class="hm-copy-live visually-hidden" role="status" aria-live="polite"></p>
-  ${fig('cb-tokens.png','The Figma Tokens panel open beside the button, navigation and dialog component sheets, showing the global set with colour, background, foreground and state ramps','Global, light, dark and theme sets, pushing one change to every component.','4/3')}
+  ${fig('cb-tokens.webp','The Figma Tokens panel open beside the button, navigation and dialog component sheets, showing the global set with colour, background, foreground and state ramps','Global, light, dark and theme sets, pushing one change to every component.','4/3')}
 `)}
 
 ${chapter(10,'Rollout','Adoption was planned, not hoped for',`
   <p class="hm-reveal">Every screen was mapped against every layer of the system, then released in three phases: structure first, surface second, craft last.</p>
   ${matrix()}
-  ${fig('cb-implementation.png','The original implementation-breakdown spreadsheet: phases A, B and C mapped against all sixteen screens','The working sheet the matrix above was drawn from.','3.7/1')}
+  ${fig('cb-implementation.webp','The original implementation-breakdown spreadsheet: phases A, B and C mapped against all sixteen screens','The working sheet the matrix above was drawn from.','3.7/1')}
   <h3>Documentation</h3>
   <div class="hm-docs">
     ${docs.map((d,i)=>`<div class="hm-doc hm-reveal" style="--i:${Math.min(i,7)}"><b>${d[0]}</b><p>${d[1]}</p></div>`).join('')}
