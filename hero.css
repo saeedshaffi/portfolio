@@ -626,15 +626,20 @@ body.home-active #home-hero-title .home-rotating-tail {
   font-weight: inherit;
 }
 
-body.home-active #home-hero-title .home-hero-break,
-body.home-active #home-hero-title .home-suffix-break {
-  display: block;
-  height: 0;
+/* Wide viewports fit "[word] and business collide." on one line for every
+   rotating word, so it wraps naturally there. Below 1200px the longest word
+   pushes "business collide." over while the shortest does not, which would
+   change the line count as the word rotates — so the break is pinned. */
+body.home-active #home-hero-title .home-suffix-break { display: none; }
+
+@media (max-width: 1199px) {
+  body.home-active #home-hero-title .home-suffix-break { display: block; height: 0; }
 }
 
-/* Wide viewports have room for the inline CTA, the longest word and "and" on
-   one line, so the phrase does not need its own line there. Verified against
-   the widest word ("complexity") at every breakpoint. */
-@media (min-width: 1000px) {
-  body.home-active #home-hero-title .home-hero-break { display: none; }
+/* Under 360px even "[word] and" no longer fits after "where" for the longest
+   word while it does for the shortest, so the phrase takes its own line. */
+body.home-active #home-hero-title .home-hero-break { display: none; }
+
+@media (max-width: 359px) {
+  body.home-active #home-hero-title .home-hero-break { display: block; height: 0; }
 }
