@@ -709,7 +709,7 @@ function initFooterContact(){
   });
 }
 
-function render(){
+function renderRoute(){
   const path=location.hash.slice(1)||'/';
   if(path==='/work'){
     pendingScrollTarget='selected-work';
@@ -718,6 +718,7 @@ function render(){
   }
   if(path==='/about'||path==='/resume-old'||path==='/resume'){
     (function(){const a=document.createElement('a');a.href='assets/SaeedShaffi_Resume.pdf';a.download='SaeedShaffi_Resume.pdf';document.body.appendChild(a);a.click();a.remove();})();
+    showToast('Résumé downloading — check your downloads');
     location.replace('#/');
     return;
   }
@@ -755,6 +756,91 @@ function render(){
     pendingScrollTarget='';
     requestAnimationFrame(scrollToSelectedWork);
   }
+}
+
+
+/* ── Motion layer ──────────────────────────────────────────────────────────
+   One authored moment: the project card the visitor chose becomes the case
+   stage. Everything else stays a quiet cross-fade. Progressive enhancement —
+   without View Transitions, or under reduced motion, routing is unchanged. */
+
+const VT_STAGE='case-stage';
+const REDIRECT_ROUTES=['/work','/about','/resume','/resume-old'];
+let vtSource=null;
+let vtPrevPath=location.hash.slice(1)||'/';
+
+function vtTag(el){
+  if(!el)return null;
+  el.style.viewTransitionName=VT_STAGE;
+  el.classList.add('vt-stage-active');
+  return el;
+}
+function vtUntag(){
+  document.querySelectorAll('.vt-stage-active').forEach(el=>{
+    el.style.viewTransitionName='';
+    el.classList.remove('vt-stage-active');
+  });
+}
+
+/* Capture which card was chosen, before the hash changes. */
+document.addEventListener('click',event=>{
+  const origin=event.target instanceof Element?event.target:null;
+  const card=origin?.closest('a.project-card[href^="#/case/"]');
+  if(card)vtSource=card.querySelector('.visual');
+},true);
+
+let toastEl=null,toastTimer=null;
+function showToast(message){
+  if(!toastEl){
+    toastEl=document.createElement('div');
+    toastEl.className='app-toast';
+    toastEl.setAttribute('role','status');
+    toastEl.setAttribute('aria-live','polite');
+    toastEl.innerHTML='<span class="app-toast-dot" aria-hidden="true"></span><span class="app-toast-text"></span>';
+    document.body.appendChild(toastEl);
+  }
+  toastEl.querySelector('.app-toast-text').textContent=message;
+  requestAnimationFrame(()=>toastEl.classList.add('is-visible'));
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>toastEl.classList.remove('is-visible'),2800);
+}
+
+function render(){
+  const nextPath=location.hash.slice(1)||'/';
+  const prevPath=vtPrevPath;
+
+  /* Routes that immediately redirect never animate — they are not a view. */
+  if(REDIRECT_ROUTES.includes(nextPath)){
+    vtUntag();vtSource=null;renderRoute();return;
+  }
+
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce||typeof document.startViewTransition!=='function'){
+    vtUntag();vtSource=null;vtPrevPath=nextPath;renderRoute();return;
+  }
+
+  const goingToCase=nextPath.startsWith('/case/');
+  const leavingCase=prevPath.startsWith('/case/');
+  const from=goingToCase?vtSource:(leavingCase?document.querySelector('.case-hero'):null);
+  vtSource=null;
+  vtUntag();
+  vtTag(from);
+  vtPrevPath=nextPath;
+
+  let transition;
+  try{
+    transition=document.startViewTransition(()=>{
+      vtUntag();
+      renderRoute();
+      const to=goingToCase
+        ?document.querySelector('.case-hero')
+        :(leavingCase?document.querySelector('a.project-card[href="#'+prevPath+'"] .visual'):null);
+      vtTag(to);
+    });
+  }catch(error){
+    vtUntag();renderRoute();return;
+  }
+  transition.finished.then(vtUntag,vtUntag);
 }
 
 if('scrollRestoration' in history)history.scrollRestoration='manual';
