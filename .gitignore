@@ -12,3 +12,7 @@ trash/
 # Editor/tooling
 .vscode/
 *.log
+
+# Local push helper + its log (not part of the site)
+push-log.txt
+push-to-github.command
