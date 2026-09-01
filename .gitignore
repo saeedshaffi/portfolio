@@ -1,6 +1,14 @@
+# macOS junk
 .DS_Store
 **/.DS_Store
+
+# Local scratch folders (never commit)
 _backups/
 _figma_tmp/
 _stale_locks/
 _to_delete/
+trash/
+
+# Editor/tooling
+.vscode/
+*.log
