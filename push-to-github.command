@@ -1,24 +1,25 @@
 #!/bin/bash
-# Double-click me (round 2): tests git's connection step by step, then pushes.
-# Results are saved to push-log.txt so Claude can read them.
+# Double-click me: waits for a working connection to GitHub, then pushes.
+# Tries for up to ~10 minutes. Log saved to push-log.txt for Claude.
 cd "$(dirname "$0")" || exit 1
 LOG="push-log.txt"
 {
-  echo "=== Round 2: $(date) ==="
-  echo "--- step 1: tiny read-only git request (ls-remote) ---"
-  git ls-remote origin HEAD 2>&1
-  echo "--- ls-remote exit: $? ---"
-  echo ""
-  echo "--- step 2: push with whole-buffer upload (no chunked streaming) ---"
-  git -c http.postBuffer=530000000 push origin main 2>&1
-  code=$?
-  echo "--- push exit: $code ---"
-  if [ "$code" -ne 0 ]; then
-    echo ""
-    echo "--- step 3: network trace of the failing request ---"
-    GIT_TRACE_CURL=1 GIT_TRACE_CURL_NO_DATA=1 git ls-remote origin HEAD 2>&1 | tail -60
-  fi
+  echo "=== Auto-retry push: $(date) ==="
+  for attempt in $(seq 1 40); do
+    code=$(curl -s --max-time 8 -o /dev/null -w "%{http_code}" https://github.com 2>/dev/null)
+    echo "[$(date +%H:%M:%S)] probe $attempt: HTTP $code"
+    if [ "$code" = "200" ] || [ "$code" = "301" ]; then
+      echo ">>> connection is up — pushing now..."
+      if git push origin main 2>&1; then
+        echo ">>> PUSH SUCCEEDED at $(date)"
+        break
+      else
+        echo ">>> push failed, will keep retrying..."
+      fi
+    fi
+    sleep 8
+  done
 } 2>&1 | tee "$LOG"
 echo ""
-echo "Done. Results saved to push-log.txt for Claude."
+echo "Done. Results saved for Claude."
 read -r -p "Press Enter to close..."
