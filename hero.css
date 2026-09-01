@@ -343,9 +343,11 @@ body.home-active #home-hero-title .home-rotating-word {
   position: relative;
   display: inline-block;
   box-sizing: content-box;
-  height: 0.906em;             /* box bottom lands on the surrounding text's baseline */
-  padding-bottom: 0.07em;      /* a hair of slack so the baseline row isn't shaved */
-  margin-bottom: -0.07em;      /* ...without moving the baseline */
+  height: 1.04em;
+  padding-top: 0.04em;
+  padding-bottom: 0.08em;
+  margin-top: -0.04em;
+  margin-bottom: -0.08em;
   margin-right: -4px;          /* cancels the clip slack added in app.js */
   overflow: hidden;
   vertical-align: baseline;
@@ -614,10 +616,6 @@ body.home-active .site-footer {
   image-rendering: auto;
 }
 
-/* ---------- Rotating promise: stable line structure ----------
-   The rotating slot is sized by app.js to the WIDEST word (fixed width),
-   so the headline's wrapping is identical for every rotating word and the
-   text around the slot never shifts as words cycle. */
-
-/* "As you can see" sits on its own supporting line beneath the CTA sentence. */
-body.home-active #home-hero-title .home-see-break { display: block; height: 0; }
+/* ---------- Rotating promise: responsive word slot ----------
+   The rotating slot follows the visible word's width so shorter words do not
+   leave unnecessary space before the sentence continues. */
