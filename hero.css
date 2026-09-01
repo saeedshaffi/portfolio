@@ -614,32 +614,10 @@ body.home-active .site-footer {
   image-rendering: auto;
 }
 
-/* ---------- Rotating promise: deterministic line structure ----------
-   The rotating words differ hugely in width (complexity vs AI). To keep the
-   headline's line count identical for every word, the phrase starts its own
-   line and the trailing clause is broken explicitly instead of by wrapping.
-   The word + "and" stay one nowrap unit, so the text after the word still
-   slides horizontally with the current word's width — no reserved gap. */
+/* ---------- Rotating promise: stable line structure ----------
+   The rotating slot is sized by app.js to the WIDEST word (fixed width),
+   so the headline's wrapping is identical for every rotating word and the
+   text around the slot never shifts as words cycle. */
 
-body.home-active #home-hero-title .home-rotating-tail {
-  color: #f8f6f2;
-  font-weight: inherit;
-}
-
-/* Wide viewports fit "[word] and business collide." on one line for every
-   rotating word, so it wraps naturally there. Below 1200px the longest word
-   pushes "business collide." over while the shortest does not, which would
-   change the line count as the word rotates — so the break is pinned. */
-body.home-active #home-hero-title .home-suffix-break { display: none; }
-
-@media (max-width: 1199px) {
-  body.home-active #home-hero-title .home-suffix-break { display: block; height: 0; }
-}
-
-/* Under 360px even "[word] and" no longer fits after "where" for the longest
-   word while it does for the shortest, so the phrase takes its own line. */
-body.home-active #home-hero-title .home-hero-break { display: none; }
-
-@media (max-width: 359px) {
-  body.home-active #home-hero-title .home-hero-break { display: block; height: 0; }
-}
+/* "As you can see" sits on its own supporting line beneath the CTA sentence. */
+body.home-active #home-hero-title .home-see-break { display: block; height: 0; }
