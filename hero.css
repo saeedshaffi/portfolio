@@ -124,7 +124,7 @@ body.home-active .home-hero-content {
 }
 
 body.home-active #home-hero-title {
-  max-width: 26ch;
+  max-width: 32ch; /* wide enough for "[See my work] I turn complexity into confidence" on one desktop line */
   margin: 0;
   color: #f8f6f2;
   font-size: clamp(3.4rem, 4.6vw, 5.9rem);
