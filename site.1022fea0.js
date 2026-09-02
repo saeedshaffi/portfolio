@@ -2187,8 +2187,12 @@ function resumePage(){
     targets.forEach(el=>{ if(!el.classList.contains('is-in'))revealObserver.observe(el); });
   }
 
-  /* ---------- Cursor-following pill ---------- */
-  let pill=null,pillRaf=0,pillTarget={x:0,y:0},pillPos={x:0,y:0},pillOn=false;
+  /* ---------- Cursor-following "View case study" pill ----------
+     The arrow always points at the centre of the hovered card: its angle is
+     recomputed from the cursor position and eased, like the hero's eye. */
+  let pill=null,pillArrow=null,pillRaf=0,pillOn=false;
+  let pillTarget={x:0,y:0},pillPos={x:0,y:0},angleTarget=-45,angle=-45,activeCard=null;
+  const shortest=(from,to)=>{let d=(to-from+540)%360-180;return from+d;};
   function initCursorPill(path){
     document.body.classList.remove('has-cursor-pill');
     if(path!=='/'||!finePointer()||reduceMotion()||window.innerWidth<=900)return;
@@ -2198,23 +2202,37 @@ function resumePage(){
       pill=document.createElement('div');
       pill.className='cursor-pill';
       pill.setAttribute('aria-hidden','true');
-      pill.innerHTML='View case <i>↗</i>';
+      pill.innerHTML='<span class="cursor-pill-label">View case study</span><span class="cursor-pill-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"/><path d="m12 5 7 7-7 7"/></svg></span>';
       document.body.appendChild(pill);
+      pillArrow=pill.querySelector('.cursor-pill-arrow');
     }
     document.body.classList.add('has-cursor-pill');
     const loop=()=>{
       pillPos.x+=(pillTarget.x-pillPos.x)*0.22;
       pillPos.y+=(pillTarget.y-pillPos.y)*0.22;
+      angle+=(angleTarget-angle)*0.16;
       pill.style.transform=`translate(${pillPos.x}px,${pillPos.y}px) translate(-50%,-50%) scale(${pillOn?1:.6})`;
+      /* the arrow glyph points right at 0deg; nudge it 1px along its own direction */
+      pillArrow.style.transform=`rotate(${angle}deg) translateX(1px)`;
       pillRaf=requestAnimationFrame(loop);
+    };
+    const aim=(card,x,y)=>{
+      const r=card.getBoundingClientRect();
+      const cx=r.left+r.width/2,cy=r.top+r.height/2;
+      const raw=Math.atan2(cy-y,cx-x)*180/Math.PI;   /* 0 = right, 90 = down */
+      angleTarget=shortest(angle,raw);
     };
     const show=e=>{
       const card=e.target.closest('.project-card:not(.coming-soon-card)');
       if(!card){hide();return;}
       pillTarget={x:e.clientX,y:e.clientY};
-      if(!pillOn){pillPos={x:e.clientX,y:e.clientY};pillOn=true;pill.classList.add('is-on');cancelAnimationFrame(pillRaf);loop();}
+      aim(card,e.clientX,e.clientY);
+      if(!pillOn||card!==activeCard){
+        activeCard=card;
+        if(!pillOn){pillPos={x:e.clientX,y:e.clientY};angle=angleTarget;pillOn=true;pill.classList.add('is-on');cancelAnimationFrame(pillRaf);loop();}
+      }
     };
-    const hide=()=>{ if(pillOn){pillOn=false;pill.classList.remove('is-on');setTimeout(()=>{if(!pillOn)cancelAnimationFrame(pillRaf);},350);} };
+    const hide=()=>{ activeCard=null; if(pillOn){pillOn=false;pill.classList.remove('is-on');setTimeout(()=>{if(!pillOn)cancelAnimationFrame(pillRaf);},350);} };
     grid.addEventListener('pointermove',show);
     grid.addEventListener('pointerleave',hide);
     grid.addEventListener('click',hide);
