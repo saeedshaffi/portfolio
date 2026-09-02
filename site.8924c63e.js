@@ -2312,41 +2312,8 @@ function resumePage(){
     });
   }
 
-  /* ---------- Theme toggle ---------- */
-  function initTheme(){
-    if(document.querySelector('.theme-toggle'))return;
-    const root=document.documentElement;
-    const media=window.matchMedia('(prefers-color-scheme: dark)');
-    const stored=(()=>{try{return localStorage.getItem('theme');}catch(e){return null;}})();
-    const apply=t=>{
-      root.dataset.theme=t;
-      const meta=document.querySelector('meta[name="theme-color"]');
-      if(meta)meta.setAttribute('content',t==='dark'?'#0f100e':'#f4f1eb');
-      const btn=document.querySelector('.theme-toggle');
-      if(btn){btn.setAttribute('aria-label',t==='dark'?'Switch to light theme':'Switch to dark theme');btn.setAttribute('aria-pressed',String(t==='dark'));}
-    };
-    const current=()=>stored||(media.matches?'dark':'light');
-    apply(current());
-    media.addEventListener('change',()=>{ let s=null;try{s=localStorage.getItem('theme');}catch(e){} if(!s)apply(media.matches?'dark':'light'); });
-    const nav=document.getElementById('site-nav');
-    const lastLink=nav?nav.querySelector('a:last-child'):null;
-    const btn=document.createElement('button');
-    btn.type='button';btn.className='theme-toggle';
-    btn.innerHTML='<svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>';
-    if(nav&&lastLink)nav.insertBefore(btn,lastLink);else document.querySelector('.site-header')?.appendChild(btn);
-    btn.addEventListener('click',()=>{
-      const next=root.dataset.theme==='dark'?'light':'dark';
-      try{localStorage.setItem('theme',next);}catch(e){}
-      root.classList.add('theme-switching');
-      apply(next);
-      setTimeout(()=>root.classList.remove('theme-switching'),450);
-    });
-    apply(current());
-  }
-
   window.initSiteExtras=function(path){
     initNavBackdrop();
-    initTheme();
     initMobileCta();
     initReveals(path);
     initCursorPill(path);
