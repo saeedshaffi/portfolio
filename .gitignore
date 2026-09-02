@@ -17,3 +17,6 @@ dist/
 # Local push helper + its log (not part of the site)
 push-log.txt
 push-to-github.command
+
+# Showreel source frames and draft cuts (60 MB, not part of the site)
+showreel-src/

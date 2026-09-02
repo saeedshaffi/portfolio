@@ -2846,6 +2846,223 @@ function resumePage(){
   };
 })();
 ;
+/* ===== hero-video.js ===== */
+/* Hero "See my work" pill — three layers, modelled on damianskotzke.com:
+   1. a muted loop of the walkthrough plays faintly behind the pill's label;
+   2. on hover (fine pointer only) a square preview card fades/scales in and
+      follows the cursor with eased lag; it carries a "View" badge;
+   3. click opens a square 90vmin modal that plays the full walkthrough with
+      sound — no controls, just ×, Esc or a click outside to close.
+   Everything is delegated from the document, so it survives app.js
+   re-rendering the hero on every route change. */
+(function(){
+  var PREVIEW=[['assets/kfh/kfh-cta-preview.webm','video/webm'],['assets/kfh/kfh-cta-preview.mp4','video/mp4']];
+  var FULL=[['assets/kfh/kfh-walkthrough.webm','video/webm'],['assets/kfh/kfh-walkthrough.mp4','video/mp4']];
+  var POSTER='assets/kfh/kfh-walkthrough-poster.webp';
+  var CARD=224, GAP=16;            /* card size and its offset from the cursor */
+  var EASE=0.16;                   /* per-frame lerp factor for the follow */
+
+  var sources=function(list){return list.map(function(s){return '<source src="'+s[0]+'" type="'+s[1]+'">';}).join('');};
+  var reduceMotion=function(){return window.matchMedia('(prefers-reduced-motion: reduce)').matches;};
+  var finePointer=function(){return window.matchMedia('(hover: hover) and (pointer: fine)').matches;};
+  var safePlay=function(v){var p=v&&v.play();if(p&&p.catch)p.catch(function(){});};
+
+  function loopVideo(className){
+    var v=document.createElement('video');
+    v.className=className;
+    v.muted=true;v.defaultMuted=true;v.loop=true;v.playsInline=true;
+    v.setAttribute('muted','');v.setAttribute('playsinline','');
+    v.setAttribute('aria-hidden','true');
+    v.tabIndex=-1;
+    v.preload='auto';
+    v.poster=POSTER;
+    v.innerHTML=sources(PREVIEW);
+    return v;
+  }
+
+  /* ---------- 1. Faint loop inside the pill ---------- */
+  function mountPill(){
+    var cta=document.querySelector('.home-inline-cta[data-hero-video]');
+    if(!cta||cta.dataset.videoReady)return;
+    var bg=cta.querySelector('.home-cta-bg');
+    if(!bg)return;
+    cta.dataset.videoReady='1';
+    var v=loopVideo('home-cta-video');
+    if(reduceMotion()){v.autoplay=false;v.preload='metadata';}
+    bg.appendChild(v);
+    if(!reduceMotion())safePlay(v);
+  }
+  /* The hero is re-rendered by app.js on navigation; watch for it. */
+  var mountQueued=false;
+  function queueMount(){
+    if(mountQueued)return;
+    mountQueued=true;
+    requestAnimationFrame(function(){mountQueued=false;mountPill();});
+  }
+  new MutationObserver(queueMount).observe(document.documentElement,{childList:true,subtree:true});
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mountPill);else mountPill();
+
+  /* ---------- 2. Cursor-following preview card ---------- */
+  var card=null,cardVideo=null,active=false,raf=0;
+  var cur={x:0,y:0},target={x:0,y:0};
+
+  function buildCard(){
+    if(card)return card;
+    card=document.createElement('div');
+    card.className='hero-reel-card';
+    card.setAttribute('aria-hidden','true');
+    card.innerHTML=
+      '<div class="hero-reel-card-inner">'+
+        '<div class="hero-reel-card-border"></div>'+
+        '<span class="hero-reel-card-badge">View'+
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+
+            '<polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>'+
+          '</svg>'+
+        '</span>'+
+      '</div>';
+    cardVideo=loopVideo('hero-reel-card-video');
+    card.firstChild.insertBefore(cardVideo,card.firstChild.firstChild);
+    document.body.appendChild(card);
+    return card;
+  }
+
+  /* Where the card's top-left corner wants to be: just below-right of the
+     pointer, flipped to the other side when it would leave the viewport. */
+  function placeFor(x,y){
+    var vw=window.innerWidth,vh=window.innerHeight;
+    var px=x+GAP,py=y+GAP;
+    if(px+CARD>vw-8)px=x-GAP-CARD;
+    if(py+CARD>vh-8)py=y-GAP-CARD;
+    return {x:Math.max(8,px),y:Math.max(8,py)};
+  }
+
+  function tick(){
+    var dx=target.x-cur.x,dy=target.y-cur.y;
+    cur.x+=dx*EASE;cur.y+=dy*EASE;
+    card.style.transform='translate3d('+cur.x.toFixed(2)+'px,'+cur.y.toFixed(2)+'px,0)';
+    if(active||Math.abs(dx)>0.5||Math.abs(dy)>0.5)raf=requestAnimationFrame(tick);
+    else raf=0;
+  }
+
+  function showCard(event){
+    if(!finePointer())return;
+    buildCard();
+    active=true;
+    var p=placeFor(event.clientX,event.clientY);
+    /* Start exactly at the pointer so the card never flies in from elsewhere. */
+    target=p;cur={x:p.x,y:p.y};
+    card.style.transform='translate3d('+p.x+'px,'+p.y+'px,0)';
+    card.classList.add('is-visible');
+    if(!reduceMotion())safePlay(cardVideo);
+    if(!raf)raf=requestAnimationFrame(tick);
+  }
+  function moveCard(event){
+    if(!active)return;
+    target=placeFor(event.clientX,event.clientY);
+    if(!raf)raf=requestAnimationFrame(tick);
+  }
+  function hideCard(){
+    if(!card||!active)return;
+    active=false;
+    card.classList.remove('is-visible');
+    if(cardVideo)cardVideo.pause();
+  }
+
+  var ctaFrom=function(event){return event.target instanceof Element?event.target.closest('.home-inline-cta[data-hero-video]'):null;};
+  document.addEventListener('pointerover',function(event){
+    var cta=ctaFrom(event);
+    if(!cta||cta.contains(event.relatedTarget))return;
+    cta.classList.add('is-previewing');
+    showCard(event);
+  });
+  document.addEventListener('pointermove',moveCard,{passive:true});
+  document.addEventListener('pointerout',function(event){
+    var cta=ctaFrom(event);
+    if(!cta||cta.contains(event.relatedTarget))return;
+    cta.classList.remove('is-previewing');
+    hideCard();
+  });
+  window.addEventListener('blur',hideCard);
+  window.addEventListener('scroll',hideCard,{passive:true});
+
+  /* ---------- 3. Square modal with the full walkthrough ---------- */
+  var dialog=null,dialogVideo=null,hint=null,closing=false;
+
+  function buildDialog(){
+    if(dialog)return dialog;
+    dialog=document.createElement('dialog');
+    dialog.className='hero-reel-modal';
+    dialog.setAttribute('aria-label','KFH Jazeel product walkthrough');
+    dialog.innerHTML=
+      '<div class="hero-reel-frame">'+
+        '<video class="hero-reel-video" playsinline loop preload="metadata" poster="'+POSTER+'">'+sources(FULL)+'</video>'+
+        '<button type="button" class="hero-reel-close" aria-label="Close video">'+
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>'+
+        '</button>'+
+        '<button type="button" class="hero-reel-hint" hidden>Tap for sound</button>'+
+      '</div>';
+    document.body.appendChild(dialog);
+    dialogVideo=dialog.querySelector('.hero-reel-video');
+    hint=dialog.querySelector('.hero-reel-hint');
+
+    dialog.querySelector('.hero-reel-close').addEventListener('click',closeDialog);
+    hint.addEventListener('click',function(){
+      dialogVideo.muted=false;safePlay(dialogVideo);hint.hidden=true;
+    });
+    /* Click on the dark area (the dialog itself) closes; the frame does not. */
+    dialog.addEventListener('click',function(event){
+      if(event.target===dialog)closeDialog();
+    });
+    dialog.addEventListener('cancel',function(event){event.preventDefault();closeDialog();});
+    return dialog;
+  }
+
+  function openDialog(){
+    buildDialog();
+    if(dialog.open)return;
+    hint.hidden=true;
+    closing=false;
+    dialog.classList.remove('is-closing');
+    document.documentElement.classList.add('hero-reel-open');
+    dialog.showModal();
+    try{dialogVideo.currentTime=0;}catch(e){}
+    dialogVideo.muted=false;
+    var played=dialogVideo.play();
+    if(played&&played.catch){
+      played.catch(function(){
+        /* Autoplay with sound refused: play muted and offer one tap for audio. */
+        dialogVideo.muted=true;safePlay(dialogVideo);hint.hidden=false;
+      });
+    }
+    requestAnimationFrame(function(){dialog.querySelector('.hero-reel-close').focus();});
+  }
+
+  function closeDialog(){
+    if(!dialog||!dialog.open||closing)return;
+    closing=true;
+    dialogVideo.pause();
+    var finish=function(){
+      dialog.classList.remove('is-closing');
+      document.documentElement.classList.remove('hero-reel-open');
+      dialog.close();
+      closing=false;
+    };
+    if(reduceMotion()){finish();return;}
+    dialog.classList.add('is-closing');
+    window.setTimeout(finish,200);
+  }
+
+  document.addEventListener('click',function(event){
+    var cta=ctaFrom(event);
+    if(!cta)return;
+    event.preventDefault();
+    cta.classList.remove('is-previewing');
+    hideCard();
+    openDialog();
+  });
+  window.addEventListener('hashchange',function(){if(dialog&&dialog.open)closeDialog();});
+})();
+;
 /* ===== app.js ===== */
 const A='https://www.figma.com/api/mcp/asset/';
 const assets={portrait:'assets/home/saeed-portrait.webp',kfh:'assets/kfh/hr/Device - Macbook Pro 3D.webp',eyewa:'assets/projects/eyewa.png',system:'assets/projects/harmony.png',talon:'assets/projects/talon.png',aiSystem:'assets/projects/ai-system.png'};
@@ -2883,7 +3100,7 @@ function separateHomeArchive(){
 const projectHighlights=()=>'';
 const projectCards=()=>projects.map(p=>p.comingSoon?`<div class="project-card coming-soon-card" aria-disabled="true">${projectVisual(p)}<span class="coming-soon-banner">Coming soon</span><div class="meta"><span class="tags">${p.tag}</span><h3>${p.title}</h3><p>${p.desc}</p></div></div>`:`<a class="project-card${p.id==='kfh'?' kfh-project-card':p.id==='eyewa'?' eyewa-project-card':p.id==='system'?' kfh-project-card hm-project-card':p.id==='talon'?' kfh-project-card tl-project-card':p.id==='ai-system'?' ai-system-project-card':''}" href="#/case/${p.id}">${projectVisual(p)}<div class="meta"><span class="tags">${p.tag}</span><h3>${p.title}</h3><p>${p.desc}</p>${projectHighlights(p)}${p.highlights?`<div class="project-highlights" aria-label="Project facts">${p.highlights.map(item=>`<span>${item}</span>`).join('')}</div>`:''}</div></a>`).join('');
 function notFoundPage(path){const safe=String(path).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));return `<section class="notfound reveal" aria-labelledby="notfound-title"><span class="notfound-eyebrow">404 · Page not found</span><h1 id="notfound-title">This page moved on. The work is still here, built for <em>clarity</em>.</h1><p>The link you followed points to a page that no longer exists. The case studies, résumé and contact details are one click away.</p><div class="notfound-actions"><a href="#/" data-scroll-target="selected-work">See my work</a><a href="mailto:saeedshaffi@gmail.com">Let’s talk <span aria-hidden="true">↗</span></a></div><div class="notfound-path">${safe}</div></section>`}
-function home(){return `<section class="home-hero reveal" aria-labelledby="home-hero-title"><span class="home-hero-grain" aria-hidden="true"></span><div class="home-hero-meta"><span>Berlin · Lead Product Designer</span><span>Fintech · eCommerce · B2B · B2C · SaaS</span></div><div class="home-hero-content"><h1 id="home-hero-title"><span class="hl" style="--hl:0">Design is how strategy becomes real.</span><br aria-hidden="true" /> <a class="home-inline-cta" href="#/" data-scroll-target="selected-work" aria-label="See my work"><span class="home-inline-label">See my work</span><span class="home-eye" aria-hidden="true"></span></a> <span class="hl" style="--hl:1">I turn complexity <span class="home-into-pair">into&nbsp;<em class="home-rotating-phrase"><span class="home-rotating-group" aria-hidden="true"><span class="home-rotating-word"><span style="--word-index:0">clarity</span><span style="--word-index:1">confidence</span><span style="--word-index:2">momentum</span></span></span><span class="sr-only">clarity</span></em></span></span><br /><a class="home-talk-pill" href="mailto:saeedshaffi@gmail.com"><span>Let’s talk</span><i class="home-talk-icon" aria-hidden="true"><span>↗</span></i></a> <span class="hl" style="--hl:2">about your product.</span></h1><div class="home-hero-note"><p>More than 10 years combining research, product strategy, systems thinking, and craft. From early ideas to measurable results.</p><a class="home-resume-link" href="assets/SaeedShaffi_Resume.pdf" download="SaeedShaffi_Resume.pdf" aria-label="Open Saeed Shaffi résumé PDF">View résumé <span aria-hidden="true">↗</span></a></div></div></section><section class="home-clients" aria-label="Companies I have worked with"><div class="home-clients-inner"><span class="home-clients-label">Worked with</span><div class="home-clients-track"><ul class="home-clients-list"><li>KFH Jazeel Bank</li><li>Eyewa</li><li>CreditBook</li><li>Talon.One</li><li>Expertlead</li><li>PayPro</li><li>PriceOye</li><li>Ideate</li></ul><ul class="home-clients-list" aria-hidden="true"><li>KFH Jazeel Bank</li><li>Eyewa</li><li>CreditBook</li><li>Talon.One</li><li>Expertlead</li><li>PayPro</li><li>PriceOye</li><li>Ideate</li></ul></div></div></section><section class="page section home-work" id="selected-work" tabindex="-1"><div class="section-head"><div><span class="eyebrow">Selected work</span><h2>Designed to move<br>the metric.</h2></div><p>Five stories about research, systems thinking, stakeholder alignment and measurable product impact.</p></div><div class="project-grid">${projectCards()}</div><section class="home-archive" aria-labelledby="visual-archive-title"><div class="section-head"><div><span class="eyebrow">Visual archive</span><h2 id="visual-archive-title">Selected shots</h2></div></div><div class="shots">${shots.map(([n,u])=>`<button class="shot" type="button" data-shot-src="${SHOTS_FULL+u}" data-shot-title="${n}" aria-label="Open ${n} interface preview" aria-haspopup="dialog"><img loading="lazy" src="${SHOTS+u}" alt="${n} interface preview"><span>${n}</span></button>`).join('')}</div></section></section><section class="page section home-principles" aria-labelledby="home-principles-title"><div class="section-head"><div><span class="eyebrow">How I work</span><h2 id="home-principles-title">Four rules I don't<br>compromise on.</h2></div><p>The habits behind every number on this page.</p></div><ol class="home-principles-grid"><li class="home-principle" style="--i:0"><span class="home-principle-num">01</span><h3>Research before pixels</h3><p>Every redesign starts with drop-off data, interviews and support signals, not a moodboard.</p></li><li class="home-principle" style="--i:1"><span class="home-principle-num">02</span><h3>Systems over screens</h3><p>I build the foundations first: tokens, components and rules, so the 900th screen is as consistent as the first.</p></li><li class="home-principle" style="--i:2"><span class="home-principle-num">03</span><h3>Ship to learn</h3><p>Phased releases that earn engineering trust and prove the direction with real numbers, not opinions.</p></li><li class="home-principle" style="--i:3"><span class="home-principle-num">04</span><h3>Bring everyone along</h3><p>Executives, engineers, support and marketing aligned through weekly reviews and documentation that outlives the project.</p></li></ol></section>${careerTimeline()}`}
+function home(){return `<section class="home-hero reveal" aria-labelledby="home-hero-title"><span class="home-hero-grain" aria-hidden="true"></span><div class="home-hero-meta"><span>Berlin · Lead Product Designer</span><span>Fintech · eCommerce · B2B · B2C · SaaS</span></div><div class="home-hero-content"><h1 id="home-hero-title"><span class="hl" style="--hl:0">Design is how strategy becomes real.</span><br aria-hidden="true" /> <a class="home-inline-cta" href="#/" data-hero-video aria-haspopup="dialog" aria-label="See my work: play the KFH Jazeel product walkthrough"><span class="home-cta-bg" aria-hidden="true"></span><span class="home-inline-label">See my work</span><span class="home-eye" aria-hidden="true"></span></a> <span class="hl" style="--hl:1">I turn complexity <span class="home-into-pair">into&nbsp;<em class="home-rotating-phrase"><span class="home-rotating-group" aria-hidden="true"><span class="home-rotating-word"><span style="--word-index:0">clarity</span><span style="--word-index:1">confidence</span><span style="--word-index:2">momentum</span></span></span><span class="sr-only">clarity</span></em></span></span><br /><a class="home-talk-pill" href="mailto:saeedshaffi@gmail.com"><span>Let’s talk</span><i class="home-talk-icon" aria-hidden="true"><span>↗</span></i></a> <span class="hl" style="--hl:2">about your product.</span></h1><div class="home-hero-note"><p>More than 10 years combining research, product strategy, systems thinking, and craft. From early ideas to measurable results.</p><a class="home-resume-link" href="assets/SaeedShaffi_Resume.pdf" download="SaeedShaffi_Resume.pdf" aria-label="Open Saeed Shaffi résumé PDF">View résumé <span aria-hidden="true">↗</span></a></div></div></section><section class="home-clients" aria-label="Companies I have worked with"><div class="home-clients-inner"><span class="home-clients-label">Worked with</span><div class="home-clients-track"><ul class="home-clients-list"><li>KFH Jazeel Bank</li><li>Eyewa</li><li>CreditBook</li><li>Talon.One</li><li>Expertlead</li><li>PayPro</li><li>PriceOye</li><li>Ideate</li></ul><ul class="home-clients-list" aria-hidden="true"><li>KFH Jazeel Bank</li><li>Eyewa</li><li>CreditBook</li><li>Talon.One</li><li>Expertlead</li><li>PayPro</li><li>PriceOye</li><li>Ideate</li></ul></div></div></section><section class="page section home-work" id="selected-work" tabindex="-1"><div class="section-head"><div><span class="eyebrow">Selected work</span><h2>Designed to move<br>the metric.</h2></div><p>Five stories about research, systems thinking, stakeholder alignment and measurable product impact.</p></div><div class="project-grid">${projectCards()}</div><section class="home-archive" aria-labelledby="visual-archive-title"><div class="section-head"><div><span class="eyebrow">Visual archive</span><h2 id="visual-archive-title">Selected shots</h2></div></div><div class="shots">${shots.map(([n,u])=>`<button class="shot" type="button" data-shot-src="${SHOTS_FULL+u}" data-shot-title="${n}" aria-label="Open ${n} interface preview" aria-haspopup="dialog"><img loading="lazy" src="${SHOTS+u}" alt="${n} interface preview"><span>${n}</span></button>`).join('')}</div></section></section><section class="page section home-principles" aria-labelledby="home-principles-title"><div class="section-head"><div><span class="eyebrow">How I work</span><h2 id="home-principles-title">Four rules I don't<br>compromise on.</h2></div><p>The habits behind every number on this page.</p></div><ol class="home-principles-grid"><li class="home-principle" style="--i:0"><span class="home-principle-num">01</span><h3>Research before pixels</h3><p>Every redesign starts with drop-off data, interviews and support signals, not a moodboard.</p></li><li class="home-principle" style="--i:1"><span class="home-principle-num">02</span><h3>Systems over screens</h3><p>I build the foundations first: tokens, components and rules, so the 900th screen is as consistent as the first.</p></li><li class="home-principle" style="--i:2"><span class="home-principle-num">03</span><h3>Ship to learn</h3><p>Phased releases that earn engineering trust and prove the direction with real numbers, not opinions.</p></li><li class="home-principle" style="--i:3"><span class="home-principle-num">04</span><h3>Bring everyone along</h3><p>Executives, engineers, support and marketing aligned through weekly reviews and documentation that outlives the project.</p></li></ol></section>${careerTimeline()}`}
 const caseData={kfh:{accent:'#56e0bd',tag:'Fintech · Digital banking',title:'Transforming KFH Jazeel Bank into a scalable fintech platform.',summary:'A six month redesign of KFH Jazeel’s personal financing platform, improving onboarding, building a design system and enabling a team to deliver at scale.',task:'Redesign web application',role:'Lead Product Designer',duration:'6 months',sections:[['The challenge',`Despite significant marketing, users were not returning to KFH Jazeel. Research exposed a product that felt like a traditional banking form: onboarding was long, core actions were unclear and even basic flows could crash. The business needed more than a visual refresh, it needed a more useful product model.`],['Research before pixels',`I partnered with the data team to examine behaviour and drop off, interviewed customers, reviewed support signals and compared traditional banks with neobanks. The most urgent signal was a 66% drop off during onboarding. Interviews reinforced it: 80% found onboarding challenging, 86% experienced crashes and 30% did not understand core features.`],['Changing how the team worked',`I led design strategy, research and stakeholder alignment while mentoring two junior designers. I introduced version control, a shared workflow and a design system based on atomic design. Weekly reviews and developer documentation kept bank executives, engineering, marketing, support and product aligned.`],['Outcome',`We phased the onboarding redesign to address engineering concerns without compromising the experience. Starting with fewer fields and clearer errors proved the direction, built trust with engineering, and unlocked deeper improvements.`]],metrics:[['66→18%','onboarding drop off'],['3→32.5%','PayBills adoption'],['900','screens delivered'],['99%','deadlines met']]},eyewa:{accent:'#ff8064',tag:'eCommerce · Checkout',title:'Turning checkout friction into customer confidence.',summary:'A checkout redesign informed by research for Eyewa that made progress, costs and security easier to understand.',task:'Checkout redesign',role:'Product Designer',duration:'Complete journey',sections:[['The challenge',`Customers struggled to understand Eyewa’s checkout steps, could not easily review their order and lacked confidence in card payments. Eyewa was losing almost 40% of potential customers during checkout.`],['From evidence to focus',`I analysed funnel behaviour, reviewed competing international commerce flows and mapped patterns and variations. Heatmaps suggested users did not know where to focus. Missing progress indicators, weak content clarity and a promo field that drew too much attention added cognitive load.`],['Design and validation',`Paper concepts became detailed flows for login, guest checkout, contact details, delivery and payment. Six customers tested the prototype remotely. Their feedback led to stronger guest checkout visibility, social sign in, separated contact and shipping steps, and clearer security cues.`],['Delivery and impact',`Engineering received complete journey states, interactive prototypes and a design specification. Grooming sessions and design QA protected the intent through implementation. Three months after launch, both retention and support signals had moved materially.`]],metrics:[['36%','reduction in user churn'],['62%','fewer checkout complaints']]},system:{accent:'#77e89c',tag:'B2B · Design systems',title:'Making consistency the default, not the debate.',summary:'Harmony brought CreditBook’s designers, developers and global teams onto a scalable shared foundation.',task:'Build a design system',role:'Sole Product Designer',duration:'2021',sections:[['The challenge',`CreditBook had verbal agreement about individual colours and elements, but no formal system. The result was inconsistent fields, alignment, colours, hierarchy and flows, and a disconnected customer experience.`],['Establishing the foundation',`I reviewed the existing design process, brand guidelines and stakeholder expectations. A moodboard aligned the organisation on creative direction, while heuristic evaluation made inconsistencies tangible and prioritised.`],['System, not sticker sheet',`Harmony defined typography, colour, spacing, grids, interactive language, states and responsive component behaviour. Figma auto layout and tokens helped components cover multiple breakpoints as well as hover, focus, filled, error and disabled states.`],['What changed',`The system created a shared language without limiting exploration. Documentation and a pattern library made decisions repeatable, accelerated design work and improved consistency across the application.`]],metrics:[['54%','customer productivity lift'],['40%','fewer design inconsistencies'],['6 mo.','to build and scale']]},talon:{accent:'#d9ff57',tag:'B2B SaaS · Promotion engine',title:'Making campaign creation explain itself.',summary:'A focused five day sprint to understand and simplify Talon.One’s Campaign Manager.',task:'Improve Campaign Manager UX',role:'Sole Product Designer',duration:'5 day sprint',sections:[['The challenge',`Talon.One is powerful, but the Campaign Manager asked users to learn its internal logic. Every participant found campaign creation difficult without documentation or video guidance.`],['A compressed discovery',`I studied product and developer documentation, watched training material, researched customer contexts and interviewed potential users when existing customers were unavailable. Interviews, user flows, heuristic review and heatmaps converged on campaign creation as the priority.`],['Simplifying the journey',`Updated flows clarified application selection, campaign setup, templates, filters, activation and success states. Wireframes introduced stronger CTA hierarchy, contextual education, clear active states and input patterns with less unnecessary mouse movement.`],['Validation and reflection',`A/B testing showed the proposed direction was considerably easier to use. The sprint also surfaced a broader principle: every screen should communicate its purpose, available options and next action without requiring an external guide.`]],metrics:[['100%','needed help creating campaigns'],['80%','wanted a dashboard overview'],['5 days','research to validated direction']]}};
 const bullet=x=>`<ul>${x.map(v=>`<li>${v}</li>`).join('')}</ul>`;
 const kfhMedia={hero:['788e6239-69e2-4597-afbe-92217d1429f7','9a218c6b-1a9a-430d-9d07-7c8f5a2249b1'],brief:['c834e16f-a72d-4c6b-94ce-e8fcafd26d82','b531681b-7bdd-4145-a59f-18f34e81f4da','0c03d3f0-8f16-451b-900f-f39b59624cd9','dd2e6e56-af9e-43b9-b72f-50b9457e5e9e'],requirements:['500e3214-5965-4ae2-b586-32d56a9ce68c','abb403b7-0300-4d60-8a65-cc841aa0bba3'],product:['f678c239-1903-458f-a895-9ed211b0f805','3b7c8075-0083-4fe2-8ec0-383d16876d37'],process:['f4a85fcc-e76f-46f8-99af-bf9e5dca2080','f8e9c15d-63e5-45ca-bf7e-2e84fadb0495','c2fa0246-e9be-4490-98c3-79b770d75b1d','c8400f48-2648-4739-94f9-0efd862e8d1e'],workflow:['d8983e2b-b82c-40f9-98ae-cecf87a33c5c','3746c2f0-2ae2-40ce-a098-778cd81bb639'],interviews:['bdffae61-dfa8-488a-a426-4eb02831cb03','c6937bcb-3677-453d-9a71-ac4681fdfeea'],heuristic:['8c6243df-8676-4b65-8415-5594107e5cf0','3624fa4b-b609-4c69-a1b8-94a07a3d784b'],traditional:['e757f660-6f3d-4966-96ee-d6f11977d0ae','f4aad7cc-253b-4ce6-a642-7cbc9fcf6f01','95375f65-00b1-402a-af60-5f3e896f0637','17e706ca-e91c-4b53-b331-a9a90ddc486e'],traditionalReviews:['cffcfb57-1999-411b-b20a-b2a851b0d14f','febac2a4-f2f5-4f0a-bf38-99598ff6c4ff','0b3ec80f-d029-4deb-b1a3-aed54b43f8f8','98936542-ec20-4c2b-855b-1145be5332af'],neo:['4de93b14-56b3-4793-832b-962fe0bbe29b','131db331-ad4d-4cc8-802b-28fad6fc37f2','8ee39cc0-18e3-4238-94a0-0407e1a3027a','6782165b-86b7-446c-9174-1f1b4bdcc4db'],neoReviews:['840550af-08fc-4875-89b8-6e6738353581','c27d8725-a9a2-4885-b616-d667cf48335e','cd71c62d-9de9-4a21-a29e-0991b1a6d187','3e386bab-7c74-4f9c-9f10-6ffbb9a9924f'],neoFlows:['5c4ba3e3-e96c-4adf-a3f3-96d02694a747','97b31519-1007-4234-819c-8844edb29dcd','eccb4781-fbc4-4e66-bb2c-b10cb1c5bcd4','0eb17fa6-6f64-428c-b3cd-28064c682e10'],traditionalFlows:['6e595cce-e8bf-4ee5-9ffa-4566b9c73f1b','a131853e-56ed-473a-b8f0-93adb0304fc7','bef08b89-66d3-4158-bfff-99dd1bbde965','9d277f32-5e96-4a52-849c-001de156274e'],comparison:['e91550f3-5388-4bf0-8553-0ece969e9384','3973d372-cfd4-47a8-b60e-3a048cd40185'],overview:['635f1785-c9da-4d20-874a-1560f05440b7','1f01b8b1-2d93-41f1-8c27-c645da430236','932f818e-6591-4142-9758-f0c48cc46488'],wireframes:['2584ada9-106b-40b4-b55c-1a605e26efa8','c2ebf65a-c5cb-4d46-8c9d-07eacd465d86','6a6fddde-7cbf-4257-a73e-90b326fd8937','2732a6a0-d91f-4846-b2e2-a8022054d21c'],hifi:['4172ef1f-64af-43ec-a598-eafd5a4f4691','26f16fc0-f385-45b1-bbc9-9727963eb2a4','95148e4c-412e-4303-a3fb-c50a489b5264','64bd3c64-a13d-4495-8d33-be942e89b15a'],version:['2ce443b5-1349-45a6-a908-dd0b3331f8d1','eb92cfca-27bc-46bb-9732-f5bf91c163f3'],system:['7ef8e6c9-03f1-4ee7-ba2d-7b3305c6ff56','51a77035-7103-439d-8b47-88b81f53b87f'],before:['ca24d5c4-4961-487c-ae45-89fc32c3d70b','ee71e32a-deef-4f45-b941-5b40a8f37245','eb9d64f4-3241-4f46-9a9b-a79e867ddcb1','f3481b17-0fd8-4ae8-9def-e7f7c4793773'],improvements:['4525e758-a432-4634-b168-990a12fcc44e','09ff798e-88ec-4d1f-baca-463f3ea40d7e','94e3f8d5-a604-4427-a618-3986528f6e43','17345604-cdd4-4b10-b119-f36ed3c78f37'],ui:['45bdc59c-4d39-40c8-89c8-063edf879325','0286bf58-ac72-4658-90eb-27c663b1dbf5','1cbd0983-1ea9-4dab-ba55-52e8bde0dfe7','4de72ca8-d5b9-4778-a690-8f1075cdf5cd'],heatmaps:['1e56ba89-2f1f-4530-9366-91552651db61','5d380d60-3bb1-4763-866c-f7bdc4ffb7b7','cbff0a7d-34c7-4344-9516-20184a7a9154','1edc7397-265d-4069-b71c-dc347b734731','90fea2a8-f304-49c0-b2e7-0a4ca8a75287','e7ffff21-5040-4899-98e5-4bf14a67f4fa'],prototype:['6f72d32b-8feb-467b-8b9e-093e13ea568d','f234abf8-ab94-4392-b5c0-4e074acb4e47'],iteration:['ac5ff918-d2e8-4cb2-a77b-2b85f6d9d4a5','07e1d39c-9b45-41e9-89e9-fbfa0df3fe74'],mobile:['5039957b-8856-463f-93c1-cd3af0bf0393','2aa1b841-4b01-400b-87c1-7367949d3553','105cf911-949f-4191-ab43-ff0e8b4cdadf','52583c38-a54c-4fc7-8abe-53aa043e66dc'],thanks:['1783f85a-f660-4db7-85a9-433f68e32f82','9107072a-331e-4f3b-bab5-c184fc45a6fc']};
