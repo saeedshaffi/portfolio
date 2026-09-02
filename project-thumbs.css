@@ -116,7 +116,7 @@
 
 /* ---------- AI design-system thumb (Designing beyond Figma) ---------- */
 
-.ai-thumb{
+.project-card .visual.ai-thumb{
   position:relative;
   display:flex;
   align-items:center;
@@ -125,11 +125,10 @@
   background:
     radial-gradient(ellipse 90% 120% at 88% 0%, rgba(120,26,24,.35), transparent 60%),
     linear-gradient(120deg,#170a0c 0%,#1d0c0e 55%,#2a0f10 100%);
-  font-size:12px;
-  font-size:2.1cqw;
-  container-type:normal;
+  container-type:inline-size;
 }
-.ai-system-project-card .visual.ai-thumb{container-type:inline-size}
+
+.ai-thumb-left,.ai-thumb-copy{font-size:max(10px,2.4cqw)}
 
 .ai-thumb-left{
   flex:1 1 56%;
