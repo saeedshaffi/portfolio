@@ -214,3 +214,52 @@
 @media(prefers-reduced-motion:reduce){
   .ai-box,.ai-thumb-arrow,.ai-thumb-save{animation:none!important}
 }
+
+
+/* ---------- Harmony thumb: token chips surfacing over the component board ---------- */
+.hm-component-board{position:relative}
+.hm-token-chip{
+  position:absolute;left:var(--x);top:var(--y);z-index:2;
+  display:inline-flex;align-items:center;gap:.45em;padding:.4em .6em .4em .45em;
+  border-radius:.6em;background:rgba(255,255,255,.96);color:#123c2c;
+  box-shadow:0 .6em 1.4em rgba(9,58,38,.22),0 0 0 1px rgba(30,128,85,.14);
+  font-size:max(9px,1.9cqw);line-height:1;white-space:nowrap;
+  animation:hm-chip 7.5s cubic-bezier(.22,1,.36,1) calc(var(--i)*1.1s) infinite;
+  transform-origin:left center;
+}
+.hm-token-chip i{display:block;width:1.1em;height:1.1em;border-radius:.3em;flex:0 0 auto}
+.hm-token-chip i.is-radius{background:transparent;border:2px solid #1e8055;border-radius:.45em}
+.hm-token-chip b{font-weight:700}
+.hm-token-chip small{color:#5a7d6a;font-size:.9em}
+@keyframes hm-chip{
+  0%,4%{opacity:0;transform:translateY(.6em) scale(.9)}
+  9%,55%{opacity:1;transform:none}
+  62%,100%{opacity:0;transform:translateY(-.4em) scale(.96)}
+}
+
+/* ---------- Talon thumb: the four-step guided flow, cycling ---------- */
+.tl-feature-shot{position:relative}
+.tl-stepper{
+  position:absolute;left:4%;right:4%;bottom:5%;z-index:2;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:.4em;padding:.5em .6em .7em;
+  border-radius:.7em;background:rgba(255,255,255,.94);
+  box-shadow:0 .8em 1.8em rgba(18,40,110,.22),0 0 0 1px rgba(24,45,120,.12);
+  font-size:max(8px,1.7cqw);color:#1b2c5e;
+}
+.tl-stepper>span{display:flex;align-items:center;gap:.4em;font-weight:700;white-space:nowrap;opacity:.42;animation:tl-step 6.4s ease-in-out calc(var(--i)*1.6s) infinite}
+.tl-stepper>span b{display:grid;place-items:center;width:1.6em;height:1.6em;border-radius:50%;background:#e8edfb;color:#2a56d4;font-size:.9em;transition:none}
+.tl-stepper-bar{position:absolute;left:.6em;right:.6em;bottom:.32em;height:.22em;border-radius:1em;background:rgba(42,86,212,.14);overflow:hidden}
+.tl-stepper-bar::after{content:"";position:absolute;inset:0;background:#2a56d4;transform-origin:left;animation:tl-bar 6.4s linear infinite}
+@keyframes tl-step{
+  0%,3%{opacity:.42}
+  6%,22%{opacity:1}
+  28%,100%{opacity:.42}
+}
+@keyframes tl-bar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+@media(prefers-reduced-motion:reduce){
+  .hm-token-chip{animation:none;opacity:1}
+  .hm-token-chip:not(:first-of-type){display:none}
+  .tl-stepper>span{animation:none;opacity:1}
+  .tl-stepper-bar::after{animation:none;transform:none}
+}
