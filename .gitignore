@@ -12,6 +12,7 @@ trash/
 # Editor/tooling
 .vscode/
 *.log
+dist/
 
 # Local push helper + its log (not part of the site)
 push-log.txt
