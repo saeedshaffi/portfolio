@@ -93,6 +93,7 @@ body.has-cursor-pill .project-card:not(.coming-soon-card) *{cursor:none}
 .nav-backdrop{position:fixed;inset:0;z-index:15;background:rgba(23,25,20,.42);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s}
 .nav-backdrop.is-on{opacity:1;pointer-events:auto}
 body.nav-open{overflow:hidden}
+body.nav-open .mobile-cta{transform:translateY(calc(100% + 24px));opacity:0}
 @media(min-width:641px){.nav-backdrop{display:none}}
 
 /* ---------- First-visit intro ---------- */
@@ -172,3 +173,120 @@ body.home-active .section-head .eyebrow{margin-bottom:6px}
   body.home-active .home-archive-section .section-head h2{font-size:32px}
   .site-footer .ft4 h2{font-size:32px!important}
 }
+
+
+/* ===================== Animation batch 1 (home) ===================== */
+
+/* A. Section-title word reveal (JS wraps words in .w > span) */
+.split-words .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}
+.split-words .w>span{display:inline-block;transform:translateY(112%);opacity:0}
+.split-words.is-in .w>span{animation:word-rise .9s cubic-bezier(.22,1,.36,1) calc(var(--wi,0) * 55ms) forwards}
+@keyframes word-rise{to{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){.split-words .w>span{transform:none;opacity:1;animation:none}}
+
+/* B. Timeline rail end-dot pulse after the draw */
+@media(prefers-reduced-motion:no-preference){
+  body.reveal-armed .timeline-track.is-in .timeline-rail::after{animation:rail-dot .4s ease-out 1.3s both,rail-pulse 1.1s ease-out 1.75s 1}
+}
+@keyframes rail-pulse{0%{box-shadow:0 0 0 5px rgba(255,107,74,.2),0 0 0 0 rgba(255,107,74,.45)}100%{box-shadow:0 0 0 5px rgba(255,107,74,.2),0 0 0 26px rgba(255,107,74,0)}}
+
+/* E. Card hover parallax (layers use the independent `translate` property so existing transforms/animations stay intact) */
+@media(hover:hover) and (pointer:fine){
+  .project-card .kfh-thumb-device,.project-card .eyewa-thumb-device,.project-card .hm-thumb-stage,.project-card .tl-thumb-stage,.project-card .ai-thumb-copy{
+    translate:calc(var(--px,0) * -7px) calc(var(--py,0) * -5px);transition:translate .45s cubic-bezier(.22,1,.36,1)
+  }
+  .project-card .kfh-thumb-copy,.project-card .eyewa-thumb-copy,.project-card .ai-thumb-left{
+    translate:calc(var(--px,0) * 4px) calc(var(--py,0) * 3px);transition:translate .45s cubic-bezier(.22,1,.36,1)
+  }
+}
+
+/* M. Metric tiles: lift in sequence + arrow tick on hover */
+@media(hover:hover) and (pointer:fine){
+  .project-card .kfh-thumb-stat,.project-card .eyewa-thumb-stat{transition:translate .4s cubic-bezier(.22,1,.36,1),box-shadow .4s}
+  .project-card:hover .kfh-thumb-stat,.project-card:hover .eyewa-thumb-stat{translate:0 -3px}
+  .project-card:hover .kfh-thumb-stat[data-thumb-order="1"],.project-card:hover .eyewa-thumb-stat:nth-child(2){transition-delay:40ms}
+  .project-card:hover .kfh-thumb-stat[data-thumb-order="2"],.project-card:hover .eyewa-thumb-stat:nth-child(3){transition-delay:80ms}
+  .project-card:hover .kfh-metric-arrow,.project-card:hover .eyewa-metric-arrow{animation:arrow-tick .55s cubic-bezier(.22,1,.36,1) .12s 1}
+}
+@keyframes arrow-tick{0%{translate:0 0}40%{translate:0 -3px}100%{translate:0 0}}
+
+/* F. Client strip: JS-driven marquee that eases its speed; hovered name takes the ink */
+.home-clients-list{animation:none}
+.home-clients-track{cursor:default}
+.home-clients-track:hover li{opacity:.3}
+.home-clients-track li{transition:opacity .35s ease,translate .35s cubic-bezier(.22,1,.36,1)}
+.home-clients-track li:hover{opacity:1;translate:0 -1px}
+
+/* G. Header compacts after scrolling; hero scroll cue */
+.site-header{transition:padding .35s cubic-bezier(.22,1,.36,1),box-shadow .35s,background-color .28s ease,border-color .28s ease}
+body.is-scrolled .site-header{padding:8px 10px 8px 14px;box-shadow:0 12px 34px rgba(25,28,20,.14)}
+body.is-scrolled.home-active .site-header{box-shadow:0 12px 34px rgba(0,0,0,.35)}
+.hero-scroll-cue{
+  position:absolute;left:50%;bottom:14px;z-index:2;translate:-50% 0;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(248,246,242,.55);
+  pointer-events:none;transition:opacity .5s ease,translate .5s ease;
+}
+.hero-scroll-cue i{display:block;width:1px;height:30px;background:linear-gradient(180deg,rgba(248,246,242,.0),rgba(248,246,242,.7));transform-origin:top;animation:cue-line 1.8s cubic-bezier(.65,0,.35,1) infinite}
+@keyframes cue-line{0%{transform:scaleY(0);opacity:0}30%{opacity:1}100%{transform:scaleY(1);opacity:0}}
+body.is-scrolled .hero-scroll-cue{opacity:0;translate:-50% 8px}
+@media(max-width:760px){.hero-scroll-cue{display:none}}
+@media(prefers-reduced-motion:reduce){.hero-scroll-cue i{animation:none;transform:none;opacity:.6}}
+
+/* I. Hero exit: content drifts slower than the page, corners soften */
+@media(prefers-reduced-motion:no-preference){
+  body.home-active .home-hero{border-radius:calc(38px + var(--hero-exit,0) * 18px)}
+  body.home-active .home-hero .home-hero-content,body.home-active .home-hero .home-hero-meta{translate:0 calc(var(--hero-exit,0) * 56px);opacity:calc(1 - var(--hero-exit,0) * .32)}
+  body.home-active .home-hero .home-hero-note{translate:0 calc(var(--hero-exit,0) * 26px);opacity:calc(1 - var(--hero-exit,0) * .45)}
+}
+
+/* O. Thumbnail images fade in from a soft tint once decoded */
+.project-card .visual img{transition:opacity .55s ease}
+.project-card .visual img.img-pending{opacity:0}
+.project-card .visual.is-loading{background:linear-gradient(120deg,#ecebe5,#f4f2ec 45%,#ecebe5);background-size:200% 100%;animation:img-shimmer 1.6s linear infinite}
+@keyframes img-shimmer{from{background-position:120% 0}to{background-position:-80% 0}}
+@media(prefers-reduced-motion:reduce){.project-card .visual.is-loading{animation:none}}
+
+/* Q. Live "Now" clock on the current chapter */
+.timeline-now-clock{display:flex;align-items:center;gap:6px;margin:2px 0 0;font-size:10.5px;font-weight:700;letter-spacing:.06em;color:var(--coral);font-variant-numeric:tabular-nums}
+.timeline-now-clock::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--coral);animation:timeline-live-pulse 1.6s ease-in-out infinite}
+.timeline-stop-now .timeline-live{display:none}
+
+/* L. Mobile CTA bar: springs up once, live dot breathes once */
+.mobile-cta.is-first{animation:cta-spring .8s cubic-bezier(.22,1.4,.36,1) both}
+@keyframes cta-spring{from{transform:translateY(calc(100% + 24px));opacity:0}to{transform:none;opacity:1}}
+.mobile-cta-text b{display:flex;align-items:center;gap:6px}
+.mobile-cta-dot{width:7px;height:7px;border-radius:50%;background:#ff756b;flex:0 0 auto}
+.mobile-cta.is-first .mobile-cta-dot{animation:cta-breathe 1.2s ease-out .7s 1}
+@keyframes cta-breathe{0%{box-shadow:0 0 0 0 rgba(255,117,107,.5)}100%{box-shadow:0 0 0 10px rgba(255,117,107,0)}}
+@media(prefers-reduced-motion:reduce){.mobile-cta.is-first,.mobile-cta.is-first .mobile-cta-dot{animation:none}}
+
+/* V. Mobile menu icon morphs into a close mark */
+.menu-toggle{display:none;width:44px;height:44px;padding:0;border-radius:999px;cursor:pointer;place-items:center}
+@media(max-width:640px){.menu-toggle{display:grid}}
+.menu-icon{position:relative;display:block;width:20px;height:14px}
+.menu-icon i{position:absolute;left:0;width:20px;height:2px;border-radius:2px;background:currentColor;transition:translate .32s cubic-bezier(.22,1,.36,1),rotate .32s cubic-bezier(.22,1,.36,1),width .32s}
+.menu-icon i:first-child{top:2px}
+.menu-icon i:last-child{bottom:2px;width:14px}
+.menu-toggle[aria-expanded="true"]{opacity:1}
+.menu-toggle[aria-expanded="true"] .menu-icon i:first-child{translate:0 4px;rotate:45deg}
+.menu-toggle[aria-expanded="true"] .menu-icon i:last-child{width:20px;translate:0 -4px;rotate:-45deg}
+
+/* D. Footer moment: heading wipe, magnetic email tile, self-drawing checkmark */
+@media(prefers-reduced-motion:no-preference){
+  .site-footer .ft4 h2{clip-path:inset(0 100% 0 0);transition:clip-path 1s cubic-bezier(.22,1,.36,1)}
+  .site-footer .ft4.is-in h2{clip-path:inset(0 -2% 0 0)}
+}
+.ft4-tile-email{translate:var(--mx,0) var(--my,0);transition:translate .45s cubic-bezier(.22,1,.36,1)}
+.ft4-copy{position:relative}
+.ft4-copy .copy-check{position:absolute;inset:0;margin:auto;width:18px;height:18px;opacity:0}
+.ft4-copy .copy-check path{stroke-dasharray:24;stroke-dashoffset:24}
+.ft4-copy.is-copied>svg:not(.copy-check){opacity:0}
+.ft4-copy.is-copied .copy-check{opacity:1}
+.ft4-copy.is-copied .copy-check path{animation:check-draw .5s cubic-bezier(.22,1,.36,1) forwards}
+@keyframes check-draw{to{stroke-dashoffset:0}}
+
+/* K. Résumé links acknowledge the click */
+.home-resume-link span,.ft4-tile .ft4-pill svg{display:inline-block;transition:translate .3s}
+.is-opening>span,.is-opening .ft4-pill svg{animation:arrow-fly .7s cubic-bezier(.22,1,.36,1) 1}
+@keyframes arrow-fly{0%{translate:0 0;opacity:1}45%{translate:8px -8px;opacity:0}46%{translate:-6px 6px;opacity:0}100%{translate:0 0;opacity:1}}
