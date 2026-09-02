@@ -862,6 +862,7 @@ function render(){
     vtUntag();renderRoute();return;
   }
   transition.finished.then(vtUntag,vtUntag);
+  if(transition.ready)transition.ready.catch(()=>{});
 }
 
 if('scrollRestoration' in history)history.scrollRestoration='manual';

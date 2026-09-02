@@ -1,26 +1,27 @@
 /* ---------- Case-study extras: TL;DR, next case, progress ---------- */
 
-.case-tldr{
+.case .case-tldr{
   --case-accent:#ff756b;
   margin:28px 0 8px;
   padding:26px 28px 24px;
-  border:1px solid var(--line);
+  border:1px solid rgba(23,25,20,.14);
   border-left:4px solid var(--case-accent);
   border-radius:22px;
-  background:var(--card);
-  color:var(--ink);
+  background:#fffdf8;
+  color:#171914;
 }
-.case-tldr-head{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
-.case-tldr-eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
-.case-tldr-hint{font-size:13px;color:var(--muted)}
-.case-tldr-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 28px;margin:0}
-.case-tldr-grid>div{min-width:0}
-.case-tldr-grid dt{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
-.case-tldr-grid dd{margin:0;font-size:15.5px;line-height:1.5}
-.case-tldr-grid>div:nth-child(3) dd{font-weight:700}
+.case .case-tldr-head{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
+.case .case-tldr-eyebrow{color:#171914;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.case .case-tldr-hint{font-size:13px;color:#65685f}
+.case .case-tldr-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 28px;margin:0}
+.case .case-tldr-grid>div{min-width:0}
+.case .case-tldr-grid dt{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#65685f;margin:0 0 6px;font-family:inherit}
+.case .case-tldr-grid dd{margin:0;font-size:15.5px;line-height:1.5;color:#171914;font-weight:400;font-family:inherit}
+.case .case-tldr-grid>div:nth-child(3) dd{font-weight:700}
 
-.case-next{
+.case .case-next{
   --case-accent:#ff756b;
+  text-decoration:none;
   display:grid;
   grid-template-columns:minmax(0,1fr) auto;
   grid-template-areas:"eyebrow cta" "title cta" "desc cta";
@@ -43,10 +44,10 @@
 .case-next:hover{transform:translateY(-4px);box-shadow:0 22px 60px rgba(25,28,20,.22)}
 .case-next:hover::before{opacity:.5;transform:scale(1.15)}
 .case-next>*{position:relative;z-index:1}
-.case-next-eyebrow{grid-area:eyebrow;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--case-accent)}
-.case-next-title{grid-area:title;font-size:clamp(24px,2.6vw,34px);font-weight:600;letter-spacing:-.03em;line-height:1.1;text-wrap:pretty}
-.case-next-desc{grid-area:desc;color:#b9b6ae;font-size:16px;max-width:60ch}
-.case-next-cta{grid-area:cta;display:inline-flex;align-items:center;gap:10px;padding:14px 20px;border-radius:999px;background:#f8f6f2;color:var(--ink);font-weight:700;white-space:nowrap}
+.case .case-next-eyebrow{grid-area:eyebrow;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--case-accent)}
+.case .case-next-title{grid-area:title;color:#f8f6f2;font-size:clamp(24px,2.6vw,34px);font-weight:600;letter-spacing:-.03em;line-height:1.1;text-wrap:pretty}
+.case .case-next-desc{grid-area:desc;color:#b9b6ae;font-size:16px;max-width:60ch}
+.case .case-next-cta{grid-area:cta;display:inline-flex;align-items:center;gap:10px;padding:14px 20px;border-radius:999px;background:#f8f6f2;color:var(--ink);font-weight:700;white-space:nowrap}
 .case-next-cta i{font-style:normal;transition:transform .3s}
 .case-next:hover .case-next-cta i{transform:translateX(4px)}
 
@@ -54,11 +55,11 @@
 .case-extra-progress span{display:block;height:100%;background:var(--case-accent,#ff756b);transform:scaleX(0);transform-origin:left}
 
 @media(max-width:900px){
-  .case-tldr-grid{grid-template-columns:1fr 1fr}
+  .case .case-tldr-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:640px){
-  .case-tldr{padding:22px 20px 20px;border-radius:18px}
-  .case-tldr-grid{grid-template-columns:1fr;gap:16px}
+  .case .case-tldr{padding:22px 20px 20px;border-radius:18px}
+  .case .case-tldr-grid{grid-template-columns:1fr;gap:16px}
   .case-next{grid-template-columns:1fr;grid-template-areas:"eyebrow" "title" "desc" "cta";padding:26px 24px;margin-top:50px}
   .case-next-cta{justify-self:start;margin-top:8px}
 }
