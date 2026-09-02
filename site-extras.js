@@ -318,7 +318,7 @@
     let el=dates.parentElement.querySelector('.timeline-now-clock');
     if(!el){el=document.createElement('span');el.className='timeline-now-clock';dates.insertAdjacentElement('afterend',el);}
     const fmt=new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Berlin'});
-    const tick=()=>{el.textContent='Now · Berlin '+fmt.format(new Date());};
+    const tick=()=>{const t=fmt.format(new Date());el.innerHTML='Now · Berlin '+t.replace(':','<i class="clock-colon" aria-hidden="true">:</i>');};
     tick();clockTimer=setInterval(tick,30000);
   }
 

@@ -85,12 +85,20 @@
 /* C. Chapter transitions (armed by JS; nothing is hidden without it). KFH keeps its own editorial motion. */
 body.chapters-armed .case .chapter .chapter-num{translate:-12px 0;opacity:0;transition:translate .8s cubic-bezier(.22,1,.36,1),opacity .6s ease}
 body.chapters-armed .case .chapter.ch-in .chapter-num{translate:0 0;opacity:1}
+/* 19. Curtain reveal: a paper-coloured edge wipes off each image left→right,
+   then the frame settles from 1.03 to 1 (slow Ken Burns). Staggered inside grids. */
 body.chapters-armed .case .chapter figure img,
-body.chapters-armed .case .chapter figure video{scale:1.03;filter:blur(10px);transition:scale 1.1s cubic-bezier(.22,1,.36,1),filter .9s ease}
+body.chapters-armed .case .chapter figure video,
+body.chapters-armed .case .chapter .media-grid>*{clip-path:inset(0 100% 0 0);scale:1.03;transition:clip-path 1s cubic-bezier(.22,1,.36,1),scale 1.6s cubic-bezier(.22,1,.36,1)}
 body.chapters-armed .case .chapter.ch-in figure img,
-body.chapters-armed .case .chapter.ch-in figure video{scale:1;filter:blur(0)}
-body.chapters-armed .case .chapter.ch-in figure:nth-of-type(2) img{transition-delay:.12s}
-body.chapters-armed .case .chapter.ch-in figure:nth-of-type(3) img{transition-delay:.24s}
+body.chapters-armed .case .chapter.ch-in figure video,
+body.chapters-armed .case .chapter.ch-in .media-grid>*{clip-path:inset(0 0 0 0);scale:1}
+body.chapters-armed .case .chapter .media-grid>* img{clip-path:none;scale:1}
+body.chapters-armed .case .chapter.ch-in figure:nth-of-type(2) img,
+body.chapters-armed .case .chapter.ch-in .media-grid>:nth-child(2){transition-delay:.14s}
+body.chapters-armed .case .chapter.ch-in figure:nth-of-type(3) img,
+body.chapters-armed .case .chapter.ch-in .media-grid>:nth-child(3){transition-delay:.28s}
+body.chapters-armed .case .chapter.ch-in .media-grid>:nth-child(4){transition-delay:.42s}
 body.chapters-armed .case .chapter .ey-compare-row{clip-path:inset(0 100% 0 0 round 14px);transition:clip-path 1.1s cubic-bezier(.22,1,.36,1)}
 body.chapters-armed .case .chapter.ch-in .ey-compare-row{clip-path:inset(0 0 0 0 round 14px)}
 body.chapters-armed .case .chapter.ch-in .ey-compare-row:nth-child(2){transition-delay:.28s}
