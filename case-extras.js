@@ -70,6 +70,8 @@
     bar.setAttribute('aria-hidden','true');
     bar.style.setProperty('--case-accent',ACCENT[id]||'#ff756b');
     bar.innerHTML='<span></span>';
+    bar.classList.add('is-arming');
+    setTimeout(()=>bar.classList.remove('is-arming'),900);
     document.body.appendChild(bar);
     const fill=bar.firstElementChild;
     let ticking=false;
@@ -100,6 +102,77 @@
     caseRoot.appendChild(link);
   }
 
+
+  const reduceMotion=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let chapterObserver=null;
+
+  /* J. Case hero entrance: title words rise, TL;DR follows, progress bar arms */
+  function splitWords(el){
+    if(el.dataset.split)return; el.dataset.split='1';
+    let i=0;
+    const walk=node=>{[...node.childNodes].forEach(n=>{
+      if(n.nodeType===3){
+        const frag=document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach(part=>{
+          if(!part)return;
+          if(/^\s+$/.test(part)){frag.appendChild(document.createTextNode(' '));return;}
+          const w=document.createElement('span');w.className='w';
+          const inner=document.createElement('span');inner.textContent=part;inner.style.setProperty('--wi',String(i++));
+          w.appendChild(inner);frag.appendChild(w);
+        });
+        n.replaceWith(frag);
+      }else if(n.nodeType===1&&n.tagName!=='BR'){walk(n);}
+    });};
+    walk(el); el.classList.add('split-words');
+  }
+  function heroEntrance(caseRoot){
+    if(reduceMotion())return;
+    const h1=caseRoot.querySelector('.case-hero h1');
+    if(h1&&!h1.dataset.split){splitWords(h1);requestAnimationFrame(()=>h1.classList.add('is-in'));}
+    caseRoot.classList.add('case-entering');
+    setTimeout(()=>caseRoot.classList.remove('case-entering'),2200);
+  }
+
+  /* C. Chapter transitions: number slides in, media settles, comparisons wipe */
+  function chapterMotion(caseRoot){
+    if(chapterObserver){chapterObserver.disconnect();chapterObserver=null;}
+    document.body.classList.remove('chapters-armed');
+    if(reduceMotion()||!('IntersectionObserver' in window)||document.body.classList.contains('kfh-active'))return;
+    const chapters=[...caseRoot.querySelectorAll('.chapter')];
+    if(!chapters.length)return;
+    document.body.classList.add('chapters-armed');
+    const vh=window.innerHeight;
+    chapters.forEach(ch=>{ if(ch.getBoundingClientRect().top<vh*0.6)ch.classList.add('ch-in'); });
+    chapterObserver=new IntersectionObserver(es=>{es.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('ch-in');chapterObserver.unobserve(e.target);} });},{rootMargin:'0px 0px -12% 0px',threshold:0.08});
+    chapters.forEach(ch=>{ if(!ch.classList.contains('ch-in'))chapterObserver.observe(ch); });
+  }
+
+  /* S. TL;DR outcome numbers count up once when the box enters view */
+  function tldrCountUp(caseRoot){
+    const dd=caseRoot.querySelector('.case-tldr-grid>div:nth-child(3) dd');
+    if(!dd||dd.dataset.counted)return; dd.dataset.counted='1';
+    const html=dd.textContent.replace(/(\d+(?:\.\d+)?)/g,(m)=>`<span class="tldr-num" data-target="${m}">${m}</span>`);
+    dd.innerHTML=html;
+    const nums=[...dd.querySelectorAll('.tldr-num')];
+    if(reduceMotion()||!nums.length)return;
+    const run=()=>{
+      const start=performance.now();
+      nums.forEach((el,i)=>{
+        const target=parseFloat(el.dataset.target),decimals=(el.dataset.target.split('.')[1]||'').length;
+        const tick=now=>{
+          const t=Math.max(0,Math.min(1,(now-start-i*90)/900)),eased=1-Math.pow(1-t,3);
+          el.textContent=(target*eased).toFixed(decimals);
+          if(t<1)requestAnimationFrame(tick);else el.textContent=el.dataset.target;
+        };
+        el.textContent=(0).toFixed(decimals);requestAnimationFrame(tick);
+      });
+    };
+    if('IntersectionObserver' in window){
+      const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){run();io.disconnect();}});},{threshold:0.3});
+      io.observe(dd);
+    }else run();
+  }
+
   window.initCaseExtras=function(path){
     const main=document.getElementById('main');
     if(!path||!path.startsWith('/case/')||!main){removeProgress();return;}
@@ -108,6 +181,9 @@
     if(!caseRoot)return;
     addTldr(id,caseRoot);
     addNext(id,caseRoot);
+    heroEntrance(caseRoot);
+    chapterMotion(caseRoot);
+    tldrCountUp(caseRoot);
     /* Existing pages create their own bars slightly later; defer so we only
        add ours when none appears. */
     setTimeout(()=>{ if((location.hash.slice(1)||'/')===path) addProgress(id,caseRoot); },60);

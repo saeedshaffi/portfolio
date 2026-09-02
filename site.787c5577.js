@@ -2106,6 +2106,8 @@ function resumePage(){
     bar.setAttribute('aria-hidden','true');
     bar.style.setProperty('--case-accent',ACCENT[id]||'#ff756b');
     bar.innerHTML='<span></span>';
+    bar.classList.add('is-arming');
+    setTimeout(()=>bar.classList.remove('is-arming'),900);
     document.body.appendChild(bar);
     const fill=bar.firstElementChild;
     let ticking=false;
@@ -2136,6 +2138,77 @@ function resumePage(){
     caseRoot.appendChild(link);
   }
 
+
+  const reduceMotion=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let chapterObserver=null;
+
+  /* J. Case hero entrance: title words rise, TL;DR follows, progress bar arms */
+  function splitWords(el){
+    if(el.dataset.split)return; el.dataset.split='1';
+    let i=0;
+    const walk=node=>{[...node.childNodes].forEach(n=>{
+      if(n.nodeType===3){
+        const frag=document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach(part=>{
+          if(!part)return;
+          if(/^\s+$/.test(part)){frag.appendChild(document.createTextNode(' '));return;}
+          const w=document.createElement('span');w.className='w';
+          const inner=document.createElement('span');inner.textContent=part;inner.style.setProperty('--wi',String(i++));
+          w.appendChild(inner);frag.appendChild(w);
+        });
+        n.replaceWith(frag);
+      }else if(n.nodeType===1&&n.tagName!=='BR'){walk(n);}
+    });};
+    walk(el); el.classList.add('split-words');
+  }
+  function heroEntrance(caseRoot){
+    if(reduceMotion())return;
+    const h1=caseRoot.querySelector('.case-hero h1');
+    if(h1&&!h1.dataset.split){splitWords(h1);requestAnimationFrame(()=>h1.classList.add('is-in'));}
+    caseRoot.classList.add('case-entering');
+    setTimeout(()=>caseRoot.classList.remove('case-entering'),2200);
+  }
+
+  /* C. Chapter transitions: number slides in, media settles, comparisons wipe */
+  function chapterMotion(caseRoot){
+    if(chapterObserver){chapterObserver.disconnect();chapterObserver=null;}
+    document.body.classList.remove('chapters-armed');
+    if(reduceMotion()||!('IntersectionObserver' in window)||document.body.classList.contains('kfh-active'))return;
+    const chapters=[...caseRoot.querySelectorAll('.chapter')];
+    if(!chapters.length)return;
+    document.body.classList.add('chapters-armed');
+    const vh=window.innerHeight;
+    chapters.forEach(ch=>{ if(ch.getBoundingClientRect().top<vh*0.6)ch.classList.add('ch-in'); });
+    chapterObserver=new IntersectionObserver(es=>{es.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('ch-in');chapterObserver.unobserve(e.target);} });},{rootMargin:'0px 0px -12% 0px',threshold:0.08});
+    chapters.forEach(ch=>{ if(!ch.classList.contains('ch-in'))chapterObserver.observe(ch); });
+  }
+
+  /* S. TL;DR outcome numbers count up once when the box enters view */
+  function tldrCountUp(caseRoot){
+    const dd=caseRoot.querySelector('.case-tldr-grid>div:nth-child(3) dd');
+    if(!dd||dd.dataset.counted)return; dd.dataset.counted='1';
+    const html=dd.textContent.replace(/(\d+(?:\.\d+)?)/g,(m)=>`<span class="tldr-num" data-target="${m}">${m}</span>`);
+    dd.innerHTML=html;
+    const nums=[...dd.querySelectorAll('.tldr-num')];
+    if(reduceMotion()||!nums.length)return;
+    const run=()=>{
+      const start=performance.now();
+      nums.forEach((el,i)=>{
+        const target=parseFloat(el.dataset.target),decimals=(el.dataset.target.split('.')[1]||'').length;
+        const tick=now=>{
+          const t=Math.max(0,Math.min(1,(now-start-i*90)/900)),eased=1-Math.pow(1-t,3);
+          el.textContent=(target*eased).toFixed(decimals);
+          if(t<1)requestAnimationFrame(tick);else el.textContent=el.dataset.target;
+        };
+        el.textContent=(0).toFixed(decimals);requestAnimationFrame(tick);
+      });
+    };
+    if('IntersectionObserver' in window){
+      const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){run();io.disconnect();}});},{threshold:0.3});
+      io.observe(dd);
+    }else run();
+  }
+
   window.initCaseExtras=function(path){
     const main=document.getElementById('main');
     if(!path||!path.startsWith('/case/')||!main){removeProgress();return;}
@@ -2144,6 +2217,9 @@ function resumePage(){
     if(!caseRoot)return;
     addTldr(id,caseRoot);
     addNext(id,caseRoot);
+    heroEntrance(caseRoot);
+    chapterMotion(caseRoot);
+    tldrCountUp(caseRoot);
     /* Existing pages create their own bars slightly later; defer so we only
        add ours when none appears. */
     setTimeout(()=>{ if((location.hash.slice(1)||'/')===path) addProgress(id,caseRoot); },60);
@@ -2563,6 +2639,7 @@ function separateHomeArchive(){
 
 const projectHighlights=()=>'';
 const projectCards=()=>projects.map(p=>p.comingSoon?`<div class="project-card coming-soon-card" aria-disabled="true">${projectVisual(p)}<span class="coming-soon-banner">Coming soon</span><div class="meta"><span class="tags">${p.tag}</span><h3>${p.title}</h3><p>${p.desc}</p></div></div>`:`<a class="project-card${p.id==='kfh'?' kfh-project-card':p.id==='eyewa'?' eyewa-project-card':p.id==='system'?' kfh-project-card hm-project-card':p.id==='talon'?' kfh-project-card tl-project-card':p.id==='ai-system'?' ai-system-project-card':''}" href="#/case/${p.id}">${projectVisual(p)}<div class="meta"><span class="tags">${p.tag}</span><h3>${p.title}</h3><p>${p.desc}</p>${projectHighlights(p)}${p.highlights?`<div class="project-highlights" aria-label="Project facts">${p.highlights.map(item=>`<span>${item}</span>`).join('')}</div>`:''}</div></a>`).join('');
+function notFoundPage(path){const safe=String(path).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));return `<section class="notfound reveal" aria-labelledby="notfound-title"><span class="notfound-eyebrow">404 · Page not found</span><h1 id="notfound-title">This page moved on. The work is still here, built for <em>clarity</em>.</h1><p>The link you followed points to a page that no longer exists. The case studies, résumé and contact details are one click away.</p><div class="notfound-actions"><a href="#/" data-scroll-target="selected-work">See my work</a><a href="mailto:saeedshaffi@gmail.com">Let’s talk <span aria-hidden="true">↗</span></a></div><div class="notfound-path">${safe}</div></section>`}
 function home(){return `<section class="home-hero reveal" aria-labelledby="home-hero-title"><span class="home-hero-grain" aria-hidden="true"></span><div class="home-hero-meta"><span>Berlin · Lead Product Designer</span><span>Fintech · eCommerce · B2B · B2C · SaaS</span></div><div class="home-hero-content"><h1 id="home-hero-title">Design is how strategy becomes real.<br aria-hidden="true" /> <a class="home-inline-cta" href="#/" data-scroll-target="selected-work" aria-label="See my work"><span class="home-inline-label">See my work</span><span class="home-eye" aria-hidden="true"></span></a> I turn complexity <span class="home-into-pair">into&nbsp;<em class="home-rotating-phrase"><span class="home-rotating-group" aria-hidden="true"><span class="home-rotating-word"><span style="--word-index:0">clarity</span><span style="--word-index:1">confidence</span><span style="--word-index:2">momentum</span></span></span><span class="sr-only">clarity</span></em></span><br /><a class="home-talk-pill" href="mailto:saeedshaffi@gmail.com"><span>Let’s talk</span><i class="home-talk-icon" aria-hidden="true">↗</i></a> about your product.</h1><div class="home-hero-note"><p>More than 10 years combining research, product strategy, systems thinking, and craft. From early ideas to measurable results.</p><a class="home-resume-link" href="assets/SaeedShaffi_Resume.pdf" download="SaeedShaffi_Resume.pdf" aria-label="Open Saeed Shaffi résumé PDF">View résumé <span aria-hidden="true">↗</span></a></div></div></section><section class="home-clients" aria-label="Companies I have worked with"><div class="home-clients-inner"><span class="home-clients-label">Worked with</span><div class="home-clients-track"><ul class="home-clients-list"><li>KFH Jazeel Bank</li><li>Eyewa</li><li>CreditBook</li><li>Talon.One</li><li>Expertlead</li><li>PayPro</li><li>PriceOye</li><li>Ideate</li></ul><ul class="home-clients-list" aria-hidden="true"><li>KFH Jazeel Bank</li><li>Eyewa</li><li>CreditBook</li><li>Talon.One</li><li>Expertlead</li><li>PayPro</li><li>PriceOye</li><li>Ideate</li></ul></div></div></section><section class="page section home-work" id="selected-work" tabindex="-1"><div class="section-head"><div><span class="eyebrow">Selected work</span><h2>Designed to move<br>the metric.</h2></div><p>Five stories about research, systems thinking, stakeholder alignment and measurable product impact.</p></div><div class="project-grid">${projectCards()}</div><section class="home-archive" aria-labelledby="visual-archive-title"><div class="section-head"><div><span class="eyebrow">Visual archive</span><h2 id="visual-archive-title">Selected shots</h2></div></div><div class="shots">${shots.map(([n,u])=>`<button class="shot" type="button" data-shot-src="${SHOTS_FULL+u}" data-shot-title="${n}" aria-label="Open ${n} interface preview" aria-haspopup="dialog"><img loading="lazy" src="${SHOTS+u}" alt="${n} interface preview"><span>${n}</span></button>`).join('')}</div></section></section><section class="page section home-principles" aria-labelledby="home-principles-title"><div class="section-head"><div><span class="eyebrow">How I work</span><h2 id="home-principles-title">Four rules I don't<br>compromise on.</h2></div><p>The habits behind every number on this page.</p></div><ol class="home-principles-grid"><li class="home-principle" style="--i:0"><span class="home-principle-num">01</span><h3>Research before pixels</h3><p>Every redesign starts with drop-off data, interviews and support signals, not a moodboard.</p></li><li class="home-principle" style="--i:1"><span class="home-principle-num">02</span><h3>Systems over screens</h3><p>I build the foundations first: tokens, components and rules, so the 900th screen is as consistent as the first.</p></li><li class="home-principle" style="--i:2"><span class="home-principle-num">03</span><h3>Ship to learn</h3><p>Phased releases that earn engineering trust and prove the direction with real numbers, not opinions.</p></li><li class="home-principle" style="--i:3"><span class="home-principle-num">04</span><h3>Bring everyone along</h3><p>Executives, engineers, support and marketing aligned through weekly reviews and documentation that outlives the project.</p></li></ol></section>${careerTimeline()}`}
 const caseData={kfh:{accent:'#56e0bd',tag:'Fintech · Digital banking',title:'Transforming KFH Jazeel Bank into a scalable fintech platform.',summary:'A six month redesign of KFH Jazeel’s personal financing platform, improving onboarding, building a design system and enabling a team to deliver at scale.',task:'Redesign web application',role:'Lead Product Designer',duration:'6 months',sections:[['The challenge',`Despite significant marketing, users were not returning to KFH Jazeel. Research exposed a product that felt like a traditional banking form: onboarding was long, core actions were unclear and even basic flows could crash. The business needed more than a visual refresh, it needed a more useful product model.`],['Research before pixels',`I partnered with the data team to examine behaviour and drop off, interviewed customers, reviewed support signals and compared traditional banks with neobanks. The most urgent signal was a 66% drop off during onboarding. Interviews reinforced it: 80% found onboarding challenging, 86% experienced crashes and 30% did not understand core features.`],['Changing how the team worked',`I led design strategy, research and stakeholder alignment while mentoring two junior designers. I introduced version control, a shared workflow and a design system based on atomic design. Weekly reviews and developer documentation kept bank executives, engineering, marketing, support and product aligned.`],['Outcome',`We phased the onboarding redesign to address engineering concerns without compromising the experience. Starting with fewer fields and clearer errors proved the direction, built trust with engineering, and unlocked deeper improvements.`]],metrics:[['66→18%','onboarding drop off'],['3→32.5%','PayBills adoption'],['900','screens delivered'],['99%','deadlines met']]},eyewa:{accent:'#ff8064',tag:'eCommerce · Checkout',title:'Turning checkout friction into customer confidence.',summary:'A checkout redesign informed by research for Eyewa that made progress, costs and security easier to understand.',task:'Checkout redesign',role:'Product Designer',duration:'Complete journey',sections:[['The challenge',`Customers struggled to understand Eyewa’s checkout steps, could not easily review their order and lacked confidence in card payments. Eyewa was losing almost 40% of potential customers during checkout.`],['From evidence to focus',`I analysed funnel behaviour, reviewed competing international commerce flows and mapped patterns and variations. Heatmaps suggested users did not know where to focus. Missing progress indicators, weak content clarity and a promo field that drew too much attention added cognitive load.`],['Design and validation',`Paper concepts became detailed flows for login, guest checkout, contact details, delivery and payment. Six customers tested the prototype remotely. Their feedback led to stronger guest checkout visibility, social sign in, separated contact and shipping steps, and clearer security cues.`],['Delivery and impact',`Engineering received complete journey states, interactive prototypes and a design specification. Grooming sessions and design QA protected the intent through implementation. Three months after launch, both retention and support signals had moved materially.`]],metrics:[['36%','reduction in user churn'],['62%','fewer checkout complaints']]},system:{accent:'#77e89c',tag:'B2B · Design systems',title:'Making consistency the default, not the debate.',summary:'Harmony brought CreditBook’s designers, developers and global teams onto a scalable shared foundation.',task:'Build a design system',role:'Sole Product Designer',duration:'2021',sections:[['The challenge',`CreditBook had verbal agreement about individual colours and elements, but no formal system. The result was inconsistent fields, alignment, colours, hierarchy and flows, and a disconnected customer experience.`],['Establishing the foundation',`I reviewed the existing design process, brand guidelines and stakeholder expectations. A moodboard aligned the organisation on creative direction, while heuristic evaluation made inconsistencies tangible and prioritised.`],['System, not sticker sheet',`Harmony defined typography, colour, spacing, grids, interactive language, states and responsive component behaviour. Figma auto layout and tokens helped components cover multiple breakpoints as well as hover, focus, filled, error and disabled states.`],['What changed',`The system created a shared language without limiting exploration. Documentation and a pattern library made decisions repeatable, accelerated design work and improved consistency across the application.`]],metrics:[['54%','customer productivity lift'],['40%','fewer design inconsistencies'],['6 mo.','to build and scale']]},talon:{accent:'#d9ff57',tag:'B2B SaaS · Promotion engine',title:'Making campaign creation explain itself.',summary:'A focused five day sprint to understand and simplify Talon.One’s Campaign Manager.',task:'Improve Campaign Manager UX',role:'Sole Product Designer',duration:'5 day sprint',sections:[['The challenge',`Talon.One is powerful, but the Campaign Manager asked users to learn its internal logic. Every participant found campaign creation difficult without documentation or video guidance.`],['A compressed discovery',`I studied product and developer documentation, watched training material, researched customer contexts and interviewed potential users when existing customers were unavailable. Interviews, user flows, heuristic review and heatmaps converged on campaign creation as the priority.`],['Simplifying the journey',`Updated flows clarified application selection, campaign setup, templates, filters, activation and success states. Wireframes introduced stronger CTA hierarchy, contextual education, clear active states and input patterns with less unnecessary mouse movement.`],['Validation and reflection',`A/B testing showed the proposed direction was considerably easier to use. The sprint also surfaced a broader principle: every screen should communicate its purpose, available options and next action without requiring an external guide.`]],metrics:[['100%','needed help creating campaigns'],['80%','wanted a dashboard overview'],['5 days','research to validated direction']]}};
 const bullet=x=>`<ul>${x.map(v=>`<li>${v}</li>`).join('')}</ul>`;
@@ -3271,7 +3348,11 @@ function renderRoute(){
   if(path==='/'&&!introPlayed){try{sessionStorage.setItem('homeIntroPlayed','1');}catch(e){}}
   const routeTitles={'/case/kfh':'Cutting onboarding drop-off from 66% to 18% at KFH Jazeel Bank — Saeed Shaffi','/case/eyewa':'Turning checkout friction into 36% higher retention at Eyewa — Saeed Shaffi','/case/system':'Making consistency the default at CreditBook with one design system — Saeed Shaffi','/case/talon':'Making campaign creation explain itself at Talon.One in a five-day sprint — Saeed Shaffi','/case/ai-system':'Taking a design system from Figma to production code with AI — Saeed Shaffi'};
   document.title=routeTitles[path]||'Saeed Shaffi, Product Designer';
-  main.innerHTML=path.startsWith('/case/')?casePage(path.split('/')[2]):home();
+  const KNOWN_CASES=['kfh','eyewa','system','talon','ai-system'];
+  const isCase=path.startsWith('/case/')&&KNOWN_CASES.includes(path.split('/')[2]);
+  const isKnown=path==='/'||isCase;
+  if(!isKnown)document.title='Page not found — Saeed Shaffi';
+  main.innerHTML=isCase?casePage(path.split('/')[2]):(isKnown?home():notFoundPage(path));
   if(path==='/')separateHomeArchive();
   initKfhThumbnailMotion();
   initEyewaThumbnailMotion();
