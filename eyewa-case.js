@@ -321,7 +321,7 @@ ${chapter(9,'Design the solution',`
 
 ${chapter(10,'Original and proposed',`
   <h2>Original screens and proposed designs</h2>
-  <p>The same five steps, before and after. Each proposed screen sits directly under the original it replaces.</p>
+  <p>The same five steps, before and after. Drag the handle on each screen to compare the original with the proposed design.</p>
   <div class="ey-compare">
     <div class="ey-compare-row" data-row="original">
       <span class="ey-compare-label">Original</span>

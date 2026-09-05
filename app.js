@@ -833,6 +833,7 @@ function renderRoute(){
   if(window.initKfhMedia)window.initKfhMedia();
   if(window.initCaseExtras)window.initCaseExtras(path);
   if(window.initSiteExtras)window.initSiteExtras(path); if(window.initMotionExtras)window.initMotionExtras(path);
+  if(window.initInteractions)window.initInteractions(path);
   document.querySelectorAll('#site-nav a').forEach(a=>a.removeAttribute('aria-current'));
   const active=document.querySelector(`#site-nav a[href="#${path}"]`);
   if(active)active.setAttribute('aria-current','page');
