@@ -353,7 +353,7 @@
       if(!a)return;
       a.classList.remove('is-opening');void a.offsetWidth;a.classList.add('is-opening');
       setTimeout(()=>a.classList.remove('is-opening'),750);
-      if(typeof showToast==='function')showToast('Résumé downloading — check your downloads');
+      if(typeof showToast==='function')showToast('Résumé downloading. Check your downloads');
     });
   }
 

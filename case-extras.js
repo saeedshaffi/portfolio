@@ -24,14 +24,14 @@
       role:'Product Designer · complete journey'
     },
     system:{
-      problem:'No formal system — inconsistent fields, colours, hierarchy and flows across the product.',
+      problem:'No formal system: inconsistent fields, colours, hierarchy and flows across the product.',
       did:'Audit, moodboard alignment, tokens, components with full states, documentation.',
       outcome:'+54% customer productivity, 40% fewer inconsistencies, six months from audit to rollout.',
       role:'Sole Product Designer'
     },
     talon:{
       problem:'Every user needed documentation to create a campaign.',
-      did:'Five-day sprint — research, flows, wireframes with contextual guidance, A/B test.',
+      did:'Five-day sprint: research, flows, wireframes with contextual guidance, A/B test.',
       outcome:'A four-step guided flow that tested considerably easier to use.',
       role:'Sole Product Designer · 5 days'
     }

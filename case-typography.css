@@ -1,0 +1,23 @@
+/* Case-study heading scale: one size per level on every case study, so the
+   KFH, Eyewa, Harmony, Talon and AI design-system pages read the same.
+   Loaded last; the per-case stylesheets set very large clamp() sizes, hence
+   the !important. Home page headings are untouched. */
+body.case-active main h1{
+  font-size:clamp(30px,3.4vw,42px)!important;
+  line-height:1.1!important;
+  letter-spacing:-.025em!important;
+}
+body.case-active main h2{
+  font-size:clamp(24px,2.3vw,30px)!important;
+  line-height:1.2!important;
+  letter-spacing:-.02em!important;
+}
+body.case-active main h3{
+  font-size:clamp(18px,1.5vw,20px)!important;
+  line-height:1.3!important;
+  letter-spacing:-.01em!important;
+}
+body.case-active main h4{
+  font-size:clamp(16px,1.2vw,18px)!important;
+  line-height:1.35!important;
+}
