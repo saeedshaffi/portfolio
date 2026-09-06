@@ -3122,39 +3122,93 @@ function resumePage(){
     }
   }
 
-  /* 6. AI design system: live button + date picker playground. */
-  function seg(name,label,values){
-    return '<fieldset><legend>'+label+'</legend><div class="dsp-seg">'+values.map(function(v,i){return '<label><input type="radio" name="'+name+'" value="'+v+'"'+(i===0||(name==='size'&&v==='md')||(name==='density'&&v==='comfortable')?' checked':'')+'><span>'+v+'</span></label>';}).join('')+'</div></fieldset>';
+  /* 6. AI design system: a live component playground. Pick a component, then
+     its props; the preview and the spec readout follow. */
+  var COMPONENTS={
+    button:{label:'Button',props:{variant:['primary','secondary','ghost'],size:['sm','md','lg'],state:['default','hover','focus','loading','disabled'],icon:['none','start','end'],density:['comfortable','compact']}},
+    input:{label:'Input',props:{type:['text','email','password','search'],size:['sm','md','lg'],state:['default','hover','focus','filled','error','disabled'],label:['on','off'],helper:['none','hint','error'],density:['comfortable','compact']}},
+    datepicker:{label:'Date picker',props:{mode:['range','single'],size:['sm','md','lg'],state:['default','hover','focus','disabled'],density:['comfortable','compact']}},
+    radio:{label:'Radio',props:{size:['sm','md'],state:['default','hover','focus','disabled'],layout:['vertical','horizontal'],description:['off','on']}},
+    toggle:{label:'Toggle',props:{size:['sm','md','lg'],checked:['on','off'],state:['default','hover','focus','disabled'],label:['right','left','none']}},
+    dropdown:{label:'Dropdown',props:{size:['sm','md','lg'],state:['default','hover','focus','open','error','disabled'],multi:['no','yes'],searchable:['no','yes']}}
+  };
+  var DEFAULTS={size:'md',density:'comfortable',state:'default',variant:'primary',icon:'none',type:'text',label:'on',helper:'none',mode:'range',layout:'vertical',description:'off',checked:'on',multi:'no',searchable:'no'};
+  var ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+
+  function seg(name,label,values,current){
+    return '<fieldset><legend>'+label+'</legend><div class="dsp-seg">'+values.map(function(v){return '<label><input type="radio" name="'+name+'" value="'+v+'"'+(v===current?' checked':'')+'><span>'+v+'</span></label>';}).join('')+'</div></fieldset>';
   }
-  function renderDatePicker(dp){
+  function calendarHTML(mode){
     var now=new Date(),y=now.getFullYear(),m=now.getMonth();
     var first=new Date(y,m,1),startDow=(first.getDay()+6)%7,days=new Date(y,m+1,0).getDate(),prevDays=new Date(y,m,0).getDate();
-    var s=8,e=14,today=now.getDate(),cells='';
+    var s=8,e=mode==='range'?14:8,today=now.getDate(),cells='';
     for(var i=0;i<startDow;i++)cells+='<b class="is-muted">'+(prevDays-startDow+i+1)+'</b>';
     for(var d=1;d<=days;d++){var cls=[];if(d===s)cls.push('is-start');if(d===e)cls.push('is-end');if(d>s&&d<e)cls.push('in-range');if(d===today)cls.push('is-today');if(d===e+3)cls.push('is-hover');cells+='<b class="'+cls.join(' ')+'">'+d+'</b>';}
     var rest=(7-(startDow+days)%7)%7;for(var j=1;j<=rest;j++)cells+='<b class="is-muted">'+j+'</b>';
     var month=first.toLocaleString('en-GB',{month:'long',year:'numeric'});
-    dp.innerHTML='<div class="ds-dp-head"><button type="button" aria-label="Previous month">‹</button><span>'+month+'</span><button type="button" aria-label="Next month">›</button></div><div class="ds-dp-grid">'+['Mo','Tu','We','Th','Fr','Sa','Su'].map(function(d){return '<span>'+d+'</span>';}).join('')+cells+'</div><div class="ds-dp-foot"><button type="button" class="ds-btn" data-variant="ghost" data-size="sm">Clear</button><button type="button" class="ds-btn" data-variant="primary" data-size="sm">Apply</button></div>';
+    return '<div class="ds-dp-head"><button type="button" aria-label="Previous month">‹</button><span>'+month+'</span><button type="button" aria-label="Next month">›</button></div><div class="ds-dp-grid">'+['Mo','Tu','We','Th','Fr','Sa','Su'].map(function(d){return '<span>'+d+'</span>';}).join('')+cells+'</div><div class="ds-dp-foot"><button type="button" class="ds-btn" data-variant="ghost" data-size="sm">Clear</button><button type="button" class="ds-btn" data-variant="primary" data-size="sm">Apply</button></div>';
+  }
+  var RENDER={
+    button:function(v){return '<button type="button" class="ds-btn" data-variant="'+v.variant+'" data-size="'+v.size+'" data-state="'+v.state+'" data-icon="'+v.icon+'" data-density="'+v.density+'">'+ICON+'<span>Continue to payment</span></button>';},
+    input:function(v){
+      var val=v.state==='filled'||v.state==='error'?(v.type==='email'?'saeed@company':v.type==='password'?'••••••••':'Abdul Hakim'):'';
+      var ph=v.type==='email'?'name@company.com':v.type==='search'?'Search accounts':v.type==='password'?'At least 8 characters':'Full name';
+      var help=v.helper==='hint'?'<span class="ds-help">We only use this to send the statement.</span>':(v.helper==='error'||v.state==='error')?'<span class="ds-help is-error">Enter a valid '+(v.type==='email'?'email address':'value')+'.</span>':'';
+      return '<div class="ds-field" data-size="'+v.size+'" data-state="'+v.state+'" data-density="'+v.density+'">'+(v.label==='on'?'<label class="ds-label">'+(v.type==='email'?'Work email':v.type==='password'?'Password':v.type==='search'?'Search':'Account holder')+'</label>':'')+'<div class="ds-input">'+(v.type==='search'?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>':'')+'<input type="'+(v.type==='password'?'password':'text')+'" value="'+val+'" placeholder="'+ph+'" readonly tabindex="-1" aria-label="Preview input"></div>'+help+'</div>';
+    },
+    datepicker:function(v){return '<div class="ds-dp" data-size="'+v.size+'" data-state="'+v.state+'" data-density="'+v.density+'" role="group" aria-label="Date picker preview">'+calendarHTML(v.mode)+'</div>';},
+    radio:function(v){
+      var opts=[['Personal account','For everyday spending and savings.'],['Business account','For registered companies and freelancers.'],['Joint account','Shared with one other person.']];
+      return '<div class="ds-radio-group" data-size="'+v.size+'" data-state="'+v.state+'" data-layout="'+v.layout+'">'+opts.map(function(o,i){return '<label class="ds-radio'+(i===0?' is-checked':'')+(i===1?' is-target':'')+'"><span class="ds-radio-dot"></span><span class="ds-radio-text"><b>'+o[0]+'</b>'+(v.description==='on'?'<small>'+o[1]+'</small>':'')+'</span></label>';}).join('')+'</div>';
+    },
+    toggle:function(v){return '<label class="ds-toggle" data-size="'+v.size+'" data-state="'+v.state+'" data-checked="'+v.checked+'" data-label="'+v.label+'">'+(v.label==='left'?'<span class="ds-toggle-text">Email me monthly statements</span>':'')+'<span class="ds-toggle-track"><span class="ds-toggle-thumb"></span></span>'+(v.label==='right'?'<span class="ds-toggle-text">Email me monthly statements</span>':'')+'</label>';},
+    dropdown:function(v){
+      var items=['Regional Office Account','Payroll Account','Savings Account','Tax Reserve'];
+      var chips=v.multi==='yes'?'<span class="ds-chip">Payroll <i>×</i></span><span class="ds-chip">Savings <i>×</i></span>':'<span class="ds-select-value">'+(v.state==='error'?'Choose an account':'Payroll Account')+'</span>';
+      return '<div class="ds-select" data-size="'+v.size+'" data-state="'+v.state+'" data-multi="'+v.multi+'"><label class="ds-label">Account</label><div class="ds-select-control">'+chips+CHEV+'</div>'+(v.state==='open'?'<div class="ds-menu">'+(v.searchable==='yes'?'<div class="ds-menu-search"><input type="text" value="" placeholder="Search accounts" readonly tabindex="-1" aria-label="Search"></div>':'')+items.map(function(it,i){return '<div class="ds-option'+(i===1?' is-selected':'')+(i===2&&v.multi==='yes'?' is-selected':'')+(i===0?' is-hover':'')+'">'+(v.multi==='yes'?'<span class="ds-check"></span>':'')+it+'</div>';}).join('')+'</div>':'')+(v.state==='error'?'<span class="ds-help is-error">Select an account to continue.</span>':'')+'</div>';
+    }
+  };
+  function specFor(name,v,stage){
+    var tag={button:'Button',input:'TextField',datepicker:'DatePicker',radio:'RadioGroup',toggle:'Switch',dropdown:'Select'}[name];
+    var props=Object.keys(v).filter(function(k){return v[k]!==DEFAULTS[k]||k==='size'||k==='variant';}).map(function(k){var val=v[k];if(val==='yes'||val==='on')return k;if(val==='no'||val==='off')return '';return k+'="'+val+'"';}).filter(Boolean);
+    var m=stage.querySelector('.ds-btn,.ds-input,.ds-select-control,.ds-toggle-track,.ds-radio-dot,.ds-dp'),measure={};
+    if(m){var mc=getComputedStyle(m);measure.h=Math.round(parseFloat(mc.height));measure.w=Math.round(parseFloat(mc.width));measure.r=mc.borderTopLeftRadius;measure.fs=Math.round(parseFloat(mc.fontSize));measure.bg=mc.backgroundColor;}
+    return '<'+tag+(props.length?' '+props.join(' '):'')+' />\n'+
+      (measure.h?'size '+measure.w+'×'+measure.h+'px · radius '+measure.r+'\n':'')+
+      (measure.fs?'font '+measure.fs+'px · bg '+measure.bg+'\n':'')+
+      (v.state==='focus'?'focus ring: 2px surface + 2px color-focus\n':'')+
+      (v.state==='hover'?'hover: color-accent-hover / surface-subtle\n':'')+
+      (v.state==='error'?'error: color-danger border + helper text\n':'')+
+      (v.state==='disabled'?'disabled: 45% opacity, no pointer events\n':'');
   }
   function initPlayground(){
     if(document.querySelector('.dsp'))return;
     var host=document.getElementById('ai-system-6')||document.getElementById('ai-system-9');
     if(!host)return;
-    /* Sit directly under the conceptual Button API figure when it is there. */
     var anchor=Array.prototype.slice.call(host.querySelectorAll('figure')).filter(function(f){return /variant=/.test(f.textContent);}).pop();
     var box=document.createElement('div');box.className='dsp';
-    box.innerHTML='<div class="dsp-head"><h3>Try the components</h3><p>Same props as the conceptual API above. Change one, watch both.</p></div><div class="dsp-body"><div class="dsp-stage"><button type="button" class="ds-btn" data-variant="primary" data-size="md" data-state="default" data-icon="none" data-density="comfortable"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span>Continue to payment</span></button><div class="ds-dp" data-size="md" data-state="default" data-density="comfortable" role="group" aria-label="Date range picker preview"></div></div><form class="dsp-controls" onsubmit="return false">'+seg('variant','Variant',['primary','secondary','ghost'])+seg('size','Size',['sm','md','lg'])+seg('state','State',['default','hover','focus','loading','disabled'])+seg('density','Density',['comfortable','compact'])+seg('icon','Icon',['none','start','end'])+'<pre class="dsp-spec" aria-live="polite"></pre></form></div>';
+    box.innerHTML='<div class="dsp-head"><h3>Try the components</h3><p>Pick a component, then its props. The preview and the spec follow.</p></div>'+
+      '<div class="dsp-tabs" role="tablist" aria-label="Component">'+Object.keys(COMPONENTS).map(function(k,i){return '<button type="button" role="tab" data-component="'+k+'" aria-selected="'+(i===0)+'"'+(i===0?' class="is-on"':'')+'>'+COMPONENTS[k].label+'</button>';}).join('')+'</div>'+
+      '<div class="dsp-body"><div class="dsp-stage"></div><form class="dsp-controls" onsubmit="return false"></form></div>';
     if(anchor)anchor.insertAdjacentElement('afterend',box);else host.appendChild(box);
-    var btn=box.querySelector('.ds-btn'),dp=box.querySelector('.ds-dp'),spec=box.querySelector('.dsp-spec');
-    renderDatePicker(dp);
-    var update=function(){
-      var v={};['variant','size','state','density','icon'].forEach(function(k){var el=box.querySelector('input[name="'+k+'"]:checked');v[k]=el?el.value:'';});
-      btn.dataset.variant=v.variant;btn.dataset.size=v.size;btn.dataset.state=v.state;btn.dataset.density=v.density;btn.dataset.icon=v.icon;
-      dp.dataset.size=v.size;dp.dataset.state=v.state;dp.dataset.density=v.density;
-      var cs=getComputedStyle(btn);
-      spec.textContent='<Button variant="'+v.variant+'" size="'+v.size+'"'+(v.icon!=='none'?' iconPosition="'+v.icon+'"':'')+(v.state==='loading'?' loading':'')+(v.state==='disabled'?' disabled':'')+' />\nheight '+Math.round(parseFloat(cs.height))+'px · padding-x '+Math.round(parseFloat(cs.paddingLeft))+'px\nfont '+Math.round(parseFloat(cs.fontSize))+'px/600 · radius '+cs.borderTopLeftRadius+'\nbg '+cs.backgroundColor+'\n'+(v.state==='focus'?'focus ring: 2px surface + 2px color-focus':'')+(v.state==='hover'?'hover: color-accent-hover / surface-subtle':'');
-    };
-    box.addEventListener('change',update);update();
+    var stage=box.querySelector('.dsp-stage'),form=box.querySelector('.dsp-controls'),tabs=box.querySelectorAll('[role=tab]');
+    var current='button',values={};
+    function build(name){
+      current=name;values={};
+      var props=COMPONENTS[name].props;
+      Object.keys(props).forEach(function(k){values[k]=props[k].indexOf(DEFAULTS[k])>=0?DEFAULTS[k]:props[k][0];});
+      form.innerHTML=Object.keys(props).map(function(k){return seg(k,k.charAt(0).toUpperCase()+k.slice(1),props[k],values[k]);}).join('')+'<pre class="dsp-spec" aria-live="polite"></pre>';
+      tabs.forEach(function(t){var on=t.dataset.component===name;t.classList.toggle('is-on',on);t.setAttribute('aria-selected',on);});
+      render();
+    }
+    function render(){
+      stage.innerHTML=RENDER[current](values);
+      form.querySelector('.dsp-spec').textContent=specFor(current,values,stage);
+    }
+    form.addEventListener('change',function(e){if(e.target.name){values[e.target.name]=e.target.value;render();}});
+    tabs.forEach(function(t){t.addEventListener('click',function(){build(t.dataset.component);});});
+    build('button');
   }
 
   /* 12. Reading progress bar gets chapter ticks; click a tick to jump. */
