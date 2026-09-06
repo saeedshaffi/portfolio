@@ -3184,14 +3184,17 @@ function resumePage(){
   }
   function initPlayground(){
     if(document.querySelector('.dsp'))return;
-    var host=document.getElementById('ai-system-6')||document.getElementById('ai-system-9');
+    /* Last section of the case study: after the final chapter. */
+    var chapters=document.querySelectorAll('main .chapter');
+    var host=chapters.length?chapters[chapters.length-1]:document.getElementById('ai-system-9');
     if(!host)return;
-    var anchor=Array.prototype.slice.call(host.querySelectorAll('figure')).filter(function(f){return /variant=/.test(f.textContent);}).pop();
+    var anchor=host;
     var box=document.createElement('div');box.className='dsp';
     box.innerHTML='<div class="dsp-head"><h3>Try the components</h3><p>Pick a component, then its props. The preview and the spec follow.</p></div>'+
       '<div class="dsp-tabs" role="tablist" aria-label="Component">'+Object.keys(COMPONENTS).map(function(k,i){return '<button type="button" role="tab" data-component="'+k+'" aria-selected="'+(i===0)+'"'+(i===0?' class="is-on"':'')+'>'+COMPONENTS[k].label+'</button>';}).join('')+'</div>'+
       '<div class="dsp-body"><div class="dsp-stage"></div><form class="dsp-controls" onsubmit="return false"></form></div>';
-    if(anchor)anchor.insertAdjacentElement('afterend',box);else host.appendChild(box);
+    box.classList.add('dsp-final');
+    anchor.insertAdjacentElement('afterend',box);
     var stage=box.querySelector('.dsp-stage'),form=box.querySelector('.dsp-controls'),tabs=box.querySelectorAll('[role=tab]');
     var current='button',values={};
     function build(name){
