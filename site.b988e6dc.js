@@ -973,7 +973,7 @@ ${chapter(9,'Design the solution',`
 
 ${chapter(10,'Original and proposed',`
   <h2>Original screens and proposed designs</h2>
-  <p>The same five steps, before and after. Drag the handle on each screen to compare the original with the proposed design.</p>
+  <p>The same five steps, before and after. Each proposed screen sits directly under the original it replaces.</p>
   <div class="ey-compare">
     <div class="ey-compare-row" data-row="original">
       <span class="ey-compare-label">Original</span>
@@ -3122,28 +3122,6 @@ function resumePage(){
     }
   }
 
-  /* 5. Eyewa: original/proposed rows become before/after sliders. */
-  function initEyewaCompare(){
-    var cmp=document.querySelector('.ey-compare');
-    if(!cmp)return;
-    var before=cmp.querySelectorAll('[data-row="original"] img'),after=cmp.querySelectorAll('[data-row="proposed"] img');
-    if(!before.length||before.length!==after.length)return;
-    var grid=document.createElement('div');grid.className='ba-grid';
-    before.forEach(function(b,i){
-      var a=after[i],wrap=document.createElement('div');
-      wrap.innerHTML='<div class="ba" style="--pos:50%"><img class="ba-before" alt=""><img class="ba-after" alt=""><span class="ba-handle" aria-hidden="true"></span><span class="ba-tag ba-tag-before">Before</span><span class="ba-tag ba-tag-after">After</span><input type="range" min="0" max="100" value="50" aria-label="Compare before and after"></div><p class="ba-caption"></p>';
-      wrap.querySelector('.ba-before').src=b.src;wrap.querySelector('.ba-before').alt=b.alt||'Original screen';
-      wrap.querySelector('.ba-after').src=a.src;wrap.querySelector('.ba-after').alt=a.alt||'Proposed screen';
-      wrap.querySelector('.ba-caption').textContent=(a.alt||'').replace(/^Proposed · /,'');
-      var ba=wrap.querySelector('.ba'),range=wrap.querySelector('input');
-      var set=function(v){ba.style.setProperty('--pos',v+'%');};
-      range.addEventListener('input',function(){set(range.value);});
-      ba.addEventListener('pointermove',function(e){if(e.buttons||finePointer()){var r=ba.getBoundingClientRect();var v=clamp((e.clientX-r.left)/r.width*100,0,100);range.value=v;set(v);}});
-      grid.appendChild(wrap);
-    });
-    cmp.replaceWith(grid);
-  }
-
   /* 6. AI design system: live button + date picker playground. */
   function seg(name,label,values){
     return '<fieldset><legend>'+label+'</legend><div class="dsp-seg">'+values.map(function(v,i){return '<label><input type="radio" name="'+name+'" value="'+v+'"'+(i===0||(name==='size'&&v==='md')||(name==='density'&&v==='comfortable')?' checked':'')+'><span>'+v+'</span></label>';}).join('')+'</div></fieldset>';
@@ -3174,20 +3152,6 @@ function resumePage(){
       spec.textContent='<Button variant="'+v.variant+'" size="'+v.size+'"'+(v.icon!=='none'?' iconPosition="'+v.icon+'"':'')+(v.state==='loading'?' loading':'')+(v.state==='disabled'?' disabled':'')+' />\nheight '+Math.round(parseFloat(cs.height))+'px · padding-x '+Math.round(parseFloat(cs.paddingLeft))+'px\nfont '+Math.round(parseFloat(cs.fontSize))+'px/600 · radius '+cs.borderTopLeftRadius+'\nbg '+cs.backgroundColor+'\n'+(v.state==='focus'?'focus ring: 2px surface + 2px color-focus':'')+(v.state==='hover'?'hover: color-accent-hover / surface-subtle':'');
     };
     box.addEventListener('change',update);update();
-  }
-
-  /* 10. Shots grid becomes a strip you can drag. */
-  function initShotsStrip(){
-    var strip=document.querySelector('.home-archive .shots');
-    if(!strip||strip.dataset.strip)return;
-    strip.dataset.strip='1';strip.classList.add('shots-strip');
-    if(!finePointer())return;
-    var down=false,startX=0,startLeft=0,moved=false;
-    on(strip,'pointerdown',function(e){down=true;moved=false;startX=e.clientX;startLeft=strip.scrollLeft;});
-    on(strip,'pointermove',function(e){if(!down)return;var dx=e.clientX-startX;if(Math.abs(dx)>4){moved=true;strip.classList.add('is-dragging');}strip.scrollLeft=startLeft-dx;});
-    var up=function(){down=false;strip.classList.remove('is-dragging');};
-    on(strip,'pointerup',up);on(strip,'pointercancel',up);on(strip,'pointerleave',up);
-    on(strip,'click',function(e){if(moved){e.preventDefault();e.stopPropagation();moved=false;}},true);
   }
 
   /* 12. Reading progress bar gets chapter ticks; click a tick to jump. */
@@ -3225,11 +3189,10 @@ function resumePage(){
 
   window.initInteractions=function(path){
     cleanup();
-    if(path==='/'){initHeroLean();initCardTilt();initShotsStrip();}
+    if(path==='/'){initHeroLean();initCardTilt();}
     initCountUp();
     if(path.indexOf('/case/')===0){
       initProgressTicks();
-      if(path==='/case/eyewa')initEyewaCompare();
       if(path==='/case/ai-system')initPlayground();
     }
   };

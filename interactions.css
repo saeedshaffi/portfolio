@@ -15,20 +15,6 @@ body.home-active #home-hero-title .hl{display:inline-block;translate:var(--lean-
 [data-countup]{font-variant-numeric:tabular-nums;transition:color .35s ease}
 [data-countup].is-counted{color:var(--case-accent,var(--coral,#ff6b4a))}
 
-/* 5. Before / after slider */
-.ba-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;margin:22px 0}
-@media(max-width:900px){.ba-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:560px){.ba-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.ba{position:relative;aspect-ratio:1202/2400;border-radius:14px;overflow:hidden;background:#eae6de;border:1px solid rgba(23,25,20,.12);user-select:none;touch-action:pan-y;--pos:50%}
-.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;pointer-events:none}
-.ba .ba-after{clip-path:inset(0 0 0 var(--pos))}
-.ba .ba-handle{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.25);translate:-1px 0;pointer-events:none}
-.ba .ba-handle::after{content:"⟷";position:absolute;top:50%;left:50%;translate:-50% -50%;width:34px;height:34px;border-radius:50%;background:#fff;color:#111;display:grid;place-items:center;font-size:14px;box-shadow:0 4px 14px rgba(0,0,0,.25)}
-.ba .ba-tag{position:absolute;top:10px;padding:4px 8px;border-radius:999px;background:rgba(10,11,10,.7);color:#fff;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;pointer-events:none}
-.ba .ba-tag-before{left:10px}.ba .ba-tag-after{right:10px}
-.ba input[type=range]{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize}
-.ba-caption{margin:8px 0 0;font-size:13px;color:#65685f;text-align:center}
-
 /* 6. Design-system playground */
 .dsp{margin:36px 0 8px;border:1px solid rgba(23,25,20,.12);border-radius:20px;background:#fffdf8;overflow:hidden}
 .dsp-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:18px 22px;border-bottom:1px solid rgba(23,25,20,.12)}
@@ -85,13 +71,6 @@ body.home-active #home-hero-title .hl{display:inline-block;translate:var(--lean-
 .ds-dp[data-state=disabled]{opacity:.45}
 .ds-dp[data-state=loading] .ds-dp-grid{opacity:.35}
 .ds-dp-foot{display:flex;justify-content:flex-end;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--color-border-default)}
-
-/* 10. Shots strip */
-.shots.shots-strip{display:flex;gap:16px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;padding:4px 4px 18px;cursor:grab;scrollbar-width:thin}
-.shots.shots-strip.is-dragging{cursor:grabbing;scroll-snap-type:none;user-select:none}
-.shots.shots-strip .shot{flex:0 0 clamp(240px,26vw,360px);scroll-snap-align:start}
-.shots.shots-strip .shot img{pointer-events:none}
-@media(hover:none){.shots.shots-strip{cursor:auto}}
 
 /* 12. Chapter ticks on the reading progress bar */
 .case-extra-progress,.reading-progress,.hm-progress{overflow:visible}
