@@ -3137,11 +3137,14 @@ function resumePage(){
     dp.innerHTML='<div class="ds-dp-head"><button type="button" aria-label="Previous month">‹</button><span>'+month+'</span><button type="button" aria-label="Next month">›</button></div><div class="ds-dp-grid">'+['Mo','Tu','We','Th','Fr','Sa','Su'].map(function(d){return '<span>'+d+'</span>';}).join('')+cells+'</div><div class="ds-dp-foot"><button type="button" class="ds-btn" data-variant="ghost" data-size="sm">Clear</button><button type="button" class="ds-btn" data-variant="primary" data-size="sm">Apply</button></div>';
   }
   function initPlayground(){
-    var host=document.getElementById('ai-system-9');
-    if(!host||host.querySelector('.dsp'))return;
+    if(document.querySelector('.dsp'))return;
+    var host=document.getElementById('ai-system-6')||document.getElementById('ai-system-9');
+    if(!host)return;
+    /* Sit directly under the conceptual Button API figure when it is there. */
+    var anchor=Array.prototype.slice.call(host.querySelectorAll('figure')).filter(function(f){return /variant=/.test(f.textContent);}).pop();
     var box=document.createElement('div');box.className='dsp';
     box.innerHTML='<div class="dsp-head"><h3>Try the components</h3><p>Same props as the conceptual API above. Change one, watch both.</p></div><div class="dsp-body"><div class="dsp-stage"><button type="button" class="ds-btn" data-variant="primary" data-size="md" data-state="default" data-icon="none" data-density="comfortable"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span>Continue to payment</span></button><div class="ds-dp" data-size="md" data-state="default" data-density="comfortable" role="group" aria-label="Date range picker preview"></div></div><form class="dsp-controls" onsubmit="return false">'+seg('variant','Variant',['primary','secondary','ghost'])+seg('size','Size',['sm','md','lg'])+seg('state','State',['default','hover','focus','loading','disabled'])+seg('density','Density',['comfortable','compact'])+seg('icon','Icon',['none','start','end'])+'<pre class="dsp-spec" aria-live="polite"></pre></form></div>';
-    host.appendChild(box);
+    if(anchor)anchor.insertAdjacentElement('afterend',box);else host.appendChild(box);
     var btn=box.querySelector('.ds-btn'),dp=box.querySelector('.ds-dp'),spec=box.querySelector('.dsp-spec');
     renderDatePicker(dp);
     var update=function(){
@@ -3186,6 +3189,21 @@ function resumePage(){
     on(window,'resize',place);
     on(window,'load',place);
   }
+
+  /* Chapter links in the case-study table of contents are plain "#id" anchors;
+     the hash router would read them as a route and show the 404 page. Scroll instead. */
+  document.addEventListener('click',function(e){
+    var a=e.target instanceof Element?e.target.closest('.study-toc a[href^="#"]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(href.indexOf('#/')===0)return;
+    var target=document.getElementById(href.slice(1));
+    if(!target)return;
+    e.preventDefault();
+    var y=target.getBoundingClientRect().top+window.scrollY-96;
+    window.scrollTo({top:y,behavior:reduceMotion()?'auto':'smooth'});
+    a.parentElement.querySelectorAll('a').forEach(function(l){l.classList.toggle('active',l===a);l.classList.toggle('is-active',l===a);});
+  });
 
   window.initInteractions=function(path){
     cleanup();
