@@ -1,7 +1,8 @@
 /* interactions.css — styles for the additive interaction layer (interactions.js). */
 
 /* 1. Hero headline lean */
-body.home-active #home-hero-title .hl{display:inline-block;translate:var(--lean-x,0) var(--lean-y,0);transition:translate .5s cubic-bezier(.22,1,.36,1)}
+/* inline (not inline-block) so the sentence can wrap mid-line beside the pills; the lean uses relative offsets, which work on inline boxes */
+body.home-active #home-hero-title .hl{display:inline;position:relative;left:var(--lean-x,0);top:var(--lean-y,0);transition:left .5s cubic-bezier(.22,1,.36,1),top .5s cubic-bezier(.22,1,.36,1)}
 
 /* 2. Project card 3D tilt (uses --px/--py from the existing parallax) */
 .project-grid.has-tilt{perspective:1400px}

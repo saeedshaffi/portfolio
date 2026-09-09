@@ -378,7 +378,7 @@ body.home-active #home-hero-title .home-rotating-suffix {
 body.home-active #home-hero-title .home-rotating-group {
   display: inline;
   color: #ff756b;
-  white-space: nowrap;
+  white-space: normal; /* nowrap here glued "into" to the word and forced both onto a new line */
 }
 
 body.home-active #home-hero-title .home-rotating-comma {

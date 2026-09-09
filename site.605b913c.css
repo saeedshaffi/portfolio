@@ -6296,7 +6296,7 @@ display: inline;
 body.home-active #home-hero-title .home-rotating-group {
 display: inline;
 color: #ff756b;
-white-space: nowrap;
+white-space: normal; 
 }
 body.home-active #home-hero-title .home-rotating-comma {
 color: #ff756b;
@@ -12347,7 +12347,7 @@ line-height:1.35!important;
 
 /* ===== interactions.css ===== */
 
-body.home-active #home-hero-title .hl{display:inline-block;translate:var(--lean-x,0) var(--lean-y,0);transition:translate .5s cubic-bezier(.22,1,.36,1)}
+body.home-active #home-hero-title .hl{display:inline;position:relative;left:var(--lean-x,0);top:var(--lean-y,0);transition:left .5s cubic-bezier(.22,1,.36,1),top .5s cubic-bezier(.22,1,.36,1)}
 .project-grid.has-tilt{perspective:1400px}
 .project-grid.has-tilt .project-card{transform-style:preserve-3d;transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .4s ease}
 .project-grid.has-tilt .project-card.is-tilting{transform:rotateY(calc(var(--px,0)*4deg)) rotateX(calc(var(--py,0)*-4deg));box-shadow:0 26px 60px rgba(25,28,20,.16)}
