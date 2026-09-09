@@ -1,6 +1,12 @@
 function resumePage(){
   const exp=[
-    {role:'Lead Product Designer',org:'Expertlead',dates:'Jan 2023, Present',loc:'Remote',
+    {role:'Senior Product Designer',org:'Deel',dates:'Jan 2025, Present',loc:'Remote',
+     bullets:[
+       'Led the complete redesign of the client experience, delivering a more intuitive, user-friendly interface that significantly improved customer satisfaction and engagement.',
+       'Introduced and integrated key features including reporting and employee payroll processing, streamlining operations and enhancing the overall client experience.',
+       'Increased client retention and positive feedback, demonstrating the effectiveness of the design solutions in addressing user needs.'
+     ]},
+    {role:'Lead Product Designer',org:'Expertlead',dates:'Jan 2023, Dec 2024',loc:'Remote',
      bullets:[
        'Streamlined design workflows and operating processes, increasing team productivity by 55% and improving product quality within two months.',
        'Designed and built turnover-expansion and revenue-consolidation applications from scratch for B2B SaaS clients, improving operational efficiency and reducing time-to-market by 30%.',

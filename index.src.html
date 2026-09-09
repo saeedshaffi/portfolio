@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&display=swap" />
-  <link rel="stylesheet" href="styles.css?v=111" />
+  <link rel="stylesheet" href="styles.css?v=112" />
   <link rel="stylesheet" href="media.css?v=59" />
   <link rel="stylesheet" href="editorial.css?v=66" />
   <link rel="stylesheet" href="kfh-editorial-redesign.css?v=2" />
@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap" />
     <link rel="stylesheet" href="harmony.css?v=13" />
     <link rel="stylesheet" href="contact-polish.css?v=7" />
-<link rel="stylesheet" href="hero.css?v=15" />
+<link rel="stylesheet" href="hero.css?v=16" />
 <link rel="stylesheet" href="eyewa-editorial.css?v=3" />
 <link rel="stylesheet" href="eyewa.css?v=34" />
 <link rel="stylesheet" href="resume.css?v=1" />
@@ -47,6 +47,7 @@
 <link rel="stylesheet" href="hero-video.css?v=1" />
 <link rel="stylesheet" href="case-typography.css?v=1" />
 <link rel="stylesheet" href="interactions.css?v=1" />
+<link rel="stylesheet" href="contact-form.css?v=7" />
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -62,48 +63,68 @@
     <a class="brand" href="#/" aria-label="Saeed Shaffi, home"><span class="brand-avatar"><img src="assets/saeed-avatar.webp" alt="" /></span><b>Saeed Shaffi</b></a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><span class="menu-icon" aria-hidden="true"><i></i><i></i></span></button>
     <nav id="site-nav" aria-label="Primary navigation">
-      <a href="#/" data-scroll-target="selected-work">Work</a><a href="assets/SaeedShaffi_Resume.pdf" download="SaeedShaffi_Resume.pdf" aria-label="Open Saeed Shaffi résumé PDF">Resume <span>↗</span></a><a href="mailto:saeedshaffi@gmail.com">Let’s talk <span>↗</span></a>
+      <a href="#/" data-scroll-target="selected-work">Work</a><a href="#/" data-hero-video aria-haspopup="dialog" aria-label="Reel: play the KFH Jazeel product walkthrough">Reel</a><a href="assets/SaeedShaffi_Resume.pdf" download="SaeedShaffi_Resume.pdf" aria-label="Open Saeed Shaffi résumé PDF">Resume <span>↗</span></a><a href="#/" data-scroll-target="lets-talk">Let’s talk</a>
     </nav>
   </header>
   <main id="main" tabindex="-1"></main>
   <footer class="site-footer" id="contact">
-    <section class="ft4" aria-labelledby="footer-contact-title">
-      <div class="ft4-top">
-        <div class="ft4-lead">
-          <span class="ft4-eyebrow">Contact</span>
-          <h2 id="footer-contact-title">Let&rsquo;s connect</h2>
-        </div>
-        <p class="ft4-sub">Email me directly, or find me on LinkedIn. Every message gets an answer, usually within two working days.</p>
-      </div>
-
-      <div class="ft4-tiles">
-        <div class="ft4-tile ft4-tile-email">
-          <span class="ft4-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
-          <span class="ft4-tile-text">
+    <section class="ft4 ft4-form" id="lets-talk" tabindex="-1" aria-labelledby="footer-contact-title">
+      <div class="ft4-lead">
+        <span class="ft4-eyebrow">Contact</span>
+        <h2 id="footer-contact-title">Have something worth building? Let&rsquo;s talk.</h2>
+        <p class="ft4-sub">Tell me a little about the product, problem, or opportunity you&rsquo;re working on.</p>
+        <ul class="ft5-links">
+          <li>
             <small>Email</small>
             <a href="mailto:saeedshaffi@gmail.com">saeedshaffi@gmail.com</a>
-          </span>
-          <button class="footer-copy-email ft4-copy" type="button" data-copy-email="saeedshaffi@gmail.com" aria-label="Copy email address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button>
-        </div>
-
-        <a class="ft4-tile" href="https://linkedin.com/in/saeedshaffi" target="_blank" rel="noreferrer">
-          <span class="ft4-tile-icon ft4-tile-icon-solid"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM2.9 21.5h4.16V9.5H2.9v12ZM9.5 9.5h3.98v1.64h.06c.55-1.05 1.9-2.16 3.92-2.16 4.19 0 4.96 2.76 4.96 6.35v6.17h-4.15v-5.47c0-1.3-.02-2.98-1.82-2.98-1.82 0-2.1 1.42-2.1 2.89v5.56H9.5V9.5Z"/></svg></span>
-          <span class="ft4-tile-text">
+            <button class="footer-copy-email ft4-copy" type="button" data-copy-email="saeedshaffi@gmail.com" aria-label="Copy email address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button>
+          </li>
+          <li>
             <small>LinkedIn</small>
-            <b>Saeed Shaffi</b>
-          </span>
-          <span class="ft4-pill">View profile <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-        </a>
-
-        <a class="ft4-tile" href="assets/SaeedShaffi_Resume.pdf" download="SaeedShaffi_Resume.pdf">
-          <span class="ft4-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v5h6"/><path d="M8 13h8M8 17h5"/></svg></span>
-          <span class="ft4-tile-text">
+            <a href="https://linkedin.com/in/saeedshaffi" target="_blank" rel="noreferrer">Saeed Shaffi <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          </li>
+          <li>
             <small>R&eacute;sum&eacute;</small>
-            <b>One page, PDF</b>
-          </span>
-          <span class="ft4-pill">Open <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-        </a>
+            <a href="assets/SaeedShaffi_Resume.pdf" download="SaeedShaffi_Resume.pdf">One page, PDF <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          </li>
+        </ul>
       </div>
+
+      <form class="ft5-form" action="https://formspree.io/f/xaeyabjb" method="POST" novalidate>
+        <div class="ft5-body">
+          <div class="ft5-row">
+            <div class="ft5-field">
+              <label for="ct-name">Name</label>
+              <input id="ct-name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
+              <span class="ft5-error" aria-live="polite"></span>
+            </div>
+            <div class="ft5-field">
+              <label for="ct-email">Email</label>
+              <input id="ct-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@company.com" required />
+              <span class="ft5-error" aria-live="polite"></span>
+            </div>
+          </div>
+          <div class="ft5-field">
+            <label for="ct-message">Message</label>
+            <textarea id="ct-message" name="message" rows="7" maxlength="2000" placeholder="What are you building, and where does design come in?" required></textarea>
+            <span class="ft5-error" aria-live="polite"></span>
+            <span class="ft5-count" aria-live="polite" hidden></span>
+          </div>
+          <input type="hidden" name="_subject" value="New portfolio enquiry" />
+          <input class="ft5-honey" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <div class="ft5-actions">
+            <button class="ft5-submit" type="submit"><span>Send message</span><i aria-hidden="true">&#8599;</i><span class="ft5-spin" aria-hidden="true"></span></button>
+            <span class="ft5-hint">Usually answered within two working days.</span>
+          </div>
+          <p class="ft5-status" role="alert"></p>
+        </div>
+        <div class="ft5-done" hidden>
+          <span class="ft5-done-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+          <b>Message sent. I&rsquo;ll get back to you soon.</b>
+          <p class="ft5-done-who">Thanks for reaching out. A reply usually lands within two working days.</p>
+          <button type="button">Send another message</button>
+        </div>
+      </form>
 
       <div class="footer-copy-toast" role="status" aria-live="polite">Email copied</div>
     </section>
@@ -122,16 +143,17 @@
   <script src="talon-case.js?v=5"></script>
   <script src="ai-system-case.js?v=8"></script>
   <script src="ai-system-story.js?v=10"></script>
-  <script src="resume.js?v=2"></script>
+  <script src="resume.js?v=3"></script>
   <script src="case-extras.js?v=1"></script>
-  <script src="site-extras.js?v=1"></script>
+  <script src="site-extras.js?v=2"></script>
   <script src="motion-extras.js?v=1"></script>
-  <script src="hero-video.js?v=1"></script>
+  <script src="hero-video.js?v=2"></script>
   <script src="interactions.js?v=1"></script>
-  <script src="app.js?v=118"></script>
+  <script src="app.js?v=122"></script>
   <script src="kfh-media.js?v=64"></script>
   <script src="kfh-editorial-redesign.js?v=3"></script>
-  <script src="home-redesign.js?v=1"></script>
+  <script src="home-redesign.js?v=2"></script>
   <script src="hero.js?v=2"></script>
+  <script src="contact-form.js?v=3"></script>
 </body>
 </html>

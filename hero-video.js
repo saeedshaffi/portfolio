@@ -33,7 +33,7 @@
 
   /* ---------- 1. Faint loop inside the pill ---------- */
   function mountPill(){
-    var cta=document.querySelector('.home-inline-cta[data-hero-video]');
+    var cta=document.querySelector('.home-inline-cta');
     if(!cta||cta.dataset.videoReady)return;
     var bg=cta.querySelector('.home-cta-bg');
     if(!bg)return;
@@ -119,7 +119,8 @@
     if(cardVideo)cardVideo.pause();
   }
 
-  var ctaFrom=function(event){return event.target instanceof Element?event.target.closest('.home-inline-cta[data-hero-video]'):null;};
+  /* Any [data-hero-video] control opens the reel (the header's Reel link); the hero pill now scrolls to the work. */
+  var ctaFrom=function(event){return event.target instanceof Element?event.target.closest('[data-hero-video]'):null;};
   document.addEventListener('pointerover',function(event){
     var cta=ctaFrom(event);
     if(!cta||cta.contains(event.relatedTarget))return;

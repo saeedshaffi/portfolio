@@ -140,7 +140,7 @@
     if(!cta){
       cta=document.createElement('div');
       cta.className='mobile-cta';
-      cta.innerHTML='<span class="mobile-cta-text"><b><i class="mobile-cta-dot" aria-hidden="true"></i>Saeed Shaffi</b><span>Lead Product Designer · Berlin</span></span><a class="mobile-cta-btn" href="mailto:saeedshaffi@gmail.com">Let’s talk <span aria-hidden="true">↗</span></a>';
+      cta.innerHTML='<span class="mobile-cta-text"><b><i class="mobile-cta-dot" aria-hidden="true"></i>Saeed Shaffi</b><span>Lead Product Designer · Berlin</span></span><a class="mobile-cta-btn" href="#/" data-scroll-target="lets-talk">Let’s talk <span aria-hidden="true">↗</span></a>';
       document.body.appendChild(cta);
       document.body.classList.add('has-mobile-cta');
     }

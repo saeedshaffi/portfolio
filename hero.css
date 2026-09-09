@@ -401,6 +401,17 @@ body.home-active #home-hero-title .home-rotating-word {
   transition: width 0.18s cubic-bezier(.33, 1, .68, 1);
 }
 
+/* Invisible copy of the widest word keeps the slot at its full width from the
+   very first paint, in the live font, so the line structure never changes
+   when a shorter word is showing. */
+body.home-active #home-hero-title .home-rotating-word::before {
+  content: "momentum";
+  display: inline-block;
+  visibility: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 /* State (opacity/filter/transform) is set inline by app.js — see initHomeRotatingWords. */
 body.home-active #home-hero-title .home-rotating-word > span {
   color: #ff756b;
@@ -604,6 +615,9 @@ body.home-active .home-hero:not(.is-hero-entered) #home-hero-title .home-talk-pi
     height: auto;
     overflow: visible;
     transition: none;
+  }
+  body.home-active #home-hero-title .home-rotating-word::before {
+    content: none;
   }
 
   body.home-active #home-hero-title .home-rotating-word > span:not(:first-child) {
