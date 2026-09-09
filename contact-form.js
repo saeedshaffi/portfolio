@@ -15,7 +15,11 @@
   const EMAIL=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   const MAX=Number(message?.getAttribute('maxlength'))||2000;
   const DRAFT='ft5-draft';
+  const SENT_KEY='ft5-sent-at';
+  const SENT_WINDOW=24*60*60*1000;   /* one delivered message per browser per 24h; repeats get the same confirmation, nothing is sent */
   const armedAt=Date.now();
+  const recentlySent=()=>{try{const t=Number(localStorage.getItem(SENT_KEY)||0);return t&&(Date.now()-t)<SENT_WINDOW;}catch(e){return false;}};
+  const markSent=()=>{try{localStorage.setItem(SENT_KEY,String(Date.now()));}catch(e){}};
 
   const messageFor=input=>{
     const v=input.value.trim();
@@ -131,6 +135,12 @@
       setError('That was quick. Please try sending again.');
       return;
     }
+    if(recentlySent()){
+      /* quiet cap: behave exactly like a successful send, without posting */
+      setLoading(true);
+      window.setTimeout(()=>{setLoading(false);clearDraft();showDone(String(new FormData(form).get('name')||''),String(new FormData(form).get('email')||'').trim());},700);
+      return;
+    }
     setLoading(true);
     const controller=('AbortController' in window)?new AbortController():null;
     const timer=controller?window.setTimeout(()=>controller.abort(),15000):0;
@@ -149,6 +159,7 @@
         throw new Error(detail||('HTTP '+response.status));
       }
       clearDraft();
+      markSent();
       showDone(name,email);
     }catch(error){
       const timedOut=error&&error.name==='AbortError';

@@ -28,7 +28,7 @@
       <section class="experience-strip" aria-labelledby="experience-title">
         <span id="experience-title">Experience across</span>
         <div class="experience-logos" role="list" aria-label="Selected companies and product environments">
-          <b role="listitem">Zand Bank</b><b role="listitem">KFH Jazeel</b><b role="listitem">PriceOye</b><b role="listitem">PayPro</b><b role="listitem">CreditBook</b><b role="listitem">Expertlead</b><b role="listitem">Deel</b>
+          <b role="listitem">Zand Bank</b><b role="listitem">KFH Jazeel</b><b role="listitem">PriceOye</b><b role="listitem">PayPro</b><b role="listitem">CreditBook</b><b role="listitem">Expertlead</b>
         </div>
       </section>
       <section class="home-highlights" id="highlights" aria-labelledby="highlights-title">
