@@ -1,6 +1,12 @@
 function resumePage(){
   const exp=[
-    {role:'Lead Product Designer',org:'Expertlead',dates:'Jan 2023, Present',loc:'Remote',
+    {role:'Senior Product Designer',org:'Deel',dates:'Jan 2024, Present',loc:'Remote',
+     bullets:[
+       'Led the complete redesign of the client experience, delivering a more intuitive interface that improved customer satisfaction and engagement.',
+       'Introduced and integrated key features such as reporting and employee payroll processing, streamlining operations for clients.',
+       'Lifted client retention and positive feedback, showing the design solutions addressed real user needs.'
+     ]},
+    {role:'Lead Product Designer',org:'Expertlead',dates:'Jan 2023, Dec 2023',loc:'Remote',
      bullets:[
        'Streamlined design workflows and operating processes, increasing team productivity by 55% and improving product quality within two months.',
        'Designed and built turnover-expansion and revenue-consolidation applications from scratch for B2B SaaS clients, improving operational efficiency and reducing time-to-market by 30%.',
@@ -69,7 +75,7 @@ function resumePage(){
         </div>
       </div>
       <div class="resume-head-actions">
-        <a class="button primary resume-download" href="resume-print.html" target="_blank" rel="noreferrer">Download Résumé (PDF)</a>
+        <a class="button primary resume-download" href="assets/SaeedShaffi_Resume.pdf?v=2026-09" download="SaeedShaffi_Resume.pdf">Download Résumé (PDF)</a>
         
       </div>
     </header>
