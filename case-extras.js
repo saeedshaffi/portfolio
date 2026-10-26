@@ -3,7 +3,7 @@
    Called by app.js after each route render: window.initCaseExtras(path). */
 (function(){
   const ORDER=['kfh','ai-system','eyewa','system','talon'];
-  const ACCENT={kfh:'#56e0bd','ai-system':'#d81e2c',eyewa:'#cf3f30',system:'#1e8055',talon:'#2f62e9'}; /* matches each page's --accent */
+  const ACCENT={kfh:'#007571','ai-system':'#d81e2c',eyewa:'#cf3f30',system:'#1e8055',talon:'#2f62e9'}; /* matches each page's --accent */
   const TLDR={
     kfh:{
       problem:'66% of users dropped off during onboarding; core flows were unclear and crashed.',

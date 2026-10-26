@@ -37,6 +37,9 @@
       'Before/image 90.webp',
       'Before/image 91.webp'
     ],
+    decisions: ['final/kfh-dashboard-priorities.webp'],
+    structure: ['final/kfh-dashboard-before-after.webp'],
+    annotated: ['final/kfh-dashboard-annotated.webp'],
     ui: [
       'final/kfh-sign-up.webp',
       'final/kfh-forgot-password.webp',
@@ -65,7 +68,10 @@
     comparison: [[3520, 1704]],
     hifi: [[1760, 878]],
     version: [[2380, 2160]],
-    ui: Array.from({ length: 9 }, () => [1358, 959]),
+    decisions: [[2400, 1422]],
+    structure: [[2400, 1347]],
+    annotated: [[2400, 1333]],
+    ui: Array.from({ length: 9 }, () => [2716, 1868]),
     heatmaps: [[3116, 2318]],
     mobile: [[1756, 588]]
   };
@@ -97,12 +103,15 @@
     version: ['Version control workflow introduced for the KFH Jazeel design team'],
     system: ['KFH Jazeel design system structure', 'Kapple design system foundations and component architecture'],
     before: Array.from({ length: 2 }, (_, index) => `Original KFH Jazeel interface, screen ${index + 1} of 2`),
+    decisions: ['Priority matrix of dashboard widgets scored by frequency of use and decision value'],
+    structure: ['Dashboard structure before and after the redesign, shown as labelled wireframes'],
+    annotated: ['The final KFH Jazeel dashboard with six numbered annotations explaining each widget'],
     ui: [
       'KFH Jazeel Sign up screen with mobile number and coupon code',
       'KFH Jazeel Forgot password screen',
       'KFH Jazeel Dashboard with balance, pending authorisations and recent operations',
       'KFH Jazeel Accounts summary listing each account with its balance',
-      'KFH Jazeel Account statement request with account and duration filters',
+      'KFH Jazeel Account statement with account and period filters and the generated statement table',
       'KFH Jazeel Financing facilities table',
       'KFH Jazeel Transaction history table with own-account and within-bank tabs',
       'KFH Jazeel Own account transfer form with a live summary of the steps',
@@ -127,6 +136,9 @@
     version: 'One shared source for the latest design work.',
     system: 'The foundations and components that helped the team work at scale.',
     before: 'The original interface before we redesigned it.',
+    decisions: 'Top right earned the first screen. Grey items stayed off the dashboard.',
+    structure: 'Decide, act, understand: the three rows of the redesigned dashboard.',
+    annotated: 'Open the image to read why each widget is where it is.',
     ui: 'The finished product in the order a customer meets it: sign in, dashboard, accounts, then transfers and services. Use the arrows, trackpad, or swipe to move between screens.',
     heatmaps: 'Attention moved towards the main task and action.',
     mobile: 'A separate mobile case study is in progress.'
@@ -862,9 +874,12 @@
       ['Version control', gallery('version', 'Version control workflow')],
       ['Design system', gifBlock('system', 'KFH Jazeel design system', 'animated/design-system.gif', 'optimized/design-system-poster.jpg', 'The shared foundations and components used across the product.', 'Animated overview of the Kapple design system foundations and architecture')],
       ['Before the redesign', gifBlock('before', 'Original screens', 'animated/original-screens.gif', 'optimized/original-screens-poster.jpg', 'The product before the redesign.', 'Animated sequence of the original KFH Jazeel interface')],
+      ['How did we rank the candidates?', gallery('decisions', 'Dashboard priorities')],
+      ['Why is it structured in three rows?', gallery('structure', 'Dashboard structure before and after')],
+      ['What changed in the 2026 refresh?', gallery('annotated', 'The final dashboard, annotated')],
       ['Final interface', gallery('ui', 'Final interface')],
       ['Heatmaps', gallery('heatmaps', 'Heatmap validation')],
-      ['Design iterations after launch', gifBlock('iteration', 'Design iterations after launch', 'animated/iterative-progress.gif', 'optimized/iterative-progress-poster.jpg', 'The interface changed through three major rounds of improvements.', 'Animated sequence of KFH Jazeel design iterations after launch')],
+      ['Design iterations after launch', gifBlock('iteration', 'Design iterations after launch', 'animated/iterative-progress.gif', 'optimized/iterative-progress-poster.jpg', 'The interface changed through three major rounds of improvements, ending with the 2026 dashboard refresh.', 'Animated sequence of KFH Jazeel design iterations after launch')],
       ['KFH Jazeel mobile case study', gallery('mobile', 'KFH Jazeel mobile product')]
     ].forEach(([heading, html]) => addAfterHeading(root, heading, html));
 
