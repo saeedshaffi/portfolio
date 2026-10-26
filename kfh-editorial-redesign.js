@@ -14,7 +14,7 @@
     'Version control':['optimized/version-control.jpg'],
     'Design system':['ds.webp','DS Kapple.webp'],
     'Before the redesign':['Before/image 90.webp','Before/image 91.webp'],
-    'Final interface':['final/kfh-dashboard.webp','final/kfh-accounts-summary.webp','final/kfh-account-statement.webp','final/kfh-financing-facilities.webp','final/kfh-transaction-history.webp','final/kfh-transfer-own-account.webp','final/kfh-account-opening.webp','final/kfh-sign-up.webp','final/kfh-forgot-password.webp'],
+    'Final interface':['final/kfh-sign-up.webp','final/kfh-forgot-password.webp','final/kfh-dashboard.webp','final/kfh-accounts-summary.webp','final/kfh-account-statement.webp','final/kfh-financing-facilities.webp','final/kfh-transaction-history.webp','final/kfh-transfer-own-account.webp','final/kfh-account-opening.webp'],
     'Heatmaps':['optimized/heatmap-validation.jpg'],
     'Design iterations after launch':['optimized/iterative-progress-poster.jpg'],
     'KFH Jazeel mobile case study':['optimized/mobile-preview.jpg']

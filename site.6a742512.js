@@ -4299,15 +4299,15 @@ document.addEventListener('click',event=>{
       'Before/image 91.webp'
     ],
     ui: [
+      'final/kfh-sign-up.webp',
+      'final/kfh-forgot-password.webp',
       'final/kfh-dashboard.webp',
       'final/kfh-accounts-summary.webp',
       'final/kfh-account-statement.webp',
       'final/kfh-financing-facilities.webp',
       'final/kfh-transaction-history.webp',
       'final/kfh-transfer-own-account.webp',
-      'final/kfh-account-opening.webp',
-      'final/kfh-sign-up.webp',
-      'final/kfh-forgot-password.webp'
+      'final/kfh-account-opening.webp'
     ],
     heatmaps: ['optimized/heatmap-validation.jpg'],
     mobile: ['optimized/mobile-preview.jpg']
@@ -4359,15 +4359,15 @@ document.addEventListener('click',event=>{
     system: ['KFH Jazeel design system structure', 'Kapple design system foundations and component architecture'],
     before: Array.from({ length: 2 }, (_, index) => `Original KFH Jazeel interface, screen ${index + 1} of 2`),
     ui: [
+      'KFH Jazeel Sign up screen with mobile number and coupon code',
+      'KFH Jazeel Forgot password screen',
       'KFH Jazeel Dashboard with balance, pending authorisations and recent operations',
       'KFH Jazeel Accounts summary listing each account with its balance',
       'KFH Jazeel Account statement request with account and duration filters',
       'KFH Jazeel Financing facilities table',
       'KFH Jazeel Transaction history table with own-account and within-bank tabs',
       'KFH Jazeel Own account transfer form with a live summary of the steps',
-      'KFH Jazeel Account opening request form',
-      'KFH Jazeel Sign up screen with mobile number and coupon code',
-      'KFH Jazeel Forgot password screen'
+      'KFH Jazeel Account opening request form'
     ],
     heatmaps: ['Attention heatmap for the redesigned KFH Jazeel sign in experience'],
     mobile: ['Preview of the forthcoming KFH Jazeel mobile case study']
@@ -4388,7 +4388,7 @@ document.addEventListener('click',event=>{
     version: 'One shared source for the latest design work.',
     system: 'The foundations and components that helped the team work at scale.',
     before: 'The original interface before we redesigned it.',
-    ui: 'The finished product across its main journeys. Use the arrows, trackpad, or swipe to move between screens.',
+    ui: 'The finished product in the order a customer meets it: sign in, dashboard, accounts, then transfers and services. Use the arrows, trackpad, or swipe to move between screens.',
     heatmaps: 'Attention moved towards the main task and action.',
     mobile: 'A separate mobile case study is in progress.'
   };
@@ -5204,7 +5204,7 @@ document.addEventListener('click',event=>{
     'Version control':['optimized/version-control.jpg'],
     'Design system':['ds.webp','DS Kapple.webp'],
     'Before the redesign':['Before/image 90.webp','Before/image 91.webp'],
-    'Final interface':['final/kfh-dashboard.webp','final/kfh-accounts-summary.webp','final/kfh-account-statement.webp','final/kfh-financing-facilities.webp','final/kfh-transaction-history.webp','final/kfh-transfer-own-account.webp','final/kfh-account-opening.webp','final/kfh-sign-up.webp','final/kfh-forgot-password.webp'],
+    'Final interface':['final/kfh-sign-up.webp','final/kfh-forgot-password.webp','final/kfh-dashboard.webp','final/kfh-accounts-summary.webp','final/kfh-account-statement.webp','final/kfh-financing-facilities.webp','final/kfh-transaction-history.webp','final/kfh-transfer-own-account.webp','final/kfh-account-opening.webp'],
     'Heatmaps':['optimized/heatmap-validation.jpg'],
     'Design iterations after launch':['optimized/iterative-progress-poster.jpg'],
     'KFH Jazeel mobile case study':['optimized/mobile-preview.jpg']
