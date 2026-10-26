@@ -1300,3 +1300,12 @@
 /* Case-study images are presentation, not controls: no zoom cursor, no hover lift. */
 .media-open.media-static{cursor:default}
 .media-open.media-static:hover{border-color:var(--line);box-shadow:none}
+
+/* KFH hero: hard guarantees against overlap at any width (figure stays in column 2, never wider than it, no card chrome). */
+.case .case-hero > .case-hero-visual,
+.case .case-hero > figure.case-hero-visual { grid-column: 2; grid-row: 1 / 4; min-width: 0; max-width: 100%; margin: 0; justify-self: stretch; }
+.case .case-hero .case-hero-visual .media-open,
+.case .case-hero .case-hero-visual .media-open.media-static { display: block; width: 100%; max-width: 100%; padding: 0; margin: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; overflow: visible; }
+.case .case-hero .case-hero-visual img { display: block; width: 100%; max-width: 100%; height: auto; }
+.case .case-hero > h1 { grid-column: 1; min-width: 0; }
+@media (min-width: 981px) and (max-width: 1180px) { .case .case-hero { grid-template-columns: minmax(0, 1fr) minmax(380px, 1fr); gap: 16px 32px; } .case .case-hero > h1 { font-size: clamp(40px, 4.4vw, 56px); } }
