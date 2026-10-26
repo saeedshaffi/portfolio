@@ -37,8 +37,17 @@
       'Before/image 90.webp',
       'Before/image 91.webp'
     ],
-    improvements: ['optimized/interface-improvements.jpg'],
-    ui: ['optimized/final-ui.jpg'],
+    ui: [
+      'final/kfh-dashboard.webp',
+      'final/kfh-accounts-summary.webp',
+      'final/kfh-account-statement.webp',
+      'final/kfh-financing-facilities.webp',
+      'final/kfh-transaction-history.webp',
+      'final/kfh-transfer-own-account.webp',
+      'final/kfh-account-opening.webp',
+      'final/kfh-sign-up.webp',
+      'final/kfh-forgot-password.webp'
+    ],
     heatmaps: ['optimized/heatmap-validation.jpg'],
     mobile: ['optimized/mobile-preview.jpg']
   };
@@ -56,8 +65,7 @@
     comparison: [[3520, 1704]],
     hifi: [[1760, 878]],
     version: [[2380, 2160]],
-    improvements: [[3520, 1756]],
-    ui: [[3520, 1756]],
+    ui: Array.from({ length: 9 }, () => [1358, 959]),
     heatmaps: [[3116, 2318]],
     mobile: [[1756, 588]]
   };
@@ -89,8 +97,17 @@
     version: ['Version control workflow introduced for the KFH Jazeel design team'],
     system: ['KFH Jazeel design system structure', 'Kapple design system foundations and component architecture'],
     before: Array.from({ length: 2 }, (_, index) => `Original KFH Jazeel interface, screen ${index + 1} of 2`),
-    improvements: ['Annotated KFH Jazeel interface improvements'],
-    ui: ['Final KFH Jazeel interface across key journeys'],
+    ui: [
+      'KFH Jazeel Dashboard with balance, pending authorisations and recent operations',
+      'KFH Jazeel Accounts summary listing each account with its balance',
+      'KFH Jazeel Account statement request with account and duration filters',
+      'KFH Jazeel Financing facilities table',
+      'KFH Jazeel Transaction history table with own-account and within-bank tabs',
+      'KFH Jazeel Own account transfer form with a live summary of the steps',
+      'KFH Jazeel Account opening request form',
+      'KFH Jazeel Sign up screen with mobile number and coupon code',
+      'KFH Jazeel Forgot password screen'
+    ],
     heatmaps: ['Attention heatmap for the redesigned KFH Jazeel sign in experience'],
     mobile: ['Preview of the forthcoming KFH Jazeel mobile case study']
   };
@@ -110,13 +127,12 @@
     version: 'One shared source for the latest design work.',
     system: 'The foundations and components that helped the team work at scale.',
     before: 'The original interface before we redesigned it.',
-    improvements: 'The changes we made and the problems they addressed.',
-    ui: 'The finished product across its main journeys.',
+    ui: 'The finished product across its main journeys. Use the arrows, trackpad, or swipe to move between screens.',
     heatmaps: 'Attention moved towards the main task and action.',
     mobile: 'A separate mobile case study is in progress.'
   };
 
-  const railKeys = new Set(['hifi', 'system', 'before', 'improvements', 'ui']);
+  const railKeys = new Set(['hifi', 'system', 'before', 'ui']);
   const logoKeys = new Set(['traditional', 'neo']);
 
   const imageItem = (key, path, index) => {
@@ -846,7 +862,6 @@
       ['Version control', gallery('version', 'Version control workflow')],
       ['Design system', gifBlock('system', 'KFH Jazeel design system', 'animated/design-system.gif', 'optimized/design-system-poster.jpg', 'The shared foundations and components used across the product.', 'Animated overview of the Kapple design system foundations and architecture')],
       ['Before the redesign', gifBlock('before', 'Original screens', 'animated/original-screens.gif', 'optimized/original-screens-poster.jpg', 'The product before the redesign.', 'Animated sequence of the original KFH Jazeel interface')],
-      ['Improvements', gallery('improvements', 'Interface improvements')],
       ['Final interface', gallery('ui', 'Final interface')],
       ['Heatmaps', gallery('heatmaps', 'Heatmap validation')],
       ['Design iterations after launch', gifBlock('iteration', 'Design iterations after launch', 'animated/iterative-progress.gif', 'optimized/iterative-progress-poster.jpg', 'The interface changed through three major rounds of improvements.', 'Animated sequence of KFH Jazeel design iterations after launch')],
