@@ -101,8 +101,8 @@
     'A design spec document that covered the updated architecture + information design of the feature'
   ];
 
-  const hifi=[['hifi-01.png','Sign in'],['hifi-02.webp','Contact information'],['hifi-03.webp','Shipping details'],['hifi-04.png','Order summary'],['hifi-05.png','Payment']];
-  const proposed=[['prop-05.png','Sign in'],['prop-04.webp','Contact information'],['prop-03.webp','Shipping details'],['prop-02.png','Order summary'],['prop-01.webp','Payment']];
+  const hifi=[['ui-signin.webp','Sign in'],['ui-contact-shipping.webp','Contact & shipping'],['ui-summary.webp','Order summary'],['ui-payment.webp','Payment']];
+  const proposed=[['ui-signin.webp','Sign in',1],['ui-contact-shipping.webp','Contact & shipping',2],['ui-summary.webp','Order summary',1],['ui-payment.webp','Payment',1]];
   const originals=[['orig-02.webp','Create account'],['orig-04.png','Contact information'],['orig-03.webp','Shipping method'],['orig-05.webp','Cart summary'],['orig-01.webp','Payment']];
   const lofi=[['lofi-04.webp','Login'],['lofi-03.webp','Contact information'],['lofi-02.webp','Shipping'],['lofi-01.webp','Summary']];
 
@@ -118,7 +118,7 @@
   <p><strong>Boosting customer retention through user experience in eCommerce checkout.</strong> Customers faced concerns and difficulties with Eyewa’s checkout, which led to a poor experience and high levels of complaints. I rebuilt the flow to be clearer and more trustworthy, and the churn and complaint numbers moved.</p>
   <span class="ey-hero-meta">User research &amp; UI design · Mobile · 9 min read</span>
   <div class="case-hero-visual" aria-label="Three screens from the redesigned checkout">
-    ${[['fig/prop-05.png','Sign in'],['fig/prop-03.webp','Shipping details'],['fig/prop-01.webp','Payment']].map(([f,t],i)=>`<span class="ey-hero-shot" style="--h:${i}">${shot(A+f,'Redesigned checkout · '+t,t+' screen from the redesigned checkout')}</span>`).join('')}
+    ${[['fig/ui-signin.webp','Sign in'],['fig/ui-contact-shipping.webp','Contact & shipping'],['fig/ui-payment.webp','Payment']].map(([f,t],i)=>`<span class="ey-hero-shot" style="--h:${i}">${shot(A+f,'Redesigned checkout · '+t,t+' screen from the redesigned checkout')}</span>`).join('')}
   </div>
 </section>
 
@@ -145,7 +145,7 @@
     </li>
     <li>
       <span class="ey-ov-step"><i>03</i>Solution</span>
-      <p>Five short steps with a visible stepper, an editable summary before payment, promo codes where people look for them, and accepted-card marks beside the SSL line.</p>
+      <p>Four short steps with a visible stepper, an editable summary before payment, promo codes where people look for them, and accepted-card marks beside the SSL line.</p>
     </li>
   </ol>
 
@@ -315,13 +315,13 @@ ${chapter(9,'Design the solution',`
   <p>Paper first. Each sketch tested one question: how much of the order can be confirmed without leaving the step?</p>
   ${gallery(lofi,4)}
   <h3>Design the solution: high fidelity wireframes</h3>
-  <p>Every screen carries the progress bar, states what it needs, and shows what it already has.</p>
-  ${gallery(hifi,5)}
+  <p>Every screen carries the four-step progress bar, states what it needs, and shows what it already has.</p>
+  ${gallery(hifi,4)}
 `)}
 
 ${chapter(10,'Original and proposed',`
   <h2>Original screens and proposed designs</h2>
-  <p>The same five steps, before and after. Each proposed screen sits directly under the original it replaces.</p>
+  <p>Five original steps become four. Each proposed screen sits under the original it replaces; contact information and shipping merge into one step.</p>
   <div class="ey-compare">
     <div class="ey-compare-row" data-row="original">
       <span class="ey-compare-label">Original</span>
@@ -329,7 +329,7 @@ ${chapter(10,'Original and proposed',`
     </div>
     <div class="ey-compare-row" data-row="proposed">
       <span class="ey-compare-label">Proposed</span>
-      <div class="ey-gallery" style="--cols:5">${proposed.map(([f,t])=>`<div>${fig(shot(F+f,'Proposed · '+t,t))}</div>`).join('')}</div>
+      <div class="ey-gallery" style="--cols:5">${proposed.map(([f,t,span])=>`<div${span>1?` class="ey-span-${span}"`:''}>${fig(shot(F+f,'Proposed · '+t,t))}</div>`).join('')}</div>
     </div>
   </div>
 `)}
@@ -350,27 +350,31 @@ ${chapter(12,'Improvements',`
     <div class="content-card"><h3>Problem</h3><p>No social login; users avoid registration. Guest order option lacks visibility, causing confusion.</p></div>
     <div class="content-card"><h3>Solution</h3><p>Enabled social account login and enhanced visibility for the ‘Login as Guest’ option on the login screen.</p></div>
   </div>
-  ${fig(shot(F+'imp-login-v2.webp','Improvements: login','Login screen across old design, first iteration and final design'),'Old design, first iteration and final design, left to right.','ey-fig-plain')}
+  <div class="ey-gallery ey-gallery-iter" style="--cols:3">
+    <div><figure class="ey-fig">${shot(F+'orig-account.webp','Old design','Original create-account screen with benefits banner, three password fields and no guest option.')}<figcaption><b>Old design</b>Account creation first, with no visible way to order as a guest.</figcaption></figure></div>
+    <div><figure class="ey-fig">${shot(F+'cs-login-iter1.webp','First iteration','Sign in screen with a progress bar and a small Order as guest link under the button.')}<figcaption><b>First iteration</b>Sign in with a progress bar, but the guest option still hid under the button.</figcaption></figure></div>
+    <div><figure class="ey-fig">${shot(F+'ui-signin.webp','Final design','Sign in screen with Order as guest first, email and password fields, and Google and Apple sign in.')}<figcaption><b>Final design</b>Order as guest first, then sign in, with social sign in below.</figcaption></figure></div>
+  </div>
+  <p class="ey-caption">Left to right: the old create-account screen, the first iteration, and the final sign in.</p>
   <h3>Improvements: contact information and shipping details</h3>
   <div class="content-columns">
     <div class="content-card"><h3>Problem</h3><p>In the old design, users had to input first and last names separately. The initial version then required users to enter all information on a single overwhelming screen.</p></div>
-    <div class="content-card"><h3>Solution</h3><p>Merged first and last name fields and separated ‘Contact Information’ and ‘Shipping Details’ onto separate screens, improving user input speed.</p></div>
+    <div class="content-card"><h3>Solution</h3><p>Merged the name fields and kept ‘Contact Information’ and ‘Shipping Details’ on one step, split into two short sections, so the whole address is confirmed before the summary.</p></div>
   </div>
-  <div class="ey-gallery ey-gallery-iter" style="--cols:4">
+  <div class="ey-gallery ey-gallery-iter" style="--cols:3">
     <div><figure class="ey-fig">${shot(F+'cs-old.png','Old design','One long web screen: separate first and last name, contact and shipping stacked together.')}<figcaption><b>Old design</b>One long web screen: separate first and last name, contact and shipping stacked together.</figcaption></figure></div>
-    <div><figure class="ey-fig">${shot(F+'cs-iter1.png','First iteration','Still one screen, moved into the app, but nothing was split.')}<figcaption><b>First iteration</b>Still one screen, moved into the app, but nothing was split.</figcaption></figure></div>
-    <div><figure class="ey-fig">${shot(F+'cs-final-1.png','Final, contact','Contact information alone, name field merged.')}<figcaption><b>Final, contact</b>Contact information alone, name field merged.</figcaption></figure></div>
-    <div><figure class="ey-fig">${shot(F+'cs-final-2.png','Final, shipping','Shipping method and address on their own step.')}<figcaption><b>Final, shipping</b>Shipping method and address on their own step.</figcaption></figure></div>
+    <div><figure class="ey-fig">${shot(F+'cs-iter1.png','First iteration','Still one screen, moved into the app, but nothing was grouped.')}<figcaption><b>First iteration</b>Still one screen, moved into the app, but nothing was grouped.</figcaption></figure></div>
+    <div><figure class="ey-fig">${shot(F+'ui-contact-shipping.webp','Final design','Contact information and shipping on one step: merged name field, then delivery method and address.')}<figcaption><b>Final design</b>One step, two sections: contact details with the name field merged, then delivery method and address.</figcaption></figure></div>
   </div>
-  <p class="ey-caption">Left to right: the old web checkout, the first app iteration, and the final split into two steps.</p>
+  <p class="ey-caption">Left to right: the old web checkout, the first app iteration, and the final grouped step.</p>
   <h3>Improvements: payment screen</h3>
   <div class="content-columns">
-    <div class="content-card"><h3>Problem</h3><p>Old design: users entered first and last names separately. First iteration issue: all information had to be added in one overwhelming screen.</p></div>
-    <div class="content-card"><h3>Solution</h3><p>Merged first and last name fields, separated ‘Contact Information’ and ‘Shipping Details’ for a more user-friendly experience.</p></div>
+    <div class="content-card"><h3>Problem</h3><p>Card fields, order summary and billing checkbox competed on one long scroll, with the trust marks below the fold.</p></div>
+    <div class="content-card"><h3>Solution</h3><p>Payment method chosen first, three card fields, and the SSL assurance sitting directly above the pay button.</p></div>
   </div>
   <div class="ey-gallery ey-gallery-iter ey-gallery-pair" style="--cols:2">
     <div><figure class="ey-fig">${shot(F+'orig-payment-2.webp','Old design','Original payment screen showing the order summary, card fields, billing checkbox and trust mark in one long checkout step.')}<figcaption><b>Old design</b>Card fields, order summary and billing checkbox competing on one scroll, with the trust marks below the fold.</figcaption></figure></div>
-    <div><figure class="ey-fig">${shot(F+'pay-final.webp','Final design','Payment method chosen first, three card fields, and the SSL assurance sitting directly above the pay button.')}<figcaption><b>Final design</b>Payment method chosen first, three card fields, and the SSL assurance sitting directly above the pay button.</figcaption></figure></div>
+    <div><figure class="ey-fig">${shot(F+'ui-payment.webp','Final design','Payment method chosen first, three card fields, and the SSL assurance sitting directly above the pay button.')}<figcaption><b>Final design</b>Payment method chosen first, three card fields, and the SSL assurance sitting directly above the pay button.</figcaption></figure></div>
   </div>
 `)}
 
