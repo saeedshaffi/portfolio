@@ -40,7 +40,9 @@
     decisions: ['final/kfh-dashboard-priorities.webp'],
     structure: ['final/kfh-dashboard-before-after.webp'],
     annotated: ['final/kfh-dashboard-annotated.webp'],
+    journey: ['final/kfh-maker-checker-journey.webp'],
     ui: [
+      'final/kfh-log-in.webp',
       'final/kfh-sign-up.webp',
       'final/kfh-forgot-password.webp',
       'final/kfh-dashboard.webp',
@@ -49,7 +51,12 @@
       'final/kfh-financing-facilities.webp',
       'final/kfh-transaction-history.webp',
       'final/kfh-transfer-own-account.webp',
-      'final/kfh-account-opening.webp'
+      'final/kfh-fawri-beneficiary-open.webp',
+      'final/kfh-approvals.webp',
+      'final/kfh-account-opening.webp',
+      'final/kfh-manage-card.webp',
+      'final/kfh-users-roles.webp',
+      'final/kfh-help-panel.webp'
     ],
     heatmaps: ['optimized/heatmap-validation.jpg'],
     mobile: ['optimized/mobile-preview.jpg']
@@ -68,10 +75,11 @@
     comparison: [[3520, 1704]],
     hifi: [[1760, 878]],
     version: [[2380, 2160]],
-    decisions: [[2400, 1422]],
-    structure: [[2400, 1347]],
-    annotated: [[2400, 1333]],
-    ui: Array.from({ length: 9 }, () => [2716, 1868]),
+    decisions: [[3200, 1896]],
+    structure: [[3200, 1796]],
+    annotated: [[3200, 1778]],
+    journey: [[3200, 1178]],
+    ui: [[2716, 1868], [2716, 1868], [2716, 1868], [2716, 1868], [2716, 1868], [2716, 1868], [2716, 1868], [2716, 1942], [2716, 1868], [2716, 1868], [2716, 1934], [2716, 1868], [2716, 1868], [2716, 1868], [2716, 1868]],
     heatmaps: [[3116, 2318]],
     mobile: [[1756, 588]]
   };
@@ -106,7 +114,9 @@
     decisions: ['Priority matrix of dashboard widgets scored by frequency of use and decision value'],
     structure: ['Dashboard structure before and after the redesign, shown as labelled wireframes'],
     annotated: ['The final KFH Jazeel dashboard with six numbered annotations explaining each widget'],
+    journey: ['Four screens showing how a payment moves from the initiator to the approver and is confirmed with an app code'],
     ui: [
+      'KFH Jazeel Log in screen with email, password and a code step',
       'KFH Jazeel Sign up screen with mobile number and coupon code',
       'KFH Jazeel Forgot password screen',
       'KFH Jazeel Dashboard with balance, pending authorisations and recent operations',
@@ -115,7 +125,12 @@
       'KFH Jazeel Financing facilities table',
       'KFH Jazeel Transaction history table with own-account and within-bank tabs',
       'KFH Jazeel Own account transfer form with a live summary of the steps',
-      'KFH Jazeel Account opening request form'
+      'KFH Jazeel Fawri transfer form with the beneficiary list open',
+      'KFH Jazeel Approvals queue with approve and reject actions on each row',
+      'KFH Jazeel Account opening request form',
+      'KFH Jazeel Manage card dialog with block, online, international and contactless controls',
+      'KFH Jazeel Users and roles settings with a table of users',
+      'KFH Jazeel Help and support panel with common questions and chat'
     ],
     heatmaps: ['Attention heatmap for the redesigned KFH Jazeel sign in experience'],
     mobile: ['Preview of the forthcoming KFH Jazeel mobile case study']
@@ -139,7 +154,8 @@
     decisions: 'Top right earned the first screen. Grey items stayed off the dashboard.',
     structure: 'Decide, act, understand: the three rows of the redesigned dashboard.',
     annotated: 'Open the image to read why each widget is where it is.',
-    ui: 'The finished product in the order a customer meets it: sign in, dashboard, accounts, then transfers and services. Use the arrows, trackpad, or swipe to move between screens.',
+    journey: 'Left to right: the initiator fills and reviews, the approver opens the queue and confirms with a code.',
+    ui: 'The finished product in the order a customer meets it: sign in, dashboard, accounts, transfers and approvals, then services and settings. Use the arrows, trackpad, or swipe to move between screens.',
     heatmaps: 'Attention moved towards the main task and action.',
     mobile: 'A separate mobile case study is in progress.'
   };
@@ -877,6 +893,7 @@
       ['How did we rank the candidates?', gallery('decisions', 'Dashboard priorities')],
       ['Why is it structured in three rows?', gallery('structure', 'Dashboard structure before and after')],
       ['What changed in the 2026 refresh?', gallery('annotated', 'The final dashboard, annotated')],
+      ['How does a payment get approved?', gallery('journey', 'Maker checker in four screens')],
       ['Final interface', gallery('ui', 'Final interface')],
       ['Heatmaps', gallery('heatmaps', 'Heatmap validation')],
       ['Design iterations after launch', gifBlock('iteration', 'Design iterations after launch', 'animated/iterative-progress.gif', 'optimized/iterative-progress-poster.jpg', 'The interface changed through three major rounds of improvements, ending with the 2026 dashboard refresh.', 'Animated sequence of KFH Jazeel design iterations after launch')],
