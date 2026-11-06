@@ -8,7 +8,7 @@
     kfh:{
       problem:'66% of users dropped off during onboarding; core flows were unclear and crashed.',
       did:'Research-led redesign, phased onboarding, a new design system and a shared team workflow.',
-      outcome:'Drop-off 66% → 18%, PayBills adoption 3% → 32.5%, 900 screens shipped.',
+      outcome:'Drop-off 66% → 18%, bulk payment adoption 42.5% → 72%, 900 screens shipped.',
       role:'Lead Product Designer · 6 months'
     },
     'ai-system':{
