@@ -30,7 +30,7 @@
     ],
     neoFlows: ['optimized/neobank-userflows.webp'],
     comparison: ['optimized/flow-comparison.jpg'],
-    hifi: ['HiFi wireframes/Component 7.png'],
+    hifi: ['HiFi wireframes/wireframe-dashboard.jpg', 'HiFi wireframes/wireframe-accounts.jpg', 'HiFi wireframes/wireframe-transaction-history.jpg', 'HiFi wireframes/wireframe-transfer.jpg', 'HiFi wireframes/wireframe-approvals.jpg', 'HiFi wireframes/wireframe-bulk-payment.jpg'],
     version: ['optimized/version-control.jpg'],
     system: ['ds.webp', 'DS Kapple.webp'],
     before: [
@@ -59,7 +59,7 @@
       'final/kfh-users-roles.webp',
       'final/kfh-help-panel.webp'
     ],
-    heatmaps: ['optimized/heatmap-validation.jpg'],
+    heatmaps: ['optimized/heatmap-dashboard.jpg', 'optimized/heatmap-accounts.jpg', 'optimized/heatmap-transaction-history.jpg', 'optimized/heatmap-transfer.jpg', 'optimized/heatmap-approvals.jpg', 'optimized/heatmap-bulk-payment.jpg'],
     mobile: ['optimized/mobile-preview.jpg']
   };
 
@@ -74,20 +74,20 @@
     neo: [[300, 300], [300, 300], [300, 300], ...Array.from({ length: 5 }, () => [660, 300])],
     neoFlows: [[3690, 2070]],
     comparison: [[3520, 1704]],
-    hifi: [[1760, 878]],
+    hifi: [[2037, 1401], [2037, 1401], [2037, 1457], [2037, 1401], [2037, 1451], [2037, 1457]],
     version: [[2380, 2160]],
     decisions: [[3200, 1896]],
     structure: [[3200, 1796]],
     annotated: [[3200, 1778]],
     journey: [[3200, 1178]],
     ui: [[2716, 1868], [2716, 1868], [2716, 1868], [2716, 1868], [2716, 1868], [2716, 1868], [2716, 1868], [2716, 1942], [2716, 1868], [2716, 1868], [2716, 1942], [2716, 1934], [2716, 1868], [2716, 1868], [2716, 1868], [2716, 1868]],
-    heatmaps: [[3116, 2318]],
+    heatmaps: [[2037, 1401], [2037, 1401], [2037, 1457], [2037, 1401], [2037, 1451], [2037, 1457]],
     mobile: [[1756, 588]]
   };
 
   const gifDimensions = {
     interviews: [900, 449],
-    priority: [1000, 1009],
+    priority: [1200, 800],
     findings: [1000, 740],
     system: [1200, 720],
     before: [900, 514],
@@ -108,7 +108,7 @@
     neo: ['Wise logo', 'N26 logo', 'Monese logo', 'Neobank considered in the competitive review', 'Neobank considered in the competitive review', 'Neobank considered in the competitive review', 'Neobank considered in the competitive review', 'Neobank considered in the competitive review'],
     neoFlows: ['Mapped onboarding and product flows across the neobanks in the research sample'],
     comparison: ['Comparison of traditional bank and neobank user flows'],
-    hifi: ['High fidelity wireframes for the redesigned KFH Jazeel journey'],
+    hifi: ['High fidelity wireframe of the KFH Jazeel dashboard', 'High fidelity wireframe of the accounts summary', 'High fidelity wireframe of the transaction history', 'High fidelity wireframe of the own account transfer form', 'High fidelity wireframe of the approvals queue', 'High fidelity wireframe of the bulk payment check lines screen'],
     version: ['Version control workflow introduced for the KFH Jazeel design team'],
     system: ['KFH Jazeel design system structure', 'Kapple design system foundations and component architecture'],
     before: Array.from({ length: 2 }, (_, index) => `Original KFH Jazeel interface, screen ${index + 1} of 2`),
@@ -134,7 +134,7 @@
       'KFH Jazeel Users and roles settings with a table of users',
       'KFH Jazeel Help and support panel with common questions and chat'
     ],
-    heatmaps: ['Attention heatmap for the redesigned KFH Jazeel sign in experience'],
+    heatmaps: ['Attention heatmap of the dashboard: focus on the total balance, new transfer and pending authorisations', 'Attention heatmap of the accounts summary: focus on balances and the account statement button', 'Attention heatmap of the transaction history: focus on download statement, search and status', 'Attention heatmap of the transfer form: focus on the amount field and review transfer', 'Attention heatmap of the approvals queue: focus on the approve button and the pending tab', 'Attention heatmap of bulk payment check lines: focus on the problem lines and review button'],
     mobile: ['Preview of the forthcoming KFH Jazeel mobile case study']
   };
 
@@ -149,7 +149,7 @@
     neo: 'We also reviewed digital banking products built around self service.',
     neoFlows: 'Open the image to follow the full journey.',
     comparison: 'Both sets of journeys shown at the same scale.',
-    hifi: 'Use the arrows, trackpad, or swipe to follow the journey.',
+    hifi: 'Greyscale, no icons: structure and hierarchy only. Use the arrows, trackpad, or swipe to move between screens.',
     version: 'One shared source for the latest design work.',
     system: 'The foundations and components that helped the team work at scale.',
     before: 'The original interface before we redesigned it.',
@@ -158,11 +158,11 @@
     annotated: 'Open the image to read why each widget is where it is.',
     journey: 'Left to right: the initiator fills and reviews, the approver opens the queue and confirms with a code.',
     ui: 'The finished product in the order a customer meets it: sign in, dashboard, accounts, transfers and approvals, then services and settings. Use the arrows, trackpad, or swipe to move between screens.',
-    heatmaps: 'Attention moved towards the main task and action.',
+    heatmaps: 'Six screens, including the dashboard. Attention lands on the main number and the one action each screen is for, not across the whole page. Use the arrows, trackpad, or swipe to move between screens.',
     mobile: 'A separate mobile case study is in progress.'
   };
 
-  const railKeys = new Set(['hifi', 'system', 'before', 'ui']);
+  const railKeys = new Set(['hifi', 'system', 'before', 'ui', 'heatmaps']);
   const logoKeys = new Set(['traditional', 'neo']);
 
   const imageItem = (key, path, index) => {
@@ -217,7 +217,7 @@
       ['05', 'Who do you compare yourselves to?', 'Emirates NBD Business for depth. Wio Business for the feel. Internally people keep bringing up Revolut Business, though we cannot match the licence.', '']
     ];
     const fields = questions.map(([number, question, answer, note]) => `<div class="questionnaire-row"><span>${number}</span><div><strong>${question}</strong><p class="questionnaire-answer">${answer}</p>${note ? `<p class="questionnaire-note">${note}</p>` : ''}</div></div>`).join('');
-    return `<figure class="media-block media-requirements questionnaire-figure"><div class="media-heading"><figcaption>Gathering requirements</figcaption><p>${notes.requirements}</p></div><div class="questionnaire-scene" role="img" aria-label="Completed stakeholder questionnaire returned during KFH Jazeel discovery"><article class="questionnaire-paper"><header><div><span>Discovery · Form 01</span><h4>Stakeholder questionnaire</h4></div><p>Sent 14 Feb<br><b>Returned 19 Feb</b></p></header><p class="questionnaire-intro">Returned by <b>N. Al-Otaibi</b>, Head of Digital Channels. Answers left verbatim; my follow-ups are in the margin.</p><div class="questionnaire-fields">${fields}</div><footer><span>5 of 5 answered</span><span>Page 1 of 2</span><i aria-hidden="true"></i></footer></article></div></figure>`;
+    return `<figure class="media-block media-requirements questionnaire-figure"><div class="media-heading"><figcaption>Gathering requirements</figcaption><p>${notes.requirements}</p></div><div class="questionnaire-scene" role="img" aria-label="Completed stakeholder questionnaire returned during KFH Jazeel discovery"><article class="questionnaire-paper"><header><div><span>Discovery · Form 01</span><h4>Stakeholder questionnaire</h4></div><p>Sent 14 Feb<br><b>Returned 19 Feb</b></p></header><div class="questionnaire-fields">${fields}</div><footer><span>5 of 5 answered</span><span>Page 1 of 2</span><i aria-hidden="true"></i></footer></article></div></figure>`;
   };
 
   const reviewCards = (type) => {
@@ -238,7 +238,7 @@
     return `<figure class="media-block quote-evidence quote-marquee-shell"><div class="media-heading"><figcaption>${title}</figcaption><p>These comments were transcribed from the Facebook reviews used in the research.</p></div><div class="quote-marquee" tabindex="0" aria-label="${title}. Reviews move automatically and pause while hovered or focused."><div class="quote-marquee-track" style="--marquee-duration:${cards.length * 9}s"><div class="quote-marquee-group" role="list">${cardMarkup}</div><div class="quote-marquee-group" aria-hidden="true">${cardMarkup}</div></div></div><p class="marquee-note">Reviews move automatically · hover or focus to pause</p></figure>`;
   };
 
-  const impactSummary = `<section class="case-impact-summary" aria-labelledby="impact-summary-title"><div class="impact-summary-copy"><span class="eyebrow">Results</span><h2 id="impact-summary-title">The product improved, and so did the way we delivered it.</h2><p>These are the results that mattered most. The story below shows how the research and design decisions led to them.</p><a href="#kfh-1" class="case-jump">Read the case study <span aria-hidden="true">↓</span></a></div><div class="case-impact-grid"><div class="impact-card impact-onboarding" style="--impact-order:0"><span class="impact-index">01 · Retention</span><strong aria-label="Onboarding drop off reduced from 66 percent to 18 percent"><span class="counter" aria-hidden="true" data-count="18">0</span><span class="impact-unit" aria-hidden="true">%</span></strong><span class="impact-caption">onboarding drop off</span><div class="impact-track" aria-hidden="true" style="--impact-from:66%;--impact-to:18%"><i></i><b></b></div><span class="impact-foot"><span class="impact-was">was 66%</span><span class="impact-delta">−48 pts</span></span></div><div class="impact-card impact-adoption" style="--impact-order:1"><span class="impact-index">02 · Adoption</span><strong aria-label="Bulk payment adoption increased from 42.5 percent to 72 percent"><span class="counter" aria-hidden="true" data-count="72">0</span><span class="impact-unit" aria-hidden="true">%</span></strong><span class="impact-caption">Bulk payment adoption</span><div class="impact-track" aria-hidden="true" style="--impact-from:42.5%;--impact-to:72%"><i></i><b></b></div><span class="impact-foot"><span class="impact-was">was 42.5%</span><span class="impact-delta">+29.5 pts</span></span></div><div class="impact-card impact-delivery" style="--impact-order:2"><span class="impact-index">03 · Scale</span><strong aria-label="900 screens delivered"><span class="counter" aria-hidden="true" data-count="900">0</span><span class="impact-unit" aria-hidden="true"></span></strong><span class="impact-caption">screens delivered</span><div class="impact-track impact-track-solo" aria-hidden="true" style="--impact-to:100%"><b></b></div><span class="impact-foot"><span class="impact-was">iOS, Android and web</span></span></div><div class="impact-card impact-deadlines" style="--impact-order:3"><span class="impact-index">04 · Delivery</span><strong aria-label="99 percent of deadlines met or beaten"><span class="counter" aria-hidden="true" data-count="99">0</span><span class="impact-unit" aria-hidden="true">%</span></strong><span class="impact-caption">deadlines met or beaten</span><div class="impact-track impact-track-solo" aria-hidden="true" style="--impact-to:99%"><b></b></div><span class="impact-foot"><span class="impact-was">across six months</span></span></div></div></section>`;
+  const impactSummary = `<section class="case-impact-summary" aria-labelledby="impact-summary-title"><div class="impact-summary-copy"><span class="eyebrow">Results</span><h2 id="impact-summary-title">The product improved, and so did the way we delivered it.</h2><p>These are the results that mattered most. The story below shows how the research and design decisions led to them.</p><a href="#kfh-1" class="case-jump">Read the case study <span aria-hidden="true">↓</span></a></div><div class="case-impact-grid"><div class="impact-card impact-onboarding" style="--impact-order:0"><span class="impact-index">01 · Retention</span><strong aria-label="Onboarding drop off reduced from 66 percent to 18 percent"><span class="counter" aria-hidden="true" data-count="18">0</span><span class="impact-unit" aria-hidden="true">%</span></strong><span class="impact-caption">onboarding drop off</span><div class="impact-track" aria-hidden="true" style="--impact-from:66%;--impact-to:18%"><i></i><b></b></div><span class="impact-foot"><span class="impact-was">was 66%</span><span class="impact-delta">−48 pts</span></span></div><div class="impact-card impact-adoption" style="--impact-order:1"><span class="impact-index">02 · Adoption</span><strong aria-label="Bulk payment adoption increased from 42.5 percent to 72 percent"><span class="counter" aria-hidden="true" data-count="72">0</span><span class="impact-unit" aria-hidden="true">%</span></strong><span class="impact-caption">Bulk payment adoption</span><div class="impact-track" aria-hidden="true" style="--impact-from:42.5%;--impact-to:72%"><i></i><b></b></div><span class="impact-foot"><span class="impact-was">was 42.5%</span><span class="impact-delta">+29.5 pts</span></span></div><div class="impact-card impact-delivery" style="--impact-order:2"><span class="impact-index">03 · Scale</span><strong aria-label="900 screens delivered"><span class="counter" aria-hidden="true" data-count="900">0</span><span class="impact-unit" aria-hidden="true"></span></strong><span class="impact-caption">screens delivered</span><div class="impact-track impact-track-solo" aria-hidden="true" style="--impact-to:100%"><b></b></div><span class="impact-foot"><span class="impact-was">web app, desktop first</span></span></div><div class="impact-card impact-deadlines" style="--impact-order:3"><span class="impact-index">04 · Delivery</span><strong aria-label="99 percent of deadlines met or beaten"><span class="counter" aria-hidden="true" data-count="99">0</span><span class="impact-unit" aria-hidden="true">%</span></strong><span class="impact-caption">deadlines met or beaten</span><div class="impact-track impact-track-solo" aria-hidden="true" style="--impact-to:99%"><b></b></div><span class="impact-foot"><span class="impact-was">across six months</span></span></div></div></section>`;
 
   const priorityDecision = `<section class="priority-decision" aria-label="How research informed prioritisation"><span class="eyebrow">What we learned and what we changed</span><div class="decision-track"><div><b>01 · Signal</b><strong>66% drop off</strong><p>Onboarding was where we were losing the most people.</p></div><div><b>02 · Evidence</b><strong>Too long and unclear</strong><p>Customers described crashes, form fatigue, and actions they could not understand.</p></div><div><b>03 · Decision</b><strong>Start small</strong><p>We began with fewer fields and clearer error messages.</p></div><div><b>04 · Delivery</b><strong>Work in stages</strong><p>We added live guidance in steps that engineering could manage.</p></div><div><b>05 · Result</b><strong>18% drop off</strong><p>The first release showed that the approach worked.</p></div></div></section>`;
 
