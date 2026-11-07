@@ -4417,7 +4417,7 @@ document.addEventListener('click',event=>{
     neo: 'We also reviewed digital banking products built around self service.',
     neoFlows: 'Open the image to follow the full journey.',
     comparison: 'Both sets of journeys shown at the same scale.',
-    lofi: 'Boxes, headings and grey lines. Enough to agree where things go and what each screen is for, nothing more. Use the arrows, trackpad, or swipe to move between screens.',
+    lofi: 'Sketch style: boxes, labels and grey lines for text. Enough to agree where things go and what each screen is for, nothing more. Use the arrows, trackpad, or swipe to move between screens.',
     hifi: 'Same screens with real content, spacing and hierarchy settled, still no colour or icons. This is what engineering and the bank reviewed before visual design. Use the arrows, trackpad, or swipe to move between screens.',
     version: 'One shared source for the latest design work.',
     system: 'The foundations and components that helped the team work at scale.',
