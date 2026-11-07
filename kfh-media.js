@@ -30,7 +30,8 @@
     ],
     neoFlows: ['optimized/neobank-userflows.webp'],
     comparison: ['optimized/flow-comparison.jpg'],
-    hifi: ['HiFi wireframes/wireframe-dashboard.jpg', 'HiFi wireframes/wireframe-accounts.jpg', 'HiFi wireframes/wireframe-transaction-history.jpg', 'HiFi wireframes/wireframe-transfer.jpg', 'HiFi wireframes/wireframe-approvals.jpg', 'HiFi wireframes/wireframe-bulk-payment.jpg'],
+    lofi: ['wireframes/lofi-dashboard.jpg', 'wireframes/lofi-accounts.jpg', 'wireframes/lofi-transaction-history.jpg', 'wireframes/lofi-transfer.jpg', 'wireframes/lofi-approvals.jpg', 'wireframes/lofi-bulk-payment.jpg'],
+    hifi: ['wireframes/hifi-dashboard.jpg', 'wireframes/hifi-accounts.jpg', 'wireframes/hifi-transaction-history.jpg', 'wireframes/hifi-transfer.jpg', 'wireframes/hifi-approvals.jpg', 'wireframes/hifi-bulk-payment.jpg'],
     version: ['optimized/version-control.jpg'],
     system: ['ds.webp', 'DS Kapple.webp'],
     before: [
@@ -74,6 +75,7 @@
     neo: [[300, 300], [300, 300], [300, 300], ...Array.from({ length: 5 }, () => [660, 300])],
     neoFlows: [[3690, 2070]],
     comparison: [[3520, 1704]],
+    lofi: [[2037, 1401], [2037, 1401], [2037, 1457], [2037, 1401], [2037, 1451], [2037, 1457]],
     hifi: [[2037, 1401], [2037, 1401], [2037, 1457], [2037, 1401], [2037, 1451], [2037, 1457]],
     version: [[2380, 2160]],
     decisions: [[3200, 1896]],
@@ -108,6 +110,7 @@
     neo: ['Wise logo', 'N26 logo', 'Monese logo', 'Neobank considered in the competitive review', 'Neobank considered in the competitive review', 'Neobank considered in the competitive review', 'Neobank considered in the competitive review', 'Neobank considered in the competitive review'],
     neoFlows: ['Mapped onboarding and product flows across the neobanks in the research sample'],
     comparison: ['Comparison of traditional bank and neobank user flows'],
+    lofi: ['Low fidelity wireframe of the KFH Jazeel dashboard: boxes, headings and grey lines for text', 'Low fidelity wireframe of the accounts summary', 'Low fidelity wireframe of the transaction history', 'Low fidelity wireframe of the own account transfer form', 'Low fidelity wireframe of the approvals queue', 'Low fidelity wireframe of the bulk payment check lines screen'],
     hifi: ['High fidelity wireframe of the KFH Jazeel dashboard', 'High fidelity wireframe of the accounts summary', 'High fidelity wireframe of the transaction history', 'High fidelity wireframe of the own account transfer form', 'High fidelity wireframe of the approvals queue', 'High fidelity wireframe of the bulk payment check lines screen'],
     version: ['Version control workflow introduced for the KFH Jazeel design team'],
     system: ['KFH Jazeel design system structure', 'Kapple design system foundations and component architecture'],
@@ -149,7 +152,8 @@
     neo: 'We also reviewed digital banking products built around self service.',
     neoFlows: 'Open the image to follow the full journey.',
     comparison: 'Both sets of journeys shown at the same scale.',
-    hifi: 'Greyscale, no icons: structure and hierarchy only. Use the arrows, trackpad, or swipe to move between screens.',
+    lofi: 'Boxes, headings and grey lines. Enough to agree where things go and what each screen is for, nothing more. Use the arrows, trackpad, or swipe to move between screens.',
+    hifi: 'Same screens with real content, spacing and hierarchy settled, still no colour or icons. This is what engineering and the bank reviewed before visual design. Use the arrows, trackpad, or swipe to move between screens.',
     version: 'One shared source for the latest design work.',
     system: 'The foundations and components that helped the team work at scale.',
     before: 'The original interface before we redesigned it.',
@@ -162,7 +166,7 @@
     mobile: 'A separate mobile case study is in progress.'
   };
 
-  const railKeys = new Set(['hifi', 'system', 'before', 'ui', 'heatmaps']);
+  const railKeys = new Set(['lofi', 'hifi', 'system', 'before', 'ui', 'heatmaps']);
   const logoKeys = new Set(['traditional', 'neo']);
 
   const imageItem = (key, path, index) => {
@@ -888,6 +892,7 @@
       ['Choosing what to fix first', priorityDecision + gifBlock('priority', 'How we chose the first problem', 'animated/prioritizing-tasks.gif', 'optimized/prioritizing-tasks-poster.jpg', 'Research helped us turn a large problem into a practical first release.', 'Animated KFH Jazeel task prioritisation sequence')],
       ['Research overview', researchOverview],
       ['Research findings', findingStory],
+      ['Turning research into wireframes', gallery('lofi', 'Low fidelity wireframes')],
       ['High fidelity wireframes', gallery('hifi', 'High fidelity wireframes')],
       ['Version control', gallery('version', 'Version control workflow')],
       ['Design system', gifBlock('system', 'KFH Jazeel design system', 'animated/design-system.gif', 'optimized/design-system-poster.jpg', 'The shared foundations and components used across the product.', 'Animated overview of the Kapple design system foundations and architecture')],
