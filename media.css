@@ -1044,7 +1044,9 @@
 }
 
 .gif-block .animated-evidence {
+  display: block;
   width: 100%;
+  height: auto;
   max-height: 720px;
   object-fit: contain;
 }

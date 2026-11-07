@@ -2123,7 +2123,9 @@ padding: clamp(8px, 1.4vw, 16px);
 background: #fff;
 }
 .gif-block .animated-evidence {
+display: block;
 width: 100%;
+height: auto;
 max-height: 720px;
 object-fit: contain;
 }
